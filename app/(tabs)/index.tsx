@@ -7,7 +7,15 @@ export default function TabOneScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
+      <View className="bg-white p-20 rounded-lg shadow shadow-gray-200">
+        <Text className="text-2xl font-bold text-pink-600 bg-red-800">agui ahsidha s</Text>
+        <Text className="mt-10 mb-15 text-red-500 text-5xl">asvu aiahi daiush </Text>
+      </View>
+      <View
+        style={styles.separator}
+        lightColor="#eee"
+        darkColor="rgba(255,255,255,0.1)"
+      />
       <EditScreenInfo path="app/(tabs)/index.tsx" />
     </View>
   );
