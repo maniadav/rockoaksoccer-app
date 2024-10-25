@@ -1,7 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   DarkTheme,
   DefaultTheme,
@@ -9,30 +10,15 @@ import {
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-import '.././global.css';
 import { useColorScheme } from '@/components/useColorScheme';
 import ProfileScreen from './ProfileScreen';
 import HomeScreen from './HomeScreen';
 import SignInScreen from './SignInScreen';
 import SignUpScreen from './SignUpScreen';
+import ResetPasswordScreen from './ResetPasswordScreen';
+import OnBoardingScreen from './OnBoardingScreen';
 
-// Create the stack navigator
 const Stack = createNativeStackNavigator();
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from 'expo-router';
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: '(tabs)',
-};
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
@@ -40,12 +26,10 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Handle any errors
   useEffect(() => {
     if (error) throw error;
   }, [error]);
 
-  // Hide splash screen when fonts are loaded
   useEffect(() => {
     if (loaded) {
       SplashScreen.hideAsync();
@@ -61,18 +45,37 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const user = await AsyncStorage.getItem('user');
+      setInitialRoute(user ? 'HomeScreen' : 'OnBoardingScreen');
+    };
+    checkLoginStatus();
+  }, []);
+
+  if (initialRoute === null) {
+    return null; // Show nothing until the initial route is determined
+  }
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName="HomeScreen">
+      <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
           options={{ title: 'Welcome' }}
         />
+        <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
+        <Stack.Screen
+          name="ResetPasswordScreen"
+          component={ResetPasswordScreen}
+        />
       </Stack.Navigator>
     </ThemeProvider>
   );
