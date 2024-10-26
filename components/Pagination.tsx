@@ -33,7 +33,7 @@ const Pagination = ({ data, scrollX, index }: any) => {
             style={[
               styles.dot,
               { width: dotWidth, backgroundColor },
-              // idx === index && styles.dotActive,
+              idx === index && styles.dotActive,
             ]}
           />
         );
@@ -46,8 +46,7 @@ export default Pagination;
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
-    bottom: 35,
+    bottom: 10,
     flexDirection: 'row',
     width: '100%',
     alignItems: 'center',

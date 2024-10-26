@@ -47,7 +47,6 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
   const [initialRoute, setInitialRoute] = useState<string | null>(null);
 
-
   useEffect(() => {
     const checkLoginStatus = async () => {
       const user = await AsyncStorage.getItem('user');
@@ -68,7 +67,12 @@ function RootLayoutNav() {
           component={HomeScreen}
           options={{ title: 'Welcome' }}
         />
-        <Stack.Screen name="OnBoardingScreen" component={OnBoardingScreen} />
+        <Stack.Screen
+          name="OnBoardingScreen"
+          component={OnBoardingScreen}
+          options={{ title: 'Welcome', headerShown: false }}
+        />
+
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
