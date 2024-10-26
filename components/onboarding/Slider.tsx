@@ -9,10 +9,11 @@ import {
   Dimensions,
 } from 'react-native';
 import React, { useRef, useState } from 'react';
-import data from '../constants/slider.data.constant';
+import data from '../../constants/slider.data.constant';
 import SlideItem from './SlideItem';
 import Pagination from './Pagination';
-import Button from './Button';
+import Button from '../Button';
+import { useNavigation } from '@react-navigation/native';
 
 type ViewableItemsChangedProps = {
   viewableItems: Array<{
@@ -22,10 +23,10 @@ type ViewableItemsChangedProps = {
 
 const { width, height } = Dimensions.get('screen');
 
-const Slider = ({ navigation }: any) => {
+const Slider = () => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
-
+  const navigation = useNavigation();
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     Animated.event(
       [
@@ -73,13 +74,13 @@ const Slider = ({ navigation }: any) => {
         <Pagination data={data} scrollX={scrollX} index={index} />
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('LoginScreen')}
+          onPress={() => navigation.navigate('SignInScreen')}
         >
           Login
         </Button>
         <Button
           mode="outlined"
-          onPress={() => navigation.navigate('RegisterScreen')}
+          onPress={() => navigation.navigate('SignUpScreen')}
         >
           Sign Up
         </Button>

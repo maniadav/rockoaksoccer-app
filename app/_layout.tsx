@@ -70,12 +70,20 @@ function RootLayoutNav() {
         <Stack.Screen
           name="OnBoardingScreen"
           component={OnBoardingScreen}
-          options={{ title: 'Welcome', headerShown: false }}
+          options={{ title: 'On Boarding', headerShown: false }}
         />
 
         <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
-        <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-        <Stack.Screen name="SignInScreen" component={SignInScreen} />
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
+          options={{ title: 'Sign Up', headerShown: false }}
+        />
+        <Stack.Screen
+          name="SignInScreen"
+          component={SignInScreen}
+          options={{ title: 'Sign In', headerShown: false }}
+        />
         <Stack.Screen
           name="ResetPasswordScreen"
           component={ResetPasswordScreen}

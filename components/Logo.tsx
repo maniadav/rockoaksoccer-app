@@ -3,14 +3,18 @@ import { Image, StyleSheet } from 'react-native';
 
 export default function Logo() {
   return (
-    <Image source={require('../assets/images/logo.png')} style={styles.image} />
+    <Image
+      source={require('.././assets/images/rockoak.png')}
+      style={styles.image}
+    />
   );
 }
 
 const styles = StyleSheet.create({
   image: {
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 40,
     marginBottom: 8,
+    tintColor: 'black',
   },
 });

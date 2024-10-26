@@ -1,32 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import Paragraph from '../components/Paragraph';
-import Slider from '@/components/Slider';
+import Slider from '@/components/onboarding/Slider';
 
-const OnBoardingScreen = ({ navigation }: any) => {
+const OnBoardingScreen = () => {
   return <Slider />;
 };
 
 export default OnBoardingScreen;
-
-{
-  /* <Background>
-<Slider />
-<Button
-  mode="contained"
-  onPress={() => navigation.navigate('SignInScreen')}
->
-  Login
-</Button>
-<Button
-  mode="outlined"
-  onPress={() => navigation.navigate('SignUpScreen')}
->
-  Sign Up
-</Button>
-</Background> */
-}

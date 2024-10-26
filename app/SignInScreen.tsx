@@ -44,7 +44,7 @@ export default function SignInScreen({ navigation }: Props) {
     <Background>
       <BackButton goBack={navigation.goBack} />
       <Logo />
-      <Header>Welcome back</Header>
+      <Header>Good to See You Again!</Header>
       <TextInput
         label="Email"
         returnKeyType="next"

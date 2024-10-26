@@ -39,7 +39,7 @@ const SignUpScreen = ({ navigation }: any) => {
     <Background>
       <BackButton goBack={navigation.goBack} />
       <Logo />
-      <Header>Create Account</Header>
+      <Header>Join the Journey to Greatness!</Header>
       <TextInput
         label="Username"
         returnKeyType="next"
