@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Alert,
+  ToastAndroid,
+  StatusBar,
+} from 'react-native';
 import { Text } from 'react-native-paper';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -18,6 +25,7 @@ import {
   getAsyncStorageValue,
 } from '@/utils/localStorage'; // Import your localStorage functions
 import { LOCALSTORAGE } from '@/constants/sotrage.constant';
+import Toast from 'react-native-toast-message'; // Import toast
 
 const SignUpScreen = ({ navigation }: any) => {
   const [name, setName] = useState({ value: '', error: '' });
@@ -36,7 +44,6 @@ const SignUpScreen = ({ navigation }: any) => {
       return;
     }
 
-    // Check if email or username already exists in local storage
     const existingUser = await getAsyncStorageValue(
       LOCALSTORAGE.LOGGED_IN_USER,
       true
@@ -45,7 +52,11 @@ const SignUpScreen = ({ navigation }: any) => {
     if (existingUser) {
       const { email: storedEmail, username: storedUsername } = existingUser;
       if (storedEmail === email.value || storedUsername === name.value) {
-        Alert.alert('Error', 'Username or email already in use');
+        Toast.show({
+          type: 'error',
+          text1: 'Something went wrong!',
+          text2: 'Username or email already in use',
+        });
         return;
       }
     }
@@ -61,19 +72,32 @@ const SignUpScreen = ({ navigation }: any) => {
         true
       );
 
-      Alert.alert('Success', 'Your account has been created successfully!');
+      await setAsyncStorageValue(
+        LOCALSTORAGE.MFA_ACCESS_TOKEN,
+        'mfatokenfromapiresponse',
+        true
+      );
+
+      Toast.show({
+        type: 'success',
+        text2: 'Your account has been created successfully!',
+      });
+
       navigation.replace('SignInScreen');
     } catch (error) {
-      Alert.alert('Error', 'Failed to save your account. Please try again.');
+      Toast.show({
+        type: 'error',
+        text2: 'Failed to save your account. Please try again.',
+      });
     }
   };
 
   return (
     <Background>
+      <Toast />
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Join the Journey to Greatness!</Header>
-
       <TextInput
         label="Username"
         returnKeyType="next"

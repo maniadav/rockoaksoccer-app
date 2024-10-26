@@ -1,3 +1,4 @@
+import LogOutButton from '@/components/LogOutButton';
 import { Link } from 'expo-router';
 import { View, Text, Button } from 'react-native';
 
@@ -24,10 +25,7 @@ const HomeScreen = ({ navigation }: any) => {
         title="Go to Sign Up"
         onPress={() => navigation.navigate('SignUpScreen')}
       />
-      <Button
-        title="Go to Login"
-        onPress={() => navigation.navigate('SignInScreen')}
-      />
+      <LogOutButton />
     </View>
   );
 };

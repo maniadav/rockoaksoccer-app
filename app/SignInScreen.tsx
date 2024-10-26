@@ -46,7 +46,7 @@ export default function SignInScreen({ navigation }: Props) {
       LOCALSTORAGE.LOGGED_IN_USER,
       true
     );
-    console.log({storedUser})
+    
     const { email: userEmail, password: userPassword } = storedUser || {};
 
     if (

@@ -17,6 +17,8 @@ import SignInScreen from './SignInScreen';
 import SignUpScreen from './SignUpScreen';
 import ResetPasswordScreen from './ResetPasswordScreen';
 import OnBoardingScreen from './OnBoardingScreen';
+import { getAsyncStorageValue } from '@/utils/localStorage';
+import { LOCALSTORAGE } from '@/constants/sotrage.constant';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,8 +51,14 @@ function RootLayoutNav() {
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const user = await AsyncStorage.getItem('user');
-      setInitialRoute(user ? 'HomeScreen' : 'OnBoardingScreen');
+      const storedUser = await getAsyncStorageValue(
+        LOCALSTORAGE.LOGGED_IN_USER,
+        true
+      );
+
+      const { email: userEmail } = storedUser || {};
+
+      setInitialRoute(userEmail ? 'HomeScreen' : 'OnBoardingScreen');
     };
     checkLoginStatus();
   }, []);
