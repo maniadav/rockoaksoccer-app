@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text } from 'react-native-paper';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -13,26 +13,59 @@ import {
   passwordValidator,
   usernameValidator,
 } from '@/helpers/validator';
+import {
+  setAsyncStorageValue,
+  getAsyncStorageValue,
+} from '@/utils/localStorage'; // Import your localStorage functions
+import { LOCALSTORAGE } from '@/constants/sotrage.constant';
 
 const SignUpScreen = ({ navigation }: any) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const onSignUpPressed = () => {
+  const onSignUpPressed = async () => {
     const nameError = usernameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
+
     if (emailError || passwordError || nameError) {
       setName({ ...name, error: nameError });
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    });
+
+    // Check if email or username already exists in local storage
+    const existingUser = await getAsyncStorageValue(
+      LOCALSTORAGE.LOGGED_IN_USER,
+      true
+    );
+
+    if (existingUser) {
+      const { email: storedEmail, username: storedUsername } = existingUser;
+      if (storedEmail === email.value || storedUsername === name.value) {
+        Alert.alert('Error', 'Username or email already in use');
+        return;
+      }
+    }
+
+    try {
+      await setAsyncStorageValue(
+        LOCALSTORAGE.LOGGED_IN_USER,
+        {
+          username: name.value,
+          email: email.value,
+          password: password.value,
+        },
+        true
+      );
+
+      Alert.alert('Success', 'Your account has been created successfully!');
+      navigation.replace('SignInScreen');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to save your account. Please try again.');
+    }
   };
 
   return (
@@ -40,6 +73,7 @@ const SignUpScreen = ({ navigation }: any) => {
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Join the Journey to Greatness!</Header>
+
       <TextInput
         label="Username"
         returnKeyType="next"
@@ -48,6 +82,7 @@ const SignUpScreen = ({ navigation }: any) => {
         error={!!name.error}
         errorText={name.error}
       />
+
       <TextInput
         label="Email"
         returnKeyType="next"
@@ -60,6 +95,7 @@ const SignUpScreen = ({ navigation }: any) => {
         textContentType="emailAddress"
         keyboardType="email-address"
       />
+
       <TextInput
         label="Password"
         returnKeyType="done"
@@ -69,6 +105,7 @@ const SignUpScreen = ({ navigation }: any) => {
         errorText={password.error}
         secureTextEntry
       />
+
       <Button
         mode="contained"
         onPress={onSignUpPressed}
@@ -76,6 +113,7 @@ const SignUpScreen = ({ navigation }: any) => {
       >
         Sign Up
       </Button>
+
       <View style={styles.row}>
         <Text>Already have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('SignInScreen')}>

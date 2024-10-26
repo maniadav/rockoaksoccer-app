@@ -1,43 +1,65 @@
 import React, { useState } from 'react';
 import { TouchableOpacity, StyleSheet, View } from 'react-native';
 import { Text } from 'react-native-paper';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
+import Background from '@/components/Background';
+import Logo from '@/components/Logo';
 import Header from '@/components/Header';
-import Button from '../components/Button';
-import TextInput from '../components/TextInput';
+import Button from '@/components/Button';
+import TextInput from '@/components/TextInput';
 import BackButton from '@/components/BackButton';
 import { theme } from '@/components/theme';
 import { emailValidator, passwordValidator } from '@/helpers/validator';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { getAsyncStorageValue } from '@/utils/localStorage';
+import { LOCALSTORAGE } from '@/constants/sotrage.constant';
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;
 };
 
 export default function SignInScreen({ navigation }: Props) {
-  const [email, setEmail] = useState<{ value: string; error: string }>({
-    value: '',
-    error: '',
-  });
-  const [password, setPassword] = useState<{ value: string; error: string }>({
-    value: '',
-    error: '',
+  const [credentials, setCredentials] = useState({
+    email: { value: '', error: '' },
+    password: { value: '', error: '' },
   });
 
-  const onLoginPressed = () => {
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+  const handleChange = (field: 'email' | 'password', value: string) => {
+    setCredentials((prev) => ({
+      ...prev,
+      [field]: { value, error: '' },
+    }));
+  };
+
+  const onLoginPressed = async () => {
+    const emailError = emailValidator(credentials.email.value);
+    const passwordError = passwordValidator(credentials.password.value);
+
     if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
+      setCredentials((prev) => ({
+        email: { ...prev.email, error: emailError },
+        password: { ...prev.password, error: passwordError },
+      }));
       return;
     }
 
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    });
+    const storedUser = await getAsyncStorageValue(
+      LOCALSTORAGE.LOGGED_IN_USER,
+      true
+    );
+    console.log({storedUser})
+    const { email: userEmail, password: userPassword } = storedUser || {};
+
+    if (
+      credentials.email.value === userEmail &&
+      credentials.password.value === userPassword
+    ) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'HomeScreen' }],
+      });
+    } else {
+      alert('Please provide correct credentials');
+    }
   };
 
   return (
@@ -45,29 +67,32 @@ export default function SignInScreen({ navigation }: Props) {
       <BackButton goBack={navigation.goBack} />
       <Logo />
       <Header>Good to See You Again!</Header>
+
       <TextInput
         label="Email"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text: string) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        value={credentials.email.value}
+        onChangeText={(text: string) => handleChange('email', text)}
+        error={!!credentials.email.error}
+        errorText={credentials.email.error}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
         keyboardType="email-address"
-        description={'please enter your email'}
+        description={'Please enter your email'}
       />
+
       <TextInput
         label="Password"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={(text: string) => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
+        value={credentials.password.value}
+        onChangeText={(text: string) => handleChange('password', text)}
+        error={!!credentials.password.error}
+        errorText={credentials.password.error}
         secureTextEntry
-        description={'please enter your password'}
+        description={'Please enter your password'}
       />
+
       <View style={styles.forgotPassword}>
         <TouchableOpacity
           onPress={() => navigation.navigate('ResetPasswordScreen')}
@@ -75,9 +100,11 @@ export default function SignInScreen({ navigation }: Props) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
+
       <Button mode="contained" onPress={onLoginPressed}>
         Sign In
       </Button>
+
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
         <TouchableOpacity onPress={() => navigation.replace('SignUpScreen')}>
@@ -93,7 +120,6 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'flex-end',
     marginBottom: 24,
-    color: 'black',
   },
   row: {
     flexDirection: 'row',
