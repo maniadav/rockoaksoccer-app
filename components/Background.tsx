@@ -9,7 +9,7 @@ import { theme } from './theme';
 export default function Background({ children }: any) {
   return (
     <ImageBackground
-      // source={require('../assets/images/onboarding_33.png')}
+      source={require('.././assets/images/background.jpg')}
       resizeMode="cover"
       style={styles.background}
     >
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
+    // padding: 20,
     width: '100%',
     maxWidth: 340,
     alignSelf: 'center',

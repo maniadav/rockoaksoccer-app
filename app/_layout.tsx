@@ -19,7 +19,8 @@ import ResetPasswordScreen from './ResetPasswordScreen';
 import OnBoardingScreen from './OnBoardingScreen';
 import { getAsyncStorageValue } from '@/utils/localStorage';
 import { LOCALSTORAGE } from '@/constants/sotrage.constant';
-
+import EventListingScreen from './EventListingScreen';
+import SearchScreen from './SearchScreen';
 const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
@@ -58,7 +59,7 @@ function RootLayoutNav() {
 
       const { email: userEmail } = storedUser || {};
 
-      setInitialRoute(userEmail ? 'HomeScreen' : 'OnBoardingScreen');
+      setInitialRoute(userEmail ? 'EventListingScreen' : 'OnBoardingScreen');
     };
     checkLoginStatus();
   }, []);
@@ -73,7 +74,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
+          options={{ title: 'Sign In', headerShown: false }}
         />
         <Stack.Screen
           name="OnBoardingScreen"
@@ -93,8 +94,18 @@ function RootLayoutNav() {
           options={{ title: 'Sign In', headerShown: false }}
         />
         <Stack.Screen
+          name="EventListingScreen"
+          component={EventListingScreen}
+          options={{ title: 'Sign In', headerShown: false }}
+        />
+        <Stack.Screen
           name="ResetPasswordScreen"
           component={ResetPasswordScreen}
+        />
+        <Stack.Screen
+          name="SearchScreen"
+          component={SearchScreen}
+          options={{ title: 'Search' }}
         />
       </Stack.Navigator>
     </ThemeProvider>
