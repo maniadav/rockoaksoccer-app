@@ -30,6 +30,15 @@ const HomeScreen = ({ navigation }: any) => {
           title="event listing"
           onPress={() => navigation.navigate('EventListingScreen')}
         />
+        <Button
+          title="CategoriesHome"
+          onPress={() => navigation.navigate('CategoriesHome')}
+        />
+        <Button
+          title="EventsDetail"
+          onPress={() => navigation.navigate('EventsDetail')}
+        />
+        <Button title="Events" onPress={() => navigation.navigate('Events')} />
         <LogOutButton />
       </View>
     </Background>

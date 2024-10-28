@@ -5,7 +5,7 @@ import { Searchbar, IconButton } from 'react-native-paper';
 import { View, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const ModularSearchBar = ({ mode = 'bar' }) => {
+const ModularSearchBar = ({ mode }: any) => {
   const navigation = useNavigation<any>();
 
   const handleSearchPress = () => {

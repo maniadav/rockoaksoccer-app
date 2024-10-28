@@ -21,6 +21,9 @@ import { getAsyncStorageValue } from '@/utils/localStorage';
 import { LOCALSTORAGE } from '@/constants/sotrage.constant';
 import EventListingScreen from './EventListingScreen';
 import SearchScreen from './SearchScreen';
+import CategoriesHome from '@/app/CategoriesHome';
+import Events from '@/components/Categories/Events';
+import EventDetail from '@/components/EventDetail/EventDetail';
 const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
@@ -59,7 +62,7 @@ function RootLayoutNav() {
 
       const { email: userEmail } = storedUser || {};
 
-      setInitialRoute(userEmail ? 'EventListingScreen' : 'OnBoardingScreen');
+      setInitialRoute(userEmail ? 'HomeScreen' : 'OnBoardingScreen');
     };
     checkLoginStatus();
   }, []);
@@ -106,6 +109,41 @@ function RootLayoutNav() {
           name="SearchScreen"
           component={SearchScreen}
           options={{ title: 'Search' }}
+        />
+        <Stack.Screen name="CategoriesHome" component={CategoriesHome} />
+        <Stack.Screen
+          name="Events"
+          component={Events}
+          options={({ route }: any) => ({
+            title: route.params.title,
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#ffffff',
+              shadowColor: '#ffffff',
+              elevation: 0,
+            },
+            headerTintColor: '#76468F',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          })}
+        />
+        <Stack.Screen
+          name="EventsDetail"
+          component={EventDetail}
+          options={({ route }: any) => ({
+            title: route.params.title,
+            headerShown: true,
+            headerStyle: {
+              backgroundColor: '#ffffff',
+              shadowColor: '#ffffff',
+              elevation: 0,
+            },
+            headerTintColor: '#76468F',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          })}
         />
       </Stack.Navigator>
     </ThemeProvider>
