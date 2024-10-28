@@ -46,7 +46,7 @@ export default function SignInScreen({ navigation }: Props) {
       LOCALSTORAGE.LOGGED_IN_USER,
       true
     );
-    
+
     const { email: userEmail, password: userPassword } = storedUser || {};
 
     if (
@@ -65,51 +65,48 @@ export default function SignInScreen({ navigation }: Props) {
   return (
     <Background>
       <BackButton goBack={navigation.goBack} />
-      <Logo />
-      <Header>Good to See You Again!</Header>
-
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={credentials.email.value}
-        onChangeText={(text: string) => handleChange('email', text)}
-        error={!!credentials.email.error}
-        errorText={credentials.email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-        description={'Please enter your email'}
-      />
-
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={credentials.password.value}
-        onChangeText={(text: string) => handleChange('password', text)}
-        error={!!credentials.password.error}
-        errorText={credentials.password.error}
-        secureTextEntry
-        description={'Please enter your password'}
-      />
-
-      <View style={styles.forgotPassword}>
-        <TouchableOpacity
-          onPress={() => navigation.navigate('ResetPasswordScreen')}
-        >
-          <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-      </View>
-
-      <Button mode="contained" onPress={onLoginPressed}>
-        Sign In
-      </Button>
-
-      <View style={styles.row}>
-        <Text>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace('SignUpScreen')}>
-          <Text style={styles.link}>Sign up</Text>
-        </TouchableOpacity>
+      <View style={{ paddingHorizontal: 5 }}>
+        <Logo />
+        <Header>Good to See You Again!</Header>
+        <TextInput
+          label="Email"
+          returnKeyType="next"
+          value={credentials.email.value}
+          onChangeText={(text: string) => handleChange('email', text)}
+          error={!!credentials.email.error}
+          errorText={credentials.email.error}
+          autoCapitalize="none"
+          autoCompleteType="email"
+          textContentType="emailAddress"
+          keyboardType="email-address"
+          description={'Please enter your email'}
+        />
+        <TextInput
+          label="Password"
+          returnKeyType="done"
+          value={credentials.password.value}
+          onChangeText={(text: string) => handleChange('password', text)}
+          error={!!credentials.password.error}
+          errorText={credentials.password.error}
+          secureTextEntry
+          description={'Please enter your password'}
+        />
+        <View style={styles.forgotPassword}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('ResetPasswordScreen')}
+          >
+            <Text style={styles.forgot}>Forgot your password?</Text>
+          </TouchableOpacity>
+        </View>
+        <Button mode="contained" onPress={onLoginPressed}>
+          Sign In
+        </Button>
+        <View style={styles.row}>
+          <Text>Don’t have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.replace('SignUpScreen')}>
+            <Text style={styles.link}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </Background>
   );

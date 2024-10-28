@@ -21,9 +21,9 @@ import { getAsyncStorageValue } from '@/utils/localStorage';
 import { LOCALSTORAGE } from '@/constants/sotrage.constant';
 import EventListingScreen from './EventListingScreen';
 import SearchScreen from './SearchScreen';
-import CategoriesHome from '@/app/CategoriesHome';
-import Events from '@/components/Categories/Events';
-import EventDetail from '@/components/EventDetail/EventDetail';
+import EventDetailScreen from './EventDetailScreen';
+import SCREENS from '@/constants/screen.constant';
+
 const Stack = createNativeStackNavigator();
 
 export default function RootLayout() {
@@ -62,7 +62,7 @@ function RootLayoutNav() {
 
       const { email: userEmail } = storedUser || {};
 
-      setInitialRoute(userEmail ? 'HomeScreen' : 'OnBoardingScreen');
+      setInitialRoute(userEmail ? 'EventListingScreen' : 'OnBoardingScreen');
     };
     checkLoginStatus();
   }, []);
@@ -97,11 +97,6 @@ function RootLayoutNav() {
           options={{ title: 'Sign In', headerShown: false }}
         />
         <Stack.Screen
-          name="EventListingScreen"
-          component={EventListingScreen}
-          options={{ title: 'Sign In', headerShown: false }}
-        />
-        <Stack.Screen
           name="ResetPasswordScreen"
           component={ResetPasswordScreen}
         />
@@ -110,29 +105,16 @@ function RootLayoutNav() {
           component={SearchScreen}
           options={{ title: 'Search' }}
         />
-        <Stack.Screen name="CategoriesHome" component={CategoriesHome} />
         <Stack.Screen
-          name="Events"
-          component={Events}
-          options={({ route }: any) => ({
-            title: route.params.title,
-            headerShown: true,
-            headerStyle: {
-              backgroundColor: '#ffffff',
-              shadowColor: '#ffffff',
-              elevation: 0,
-            },
-            headerTintColor: '#76468F',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
+          name="EventListingScreen"
+          component={EventListingScreen}
+          options={{ title: 'Sign In', headerShown: false }}
         />
         <Stack.Screen
-          name="EventsDetail"
-          component={EventDetail}
+          name={`${SCREENS.eventDetail}`}
+          component={EventDetailScreen}
           options={({ route }: any) => ({
-            title: route.params.title,
+            title: 'Event Detail',
             headerShown: true,
             headerStyle: {
               backgroundColor: '#ffffff',

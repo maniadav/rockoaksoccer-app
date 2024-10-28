@@ -19,13 +19,5 @@ export const getAllEvent = () => {
 };
 
 export const getEventById = (id: any) => {
-  return DATA.find((event) => event.Id === id);
-};
-
-export const getOldEvents = () => {
-  return DATA.filter((event) => {
-    let today = new Date();
-    let etkinlikTarihi = new Date(event.EtkinlikBaslamaTarihi);
-    return etkinlikTarihi < today;
-  });
+  return DATA.find((event) => event.id === id);
 };

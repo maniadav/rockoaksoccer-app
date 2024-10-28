@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { commonStyles } from '../../app/HomeCss';
-import Card from '@/components/Card';
+import Card from '@/components/event/Card';
 
 const EventsRow = ({ data, title, navigation }: any) => {
   return (
@@ -26,21 +26,21 @@ const EventsRow = ({ data, title, navigation }: any) => {
               data={data}
               renderItem={({ item }) => (
                 <Card
-                  key={item?.Id}
+                  key={item?.id}
                   title={
-                    item?.Adi.length > 20
-                      ? item?.Adi.slice(0, 20) + '...'
-                      : item?.Adi
+                    item?.title.length > 20
+                      ? item?.title.slice(0, 20) + '...'
+                      : item?.title
                   }
                   location={
-                    item?.EtkinlikMerkezi.length > 20
-                      ? item?.EtkinlikMerkezi.slice(0, 20) + '...'
-                      : item?.EtkinlikMerkezi
+                    item?.eventVenue.length > 20
+                      ? item?.eventVenue.slice(0, 20) + '...'
+                      : item?.eventVenue
                   }
-                  date={item?.EtkinlikBaslamaTarihi.toString().split('T')[0]}
+                  date={item?.eventStartDate.toString().split('T')[0]}
                   price={item?.UcretsizMi}
                   id={item?.Id}
-                  eventImage={item?.KucukAfis}
+                  eventImage={item?.smallPoster}
                   navigation={navigation}
                 />
               )}

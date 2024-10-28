@@ -2,23 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, SafeAreaView, Text, View } from 'react-native';
 import { getEventById } from '@/api/categories';
 import { FontAwesome } from '@expo/vector-icons';
-import { styles } from './EventDetailCss';
+import { eventDetailStyling } from './HomeCss';
 // import MapView, { Marker } from 'react-native-maps';
 import { ScrollView } from 'react-native-gesture-handler';
+import DATA from '@/constants/event.data.constant';
+import { RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '@/types/stack.type';
+
+type EventDetailRouteProp = RouteProp<RootStackParamList, 'EventDetail'>;
 
 function EventDetail({ route }: any) {
-  const [event, setEvent] = useState<any>({});
+  const [event, setEvent] = useState<any>(DATA[0]);
   const [location, setLocation] = useState<any>({});
 
   useEffect(() => {
     const data = async () => {
       const { id } = route.params;
-      const event = await getEventById(id);
+      // const event = await getEventById(id);
+      const event = DATA[0];
       setEvent(event);
-      if (event?.EtkinlikMerkeziKonum) {
+      if (event?.eventStartDate) {
         setLocation(
-          event.EtkinlikMerkeziKonum
-            ? event.EtkinlikMerkeziKonum
+          event.eventStartDate
+            ? event.eventStartDate
             : ['41.015137', '28.979530']
         );
       } else {
@@ -31,10 +37,13 @@ function EventDetail({ route }: any) {
     <SafeAreaView>
       <ScrollView>
         <View style={{ width: '100%' }}>
-          <View style={styles.imageContainer}>
-            <Image source={{ uri: `${event.KucukAfis}` }} style={styles.img} />
-            <View style={styles.cardInImage}>
-              <View style={styles.cardInCardInImage}>
+          <View style={eventDetailStyling.imageContainer}>
+            <Image
+              source={{ uri: `${event.KucukAfis}` }}
+              style={eventDetailStyling.img}
+            />
+            <View style={eventDetailStyling.cardInImage}>
+              <View style={eventDetailStyling.cardInCardInImage}>
                 <Text
                   style={{
                     fontSize: 17,
@@ -155,7 +164,7 @@ function EventDetail({ route }: any) {
               elevation: 5,
             }}
           >
-            {event.EtkinlikMerkeziKonum ? (
+            {event.eventStartDate ? (
               <MapView
                 style={{
                   width: Dimensions.get('window').width,

@@ -7,6 +7,7 @@ export type RootStackParamList = {
   SignUpScreen: undefined;
   Dashboard: undefined;
   EventListing: undefined;
+  EventDetail: { id: string };
 };
 
 export type RootStackNavigationProp =

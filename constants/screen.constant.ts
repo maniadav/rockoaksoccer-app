@@ -3,6 +3,8 @@ const SCREENS = {
   onBoarding: 'OnBoardingScreen',
   signIn: 'SignInScreen',
   signOut: 'SignOutScreen',
+  eventListing: 'EventListingScreen',
+  eventDetail: 'EventDetailScreen',
 };
 
 export default SCREENS;

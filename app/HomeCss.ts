@@ -78,7 +78,7 @@ export const commonStyles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   cardDetailsButton: {
-    backgroundColor: '#410777',
+    backgroundColor: theme.colors.primary,
     opacity: 0.9,
     padding: 5,
     borderRadius: 5,
@@ -88,5 +88,41 @@ export const commonStyles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     right: 10,
+  },
+});
+
+export const eventDetailStyling = StyleSheet.create({
+  imageContainer: {
+    width: '100%',
+    marginBottom: 130,
+  },
+  img: {
+    width: '100%',
+    resizeMode: 'stretch',
+    height: 200,
+    position: 'relative',
+  },
+  cardInImage: {
+    position: 'absolute',
+    backgroundColor: '#7F2CCB',
+    width: '90%',
+    top: 175,
+    left: 20,
+    borderRadius: 30,
+    paddingHorizontal: 25,
+    paddingVertical: 15,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.7,
+    elevation: 5,
+  },
+  cardInCardInImage: {
+    backgroundColor: '#ffffff',
+    borderRadius: 20,
+    padding: 10,
+    paddingHorizontal: 25,
   },
 });

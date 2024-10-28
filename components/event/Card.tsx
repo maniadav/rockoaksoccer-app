@@ -4,19 +4,13 @@ import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { commonStyles } from '@/app/HomeCss';
 
 import { FontAwesome } from '@expo/vector-icons';
+import SCREENS from '@/constants/screen.constant';
 
-function Card({
-  title,
-  location,
-  date,
-  price,
-  id,
-  navigation,
-  eventImage,
-}: any) {
+function Card({ title, location, date, id, navigation, eventImage }: any) {
   const goToDetailPage = () => {
-    navigation.navigate('EventsDetail', { id: id, title: title });
+    navigation.navigate(SCREENS.eventDetail, { id: id, title: title });
   };
+  console.log({ eventImage });
   return (
     <View style={commonStyles.homeCard}>
       <View
@@ -66,7 +60,7 @@ function Card({
         style={commonStyles.cardDetailsButton}
         onPress={goToDetailPage}
       >
-        <Text style={{ color: 'white' }}>Detay</Text>
+        <Text style={{ color: 'white', fontSize: 10 }}>View Details</Text>
       </TouchableOpacity>
     </View>
   );

@@ -9,7 +9,7 @@ import { theme } from './theme';
 export default function Background({ children }: any) {
   return (
     <ImageBackground
-      source={require('.././assets/images/background.jpg')}
+      // source={require('.././assets/images/background.jpg')}
       resizeMode="cover"
       style={styles.background}
     >
