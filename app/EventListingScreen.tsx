@@ -95,7 +95,9 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
                   date={item.eventStartDate}
                   location={item.eventVenue}
                   onPress={() =>
-                    navigation.navigate(SCREENS.eventDetail, { id: item?.id })
+                    navigation.navigate(SCREENS.eventDetail, {
+                      id: item?.id,
+                    })
                   }
                 />
               )}

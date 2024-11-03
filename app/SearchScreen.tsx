@@ -4,7 +4,7 @@ import { Searchbar, Text } from 'react-native-paper';
 import filter from 'lodash.filter';
 import { theme } from '@/components/theme';
 import DATA from '@/constants/event.data.constant';
-import SearchCard from '@/components/Search/SearchCard';
+import EventCard from '@/components/event/EventCard';
 import { useNavigation } from 'expo-router';
 import { styles } from '@/style/categories.style';
 import { getAllEvent, getEventById } from '@/api/categories';
@@ -76,7 +76,7 @@ const SearchScreen = () => {
         <FlatList
           data={data}
           renderItem={({ item }: any) => (
-            <SearchCard
+            <EventCard
               title={item.title}
               image={item.smallPoster}
               date={item.eventStartDate}

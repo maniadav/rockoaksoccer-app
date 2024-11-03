@@ -54,9 +54,9 @@ export const commonStyles = StyleSheet.create({
   homeCard: {
     marginLeft: 10,
     backgroundColor: '#e2e2e2',
-    height: 280,
-    width: 150,
-    borderRadius: 10,
+    height: 240,
+    width: 200,
+    borderRadius: 4,
     marginRight: 20,
     shadowColor: 'black',
     shadowOffset: {
@@ -66,7 +66,7 @@ export const commonStyles = StyleSheet.create({
     shadowOpacity: 0.64,
     shadowRadius: 3.27,
     elevation: 10,
-    padding: 10,
+    // padding: 10,
     gap: 3,
   },
   cardDetailText: {

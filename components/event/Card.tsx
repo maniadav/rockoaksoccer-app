@@ -15,7 +15,7 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
     <View style={commonStyles.homeCard}>
       <View
         style={{
-          height: 100,
+          height: 120,
         }}
       >
         <Image
@@ -23,7 +23,7 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
             uri: `${eventImage}`,
           }}
           style={{
-            borderRadius: 10,
+            borderRadius: 4,
             width: '100%',
             height: '100%',
             maxHeight: '100%',
@@ -31,7 +31,12 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
           }}
         />
       </View>
-      <View>
+      <View
+        style={{
+          paddingHorizontal: 10,
+          paddingVertical: 5
+        }}
+      >
         <Text
           style={{
             fontSize: 15,
@@ -41,19 +46,19 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
         >
           {title}
         </Text>
-      </View>
-      <View
-        style={{
-          gap: 10,
-        }}
-      >
-        <View style={commonStyles.cardDetailText}>
-          <FontAwesome name="map-marker" size={15} color="black" />
-          <Text>{location}</Text>
-        </View>
-        <View style={commonStyles.cardDetailText}>
-          <FontAwesome name="calendar" size={15} color="black" />
-          <Text>{date?.split('-').reverse().join(' ')}</Text>
+        <View
+          style={{
+            gap: 10,
+          }}
+        >
+          <View style={commonStyles.cardDetailText}>
+            <FontAwesome name="map-marker" size={15} color="black" />
+            <Text>{location}</Text>
+          </View>
+          <View style={commonStyles.cardDetailText}>
+            <FontAwesome name="calendar" size={15} color="black" />
+            <Text>{date?.split('-').reverse().join(' ')}</Text>
+          </View>
         </View>
       </View>
       <TouchableOpacity

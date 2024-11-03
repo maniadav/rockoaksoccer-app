@@ -1,3 +1,4 @@
+import COLOUR from '@/constants/colour.constant';
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
@@ -25,16 +26,21 @@ export const styles = StyleSheet.create({
     marginBottom: 440,
   },
   searchCard: {
+    // backgroundColor: 'red',
     borderBottomColor: 'grey',
     borderBottomWidth: 1,
     paddingBottom: 20,
     marginBottom: 40,
+    shadowColor: 'black',
+    // borderRadius: 10
+    // borderTopStartRadius: 10,
+    // borderTopEndRadius: 10
   },
   searchButton: {
-    backgroundColor: '#7F2CCB',
+    backgroundColor: COLOUR.primary,
     paddingHorizontal: 10,
     paddingVertical: 9,
-    borderRadius: 10,
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
   },

@@ -16,11 +16,11 @@ export default function BackButton({ goBack }: any) {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 40,
     left: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)', // Black with 30% opacity
+    backgroundColor: 'rgba(0, 0, 0, 0.2)', // Black with 30% opacity
     borderRadius: 4,
     padding: 5,
+    zIndex: 1000,
     flex: 1,
   },
   image: {

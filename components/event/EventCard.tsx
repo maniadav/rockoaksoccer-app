@@ -3,6 +3,7 @@ import { Image, Text, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { styles } from '@/style/eventCard.style';
+import { theme } from '../theme';
 
 function EventCard({ title, date, location, image, onPress }: any) {
   console.log({ image });
@@ -16,6 +17,7 @@ function EventCard({ title, date, location, image, onPress }: any) {
         style={{
           gap: 10,
           marginBottom: 10,
+          backgroundColor: '',
         }}
       >
         <View
@@ -24,7 +26,7 @@ function EventCard({ title, date, location, image, onPress }: any) {
             justifyContent: 'space-between',
           }}
         >
-          <Text style={{ fontSize: 20, fontWeight: 'bold', maxWidth: 200 }}>
+          <Text style={{ fontSize: 20, fontWeight: 'semibold', maxWidth: 200 }}>
             {title}
           </Text>
           <View

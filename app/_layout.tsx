@@ -94,7 +94,7 @@ function RootLayoutNav() {
         <Stack.Screen
           name="SignInScreen"
           component={SignInScreen}
-          options={{ title: 'Sign In', headerShown: false }}
+          options={{ title: 'SignInScreen', headerShown: false }}
         />
         <Stack.Screen
           name="ResetPasswordScreen"
@@ -103,19 +103,19 @@ function RootLayoutNav() {
         <Stack.Screen
           name="SearchScreen"
           component={SearchScreen}
-          options={{ title: 'Search' }}
+          options={{ title: 'SearchScreen' }}
         />
         <Stack.Screen
           name="EventListingScreen"
           component={EventListingScreen}
-          options={{ title: 'Sign In', headerShown: false }}
+          options={{ title: 'EventListingScreen', headerShown: false }}
         />
         <Stack.Screen
           name={`${SCREENS.eventDetail}`}
           component={EventDetailScreen}
           options={({ route }: any) => ({
             title: 'Event Detail',
-            headerShown: true,
+            headerShown: false,
             headerStyle: {
               backgroundColor: '#ffffff',
               shadowColor: '#ffffff',
