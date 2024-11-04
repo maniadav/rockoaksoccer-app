@@ -1,4 +1,4 @@
-import DATA from '@/constants/event.data.constant';
+import DATA, { EventDraft } from '@/constants/event.data.constant';
 
 export const getCategories = () => {
   let categories: any = [];
@@ -10,14 +10,10 @@ export const getCategories = () => {
   return categories;
 };
 
-export const getEventsByCategory = (category: any) => {
-  return DATA.filter((event) => event.type === category);
-};
-
 export const getAllEvent = () => {
-  return DATA;
+  return EventDraft;
 };
 
 export const getEventById = (id: any) => {
-  return DATA.find((event) => event.id === id);
+  return DATA.find((event) => event.uniqueId === id);
 };

@@ -26,25 +26,24 @@ const EventsRow = ({ data, title, navigation }: any) => {
               data={data}
               renderItem={({ item }) => (
                 <Card
-                  key={item?.id}
+                  key={item?.uniqueId}
                   title={
                     item?.title.length > 20
                       ? item?.title.slice(0, 20) + '...'
                       : item?.title
                   }
                   location={
-                    item?.eventVenue.length > 20
-                      ? item?.eventVenue.slice(0, 20) + '...'
-                      : item?.eventVenue
+                    item?.location.length > 20
+                      ? item?.location.slice(0, 20) + '...'
+                      : item?.location
                   }
-                  date={item?.eventStartDate.toString().split('T')[0]}
-                  price={item?.UcretsizMi}
-                  id={item?.Id}
-                  eventImage={item?.smallPoster}
+                  date={item?.date.toString().split('T')[0]}
+                  id={item?.uniqueId}
+                  eventImage={item?.image}
                   navigation={navigation}
                 />
               )}
-              keyExtractor={(item) => item?.Id}
+              keyExtractor={(item) => item?.uniqueId}
               horizontal={true}
               showsHorizontalScrollIndicator={false}
             />

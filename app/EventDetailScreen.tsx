@@ -1,101 +1,146 @@
 import React, { useEffect, useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
-// import { getEventById } from '@/api/categories';
-import { FontAwesome } from '@expo/vector-icons';
-import { eventDetailStyling } from './HomeCss';
-// import MapView, { Marker } from 'react-native-maps';
-// import { ScrollView } from 'react-native-gesture-handler';
 import DATA from '@/constants/event.data.constant';
-// import { RouteProp } from '@react-navigation/native';
-// import { RootStackParamList } from '@/types/stack.type';
-// import BackButton from '@/components/BackButton';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import BackButton from '@/components/BackButton';
 import { getEventById } from '@/api/categories';
-
-// type EventDetailRouteProp = RouteProp<RootStackParamList, 'EventDetail'>;
+import EventDetailsDesc from '@/components/event/EventDetailsDesc';
+import BookingButton from '@/components/button/BookingButton';
+import ContentView from '@/components/event/ContentView';
+import { formatDate } from '@/helpers/convert';
+import { View, StyleSheet, ScrollView, Image } from 'react-native';
+import { EventData } from '@/types/event.type';
+import Loader from '@/components/common/Loader';
+import NoData from '@/components/common/NoData';
+import EventMap from '@/components/event/EventMap';
 
 function EventDetailScreen({ route }: any) {
-  const [event, setEvent] = useState<any>(DATA[0]);
-  const [location, setLocation] = useState<any>({});
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [data, setData] = useState<EventData | null>(null);
 
-  const fetchData = async (id: string) => {
-    const eventByID: any = await getEventById(id);
-    if (eventByID) {
-      setEvent(eventByID);
-    } else {
-      setEvent(event);
-    }
+  useEffect(() => {
+    fetchEventDetails();
+  }, [route.param]);
 
-    if (event?.eventStartDate) {
-      setLocation(
-        event.eventStartDate ? event.eventStartDate : ['41.015137', '28.979530']
-      );
-    } else {
-      setLocation(['41.015137', '28.979530']);
+  const fetchEventDetails = async () => {
+    const { id } = route.params;
+    // const rockOakApi = new UtilityAPI();
+    setIsLoading(true);
+    try {
+      // const res = await rockOakApi.fetchEventDetails(params.slug);
+      const eventByID = (await getEventById(id)) || null;
+      setData(eventByID);
+    } catch (error) {
+      console.error('Fetching events failed', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  useEffect(() => {
-    const { id } = route.params;
-    fetchData(id);
-  }, [route.params]);
-  console.log(event);
+  const eventData = data || DATA[0];
+
   return (
-    <ScrollView>
-      <Image
-        source={{ uri: `${event.smallPoster}` }}
-        style={{
-          top: 0,
-          width: '100%',
-          height: 300,
-          zIndex: -1,
-        }}
-      />
-      <View
-        style={{
-          position: 'absolute',
-          top: 30,
-          left: 10,
-          zIndex: 1,
-        }}
-      >
-        <BackButton />
-      </View>
-      <View style={{ padding: 20 }}>
-        <View style={eventDetailStyling.cardInImage}>
-          <View style={eventDetailStyling.cardInCardInImage}>
-            <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
-              titile-{event.title}
-            </Text>
-            <View style={{ flexDirection: 'row', gap: 10, marginTop: 5 }}>
-              <FontAwesome name="map-marker" size={15} color="black" />
-              <Text>{event.eventVenue}</Text>
+    <View style={styles.container}>
+      {isLoading ? (
+        <Loader />
+      ) : eventData ? (
+        <View style={{ flex: 1 }}>
+          <ScrollView>
+            <Image
+              source={{ uri: `${eventData.images.landscape}` }}
+              style={styles.image}
+            />
+            <View style={styles.backButtonContainer}>
+              <BackButton />
             </View>
-            <View style={{ flexDirection: 'row', gap: 10, marginTop: 5 }}>
-              <FontAwesome name="calendar" size={15} color="black" />
+            <View style={styles.eventDetailsContainer}>
+              <EventDetailsDesc
+                title={eventData.images.landscape}
+                date={eventData.timing.start}
+              />
             </View>
-          </View>
+            <View style={styles.contentContainer}>
+              <ContentView
+                title="Published On"
+                description={formatDate(eventData.timing.start)}
+              />
+              <ContentView title="Tags" tagData={eventData.tags} />
+              <ContentView
+                title="Location"
+                description={eventData.locationDetail?.location || ''}
+              />
+              <ContentView
+                title="About the Event"
+                subTitle={eventData.timing.duration}
+                description={eventData.shortDescription}
+              />
+              <ContentView
+                title="About the Organizer"
+                subTitle={eventData.organizer?.role}
+                description={eventData.organizer?.name}
+              />
+            </View>
+            <EventMap
+              locationDetail={eventData.locationDetail}
+              date={eventData.timing.start}
+            />
+          </ScrollView>
+          <SafeAreaView style={styles.safeAreaView}>
+            <BookingButton />
+          </SafeAreaView>
         </View>
-
-        <Text style={{ fontSize: 19, fontWeight: 'bold', marginTop: 20 }}>
-          Etkinlik Detayı
-        </Text>
-        <Text style={{ fontSize: 15, marginTop: 10, fontStyle: 'italic' }}>
-          {event.title}
-        </Text>
-
-        {event.artist && (
-          <>
-            <Text style={{ fontSize: 19, fontWeight: 'bold', marginTop: 20 }}>
-              Etkinlik Sanatçısı
-            </Text>
-            <Text style={{ fontSize: 15, marginTop: 10 }}>{event.artist}</Text>
-          </>
-        )}
-      </View>
-    </ScrollView>
+      ) : (
+        <View style={styles.noDataContainer}>
+          <NoData />
+        </View>
+      )}
+    </View>
   );
 }
 
 export default EventDetailScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#ffffff',
+  },
+  image: {
+    top: 0,
+    width: '100%',
+    height: 300,
+    zIndex: -1,
+  },
+  backButtonContainer: {
+    position: 'absolute',
+    top: 30,
+    left: 10,
+    zIndex: 1,
+  },
+  eventDetailsContainer: {
+    position: 'absolute',
+    top: 220,
+    left: 20,
+    right: 20,
+    zIndex: 1,
+  },
+  contentContainer: {
+    padding: 20,
+  },
+  safeAreaView: {
+    backgroundColor: 'white',
+  },
+  noDataContainer: {
+    display: 'flex',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+    padding: 20,
+  },
+  noDataText: {
+    fontSize: 16,
+    color: 'gray',
+  },
+});

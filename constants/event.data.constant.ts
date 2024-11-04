@@ -1,67 +1,121 @@
+export const EventDraft = [
+  {
+    uniqueId: 'cda54a39-6696-4c14-ac6c-18c8912922c1',
+    title: 'Australian Football Championship',
+    description:
+      'Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!',
+    date: '2024-10-15T10:00:00.000Z',
+    location: 'Melbourne Cricket Ground, Melbourne, Australia',
+    image:
+      'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+  },
+  {
+    uniqueId: '319600b7-87e4-41f6-ae28-8103e8b156b5',
+    title: 'Australian Football Championship',
+    description:
+      'Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!',
+    date: '2024-10-15T10:00:00.000Z',
+    location: 'Melbourne Cricket Ground, Melbourne, Australia',
+    type: 'football',
+    image:
+      'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+  },
+  {
+    uniqueId: 'cbf85437-279a-404a-9827-ac9ceeeb703a',
+    title: 'AUFA Nothing Compact',
+    description:
+      'Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!',
+    date: '2024-10-15T10:00:00.000Z',
+    location: 'Melbourne Cricket Ground, Melbourne, Australia',
+    type: 'basketball',
+    image:
+      'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+  },
+  {
+    uniqueId: '71f9209d-48c5-412d-9708-676572fd4404',
+    title: 'AUFA Nothing Compact',
+    description:
+      'Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!',
+    date: '2024-10-15T10:00:00.000Z',
+    location: 'Melbourne Cricket Ground, Melbourne, Australia',
+    type: 'basketball',
+    image:
+      'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+  },
+];
+
 const DATA = [
   {
-    type: 'SPORT',
-    id: 52591,
-    title: 'Soccer Match: Melbourne Victory vs Sydney FC',
-    eventEndDate: '2024-11-18T22:00:00',
-    smallPoster:
-      'https://tiyatrogunlugu.com/wp-content/uploads/genco-erkal-bir-delinin-hatira-defteri.jpg',
-    eventVenue: 'Melbourne Rectangular Stadium',
-    eventVenueLocation: {
-      latitude: -37.8261,
-      longitude: 144.9909,
+    timing: {
+      start: '2024-10-15T10:00:00.000Z',
+      end: '2024-10-15T17:00:00.000Z',
+      duration: '7 hours',
     },
-    shortDescription: 'Exciting match between Melbourne Victory and Sydney FC.',
-    ticketPurchaseLink: 'https://exampleticketlink.com/match19',
-    isFree: false,
-    image:
-      'https://tiyatrogunlugu.com/wp-content/uploads/genco-erkal-bir-delinin-hatira-defteri.jpg',
-    eventUrl: 'melbourne-victory-vs-sydney-fc',
-    eventStartDate: '2024-11-18T19:30:00',
-    artist: 'Melbourne Victory Team, Sydney FC Team',
-  },
-  {
-    type: 'SPORT',
-    id: 52610,
-    title: 'A-League Soccer: Brisbane Roar vs Perth Glory',
-    eventEndDate: '2024-11-24T21:00:00',
-    smallPoster:
-      'https://tiyatrogunlugu.com/wp-content/uploads/genco-erkal-bir-delinin-hatira-defteri.jpg',
-    eventVenue: 'Suncorp Stadium, Brisbane',
-    eventVenueLocation: {
-      latitude: -27.4647,
-      longitude: 153.0081,
+    locationDetail: {
+      location: 'Melbourne Cricket Ground, Melbourne, Australia',
+      lat: -37.819967,
+      lng: 144.983449,
     },
-    shortDescription: 'Watch Brisbane Roar take on Perth Glory in A-League.',
-    ticketPurchaseLink: 'https://exampleticketlink.com/match20',
-    isFree: false,
-    image:
-      'https://tiyatrogunlugu.com/wp-content/uploads/genco-erkal-bir-delinin-hatira-defteri.jpg',
-    eventUrl: 'brisbane-roar-vs-perth-glory',
-    eventStartDate: '2024-11-24T18:45:00',
-    artist: 'Brisbane Roar Team, Perth Glory Team',
-  },
-  {
-    type: 'SPORT',
-    id: 52620,
-    title: 'A-League Soccer: Adelaide United vs Western Sydney Wanderers',
-    eventEndDate: '2024-11-29T22:30:00',
-    smallPoster:
-      'https://tiyatrogunlugu.com/wp-content/uploads/genco-erkal-bir-delinin-hatira-defteri.jpg',
-    eventVenue: 'Coopers Stadium, Adelaide',
-    eventVenueLocation: {
-      latitude: -34.9205,
-      longitude: 138.6027,
+    organizer: {
+      role: 'admin',
+      userId: 'admin_football_001',
+      name: 'Sports Australia',
     },
+    images: {
+      landscape:
+        'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+      portrait:
+        'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+    },
+    _id: '6704f3f8193b7f0a2ec48346',
+    title: 'Australian Football Championship',
     shortDescription:
-      'Exciting A-League clash between Adelaide United and Western Sydney Wanderers.',
-    ticketPurchaseLink: 'https://exampleticketlink.com/match21',
-    isFree: false,
-    image:
-      'https://tiyatrogunlugu.com/wp-content/uploads/genco-erkal-bir-delinin-hatira-defteri.jpg',
-    eventUrl: 'adelaide-united-vs-wsw',
-    eventStartDate: '2024-11-29T19:30:00',
-    artist: 'Adelaide United Team, Western Sydney Wanderers Team',
+      'Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!',
+    type: 'football',
+    longDescription:
+      "Get ready for an action-packed event as the best football teams from across Australia come together to battle it out for the championship title. With thrilling matches, live commentary, and fan activities, the Australian Football Championship promises an unforgettable experience for all football enthusiasts. Don't miss out on this chance to witness the nation's top talent and immerse yourself in the excitement of the game!",
+    status: 'active',
+    tags: ['football', 'sports', 'championship', 'australia', 'event'],
+    uniqueId: '319600b7-87e4-41f6-ae28-8103e8b156b5',
+    createdAt: '2024-10-08T08:57:28.201Z',
+    updatedAt: '2024-10-08T08:57:28.201Z',
+    __v: 0,
+  },
+  {
+    timing: {
+      start: '2024-10-15T10:00:00.000Z',
+      end: '2024-10-15T17:00:00.000Z',
+      duration: '7 hours',
+    },
+    locationDetail: {
+      location: 'Melbourne Cricket Ground, Melbourne, Australia',
+      lat: -37.819967,
+      lng: 144.983449,
+    },
+    organizer: {
+      role: 'admin',
+      userId: 'admin_football_001',
+      name: 'Sports Australia',
+    },
+    images: {
+      landscape:
+        'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+      portrait:
+        'https://rock-oak-bucket.s3.ap-south-1.amazonaws.com/abigail-keenan-8-s5QuUBtyM-unsplash.jpg',
+    },
+    _id: '6704f3f8193b7f0a2ec48346',
+    title: 'Australian Football Championship',
+    shortDescription:
+      'Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!',
+    type: 'football',
+    longDescription:
+      "Get ready for an action-packed event as the best football teams from across Australia come together to battle it out for the championship title. With thrilling matches, live commentary, and fan activities, the Australian Football Championship promises an unforgettable experience for all football enthusiasts. Don't miss out on this chance to witness the nation's top talent and immerse yourself in the excitement of the game!",
+    status: 'active',
+    tags: ['football', 'sports', 'championship', 'australia', 'event'],
+    uniqueId: '319600b7-87e4-41f6-ae28-8103e8b156b5',
+    createdAt: '2024-10-08T08:57:28.201Z',
+    updatedAt: '2024-10-08T08:57:28.201Z',
+    __v: 0,
   },
 ];
 

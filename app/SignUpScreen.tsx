@@ -95,7 +95,7 @@ const SignUpScreen = ({ navigation }: any) => {
   return (
     <Background>
       <Toast />
-      <BackButton goBack={navigation.goBack} />
+      <BackButton />
       <Logo />
       <Header>Join the Journey to Greatness!</Header>
       <TextInput

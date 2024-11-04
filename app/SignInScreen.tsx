@@ -64,7 +64,7 @@ export default function SignInScreen({ navigation }: Props) {
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
+      <BackButton />
       <View style={{ paddingHorizontal: 5 }}>
         <Logo />
         <Header>Good to See You Again!</Header>

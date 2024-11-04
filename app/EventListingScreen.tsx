@@ -91,25 +91,29 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
               renderItem={({ item }: any) => (
                 <EventCard
                   title={item.title}
-                  image={item.smallPoster}
-                  date={item.eventStartDate}
-                  location={item.eventVenue}
+                  image={item.image}
+                  date={item.date}
+                  location={
+                    item?.location.length > 30
+                      ? item?.location.slice(0, 30) + '...'
+                      : item?.location
+                  }
                   onPress={() =>
                     navigation.navigate(SCREENS.eventDetail, {
-                      id: item?.id,
+                      id: item?.uniqueId,
                     })
                   }
                 />
               )}
-              keyExtractor={(item: any) => `${item?.id}`}
+              keyExtractor={(item: any) => `${item?.uniqueId}`}
               scrollEnabled={true}
               showsVerticalScrollIndicator={false}
             />
-            <EventsRow
+            {/* <EventsRow
               title="Events in Upcoming Week"
               data={todayEvent}
               navigation={navigation}
-            />
+            /> */}
           </ScrollView>
         </SafeAreaView>
       </SafeAreaProvider>
