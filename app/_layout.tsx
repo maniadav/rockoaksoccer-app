@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  NavigationContainer,
+  useNavigationState,
+} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -68,6 +71,20 @@ function RootLayoutNav() {
     };
     checkLoginStatus();
   }, []);
+
+  const showBottomTabNav = useMemo(
+    () => [
+      SCREENS.home,
+      SCREENS.eventListing,
+      SCREENS.profile,
+      SCREENS.setting,
+    ],
+    []
+  );
+
+  const currentRouteName = useNavigationState(
+    (state) => state.routes[state.index]?.name
+  );
 
   if (initialRoute === null) {
     return null; // Show nothing until the initial route is determined
@@ -138,8 +155,7 @@ function RootLayoutNav() {
           })}
         />
       </Stack.Navigator>
-      {initialRoute === 'EventListingScreen' ||
-      initialRoute === 'ProfileScreen' ? (
+      {showBottomTabNav.includes(currentRouteName) ? (
         <BottomTabNavigator />
       ) : null}
     </ThemeProvider>

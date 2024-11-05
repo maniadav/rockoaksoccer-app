@@ -11,13 +11,19 @@ function EventCard({ title, date, location, image, onPress }: any) {
     <View style={styles.searchCard}>
       <Image
         source={{ uri: `${image}` }}
-        style={{ borderRadius: 10, marginBottom: 20, height: 200 }}
+        style={{
+          borderTopRightRadius: 10,
+          borderTopLeftRadius: 10,
+          marginBottom: 20,
+          height: 200,
+        }}
       />
       <View
         style={{
           gap: 10,
           marginBottom: 10,
           backgroundColor: '',
+          paddingHorizontal:10
         }}
       >
         <View

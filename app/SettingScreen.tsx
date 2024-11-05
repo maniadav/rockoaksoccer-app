@@ -6,13 +6,14 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import TopNavigation from '@/components/navigation/TopNavigation';
 
 const SettingScreen = ({ navigation }: any) => {
   return (
     <SafeAreaProvider style={styles.container}>
       <SafeAreaView>
         <View>
-          <Text>SettingScreen</Text>
+        <TopNavigation title={'Settings'} />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

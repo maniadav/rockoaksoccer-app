@@ -1,20 +1,35 @@
 import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  ScrollView,
+  Image,
+} from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ProfileCard from '@/components/profile/ProfileCard';
+import TopNavigation from '@/components/navigation/TopNavigation';
 
 const ProfileScreen = ({ navigation }: any) => {
   return (
     <SafeAreaProvider style={styles.container}>
-      <SafeAreaView>
-        <View>
-          <Text>Profile Screen</Text>
-        </View>
-      </SafeAreaView>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <View>
+            {/* <Image
+              source={require('../assets/images/background.jpg')} // Use require for local images
+              style={styles.image}
+            /> */}
+            <ProfileCard />
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaProvider>
   );
 };
@@ -24,7 +39,13 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#fff',
   },
+  image: {
+    top: 0,
+    width: '100%',
+    height: 100,
+    zIndex: -1,
+  },
+  profileImage: { position: 'absolute', top: 30, left: 10, zIndex: 1 },
 });

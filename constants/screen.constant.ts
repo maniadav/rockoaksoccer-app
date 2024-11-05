@@ -5,6 +5,8 @@ const SCREENS = {
   signOut: 'SignOutScreen',
   eventListing: 'EventListingScreen',
   eventDetail: 'EventDetailScreen',
+  profile: 'ProfileScreen',
+  setting: 'SettingScreen'
 };
 
 export default SCREENS;
