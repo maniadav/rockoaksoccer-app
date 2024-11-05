@@ -19,7 +19,7 @@ function FeaturedEvent({ data }: any) {
           source={
             KucukAfis
               ? { uri: KucukAfis }
-              : require('../assets/images/featured.png')
+              : require('../assets/images/foot-player.png')
           }
           style={{
             width: '100%',
@@ -29,9 +29,9 @@ function FeaturedEvent({ data }: any) {
         />
         <View style={commonStyles.eventInfoCard}>
           <Text style={commonStyles.textsHeader}>
-            {'Music of the Spheres'}
+            {'Spirit of the Game'}
           </Text>
-          <Text style={commonStyles.texts}>
+          {/* <Text style={commonStyles.texts}>
             Event Date:{' '}
             {EtkinlikBaslamaTarihi != ''
               ? EtkinlikBaslamaTarihi?.split('T')[0]
@@ -47,7 +47,7 @@ function FeaturedEvent({ data }: any) {
                 ':' +
                 EtkinlikBaslamaTarihi?.split('T')[1].split(':')[1]
               : '20:00'}{' '}
-          </Text>
+          </Text> */}
         </View>
       </View>
     </View>

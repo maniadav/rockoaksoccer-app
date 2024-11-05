@@ -23,6 +23,8 @@ import EventListingScreen from './EventListingScreen';
 import SearchScreen from './SearchScreen';
 import EventDetailScreen from './EventDetailScreen';
 import SCREENS from '@/constants/screen.constant';
+import BottomTabNavigator from '@/components/navigation/BottomTabNavigator';
+import SettingScreen from './SettingScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -84,8 +86,16 @@ function RootLayoutNav() {
           component={OnBoardingScreen}
           options={{ title: 'On Boarding', headerShown: false }}
         />
-
-        <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+        <Stack.Screen
+          name="SettingScreen"
+          component={SettingScreen}
+          options={{ title: 'SettingScreen', headerShown: false }}
+        />
+        <Stack.Screen
+          name="ProfileScreen"
+          component={ProfileScreen}
+          options={{ title: 'ProfileScreen', headerShown: false }}
+        />
         <Stack.Screen
           name="SignUpScreen"
           component={SignUpScreen}
@@ -128,6 +138,10 @@ function RootLayoutNav() {
           })}
         />
       </Stack.Navigator>
+      {initialRoute === 'EventListingScreen' ||
+      initialRoute === 'ProfileScreen' ? (
+        <BottomTabNavigator />
+      ) : null}
     </ThemeProvider>
   );
 }

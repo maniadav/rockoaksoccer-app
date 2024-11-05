@@ -19,6 +19,7 @@ import { getAllEvent } from '../api/categories';
 import { commonStyles } from './HomeCss';
 import EventCard from '@/components/event/EventCard';
 import SCREENS from '@/constants/screen.constant';
+import SearchCard from '@/components/search/SearchCard';
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'EventListing'>;
@@ -69,52 +70,48 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
             style={styles.image}
             source={require('../assets/images/menu.png')}
           />
-          <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            <Text style={styles.logoText}>
-              Rock<Text style={styles.primaryText}>Oak</Text>
-              <Text style={styles.logoTextSmall}> Soccer</Text>
-            </Text>
-            <Text style={styles.subheading}>Find</Text>
-            <Text style={styles.trendingText}>Trending Events</Text>
-            <ModularSearchBar mode="bar" />
-
-            <View style={commonStyles.firstView}>
-              <FeaturedEvent data={featuredEvent[0]} />
-            </View>
-            <EventsRow
-              title="Popular Events"
-              data={data}
-              navigation={navigation}
-            />
-            <FlatList
-              data={data}
-              renderItem={({ item }: any) => (
-                <EventCard
-                  title={item.title}
-                  image={item.image}
-                  date={item.date}
-                  location={
-                    item?.location.length > 30
-                      ? item?.location.slice(0, 30) + '...'
-                      : item?.location
-                  }
-                  onPress={() =>
-                    navigation.navigate(SCREENS.eventDetail, {
-                      id: item?.uniqueId,
-                    })
-                  }
-                />
-              )}
-              keyExtractor={(item: any) => `${item?.uniqueId}`}
-              scrollEnabled={true}
-              showsVerticalScrollIndicator={false}
-            />
-            {/* <EventsRow
-              title="Events in Upcoming Week"
-              data={todayEvent}
-              navigation={navigation}
-            /> */}
-          </ScrollView>
+          <FlatList
+            data={data}
+            renderItem={({ item }: any) => (
+              <EventCard
+                title={item.title}
+                image={item.image}
+                date={item.date}
+                location={
+                  item?.location.length > 30
+                    ? item?.location.slice(0, 30) + '...'
+                    : item?.location
+                }
+                onPress={() =>
+                  navigation.navigate(SCREENS.eventDetail, {
+                    id: item?.uniqueId,
+                  })
+                }
+              />
+            )}
+            keyExtractor={(item: any) => `${item?.uniqueId}`}
+            ListHeaderComponent={
+              <>
+                <Text style={styles.logoText}>
+                  Rock<Text style={styles.primaryText}>Oak</Text>
+                  <Text style={styles.logoTextSmall}> Soccer</Text>
+                </Text>
+                <Text style={styles.subheading}>Find</Text>
+                <Text style={styles.trendingText}>Trending Events</Text>
+                {/* <ModularSearchBar mode="bar" /> */}
+                <SearchCard />
+                <View style={commonStyles.firstView}>
+                  <FeaturedEvent data={featuredEvent[0]} />
+                </View>
+                {/* <EventsRow
+                  title="Popular Events"
+                  data={data}
+                  navigation={navigation}
+                /> */}
+              </>
+            }
+            showsVerticalScrollIndicator={false}
+          />
         </SafeAreaView>
       </SafeAreaProvider>
     </ImageBackground>

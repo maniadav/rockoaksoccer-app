@@ -59,7 +59,6 @@ const SearchScreen = () => {
     setEvents(DATA);
   };
 
-  console.log({ data }, data.length);
   return (
     <View style={styles.categoryContainer}>
       <Searchbar
