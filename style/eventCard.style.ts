@@ -28,12 +28,14 @@ export const styles = StyleSheet.create({
   searchCard: {
     // backgroundColor: 'red',
     borderBottomColor: 'grey',
-    borderWidth: 1,
+    // borderWidth: 1,
     paddingBottom: 20,
     marginBottom: 40,
     shadowColor: 'black',
     // borderRadius: 10
-    borderRadius: 12
+    borderRadius: 12,
+    borderBottomWidth: 2,
+    borderColor: 'black',
   },
   searchButton: {
     backgroundColor: COLOUR.primary,

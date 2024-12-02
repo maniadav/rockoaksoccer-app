@@ -26,11 +26,11 @@ export default function ProfileCard() {
           <TouchableOpacity style={styles.primaryButton}>
             <Text style={styles.buttonText}>Edit Profile</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.primaryButton, styles.ghostButton]}>
+          {/* <TouchableOpacity style={[styles.primaryButton, styles.ghostButton]}>
             <Text style={[styles.buttonText, styles.ghostButtonText]}>
               Following
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
     </View>

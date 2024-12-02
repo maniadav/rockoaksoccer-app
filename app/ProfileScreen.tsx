@@ -22,10 +22,7 @@ const ProfileScreen = ({ navigation }: any) => {
       <View style={{ flex: 1 }}>
         <ScrollView>
           <View>
-            {/* <Image
-              source={require('../assets/images/background.jpg')} // Use require for local images
-              style={styles.image}
-            /> */}
+            {/* <TopNavigation /> */}
             <ProfileCard />
           </View>
         </ScrollView>

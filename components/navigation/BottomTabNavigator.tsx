@@ -12,6 +12,7 @@ const BottomTabNavigator = () => {
   const getTabColor = (screenName: string) => {
     return currentRoute === screenName ? 'rgb(230,62,85)' : 'black';
   };
+
   console.log({ currentRoute });
   return (
     <View style={styles.container}>
@@ -22,9 +23,9 @@ const BottomTabNavigator = () => {
         <Ionicons
           name="home-outline"
           size={24}
-          color={getTabColor('EventListingScreen')}
+          color={getTabColor('HomeScreen')}
         />
-        <Text style={{ color: getTabColor('EventListingScreen') }}>Events</Text>
+        <Text style={{ color: getTabColor('HomeScreen') }}>Home</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
@@ -43,7 +44,11 @@ const BottomTabNavigator = () => {
         style={styles.tab}
         onPress={() => navigation.navigate('EventListingScreen')}
       >
-        <FontAwesome6 name="soccer-ball" size={24} color="black" />
+        <FontAwesome6
+          name="soccer-ball"
+          size={24}
+          color={getTabColor('EventListingScreen')}
+        />
         <Text style={{ color: getTabColor('EventListingScreen') }}>Event</Text>
       </TouchableOpacity>
 
@@ -65,13 +70,13 @@ const BottomTabNavigator = () => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    bottom: 25,
+    bottom: 0,
     left: 0,
     right: 0,
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: 'white',
-    borderRadius: 20,
+    // borderRadius: 20,
     paddingVertical: 10,
     elevation: 5,
   },

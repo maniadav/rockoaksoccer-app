@@ -4,6 +4,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 import { styles } from '@/style/eventCard.style';
 import { theme } from '../theme';
+import { black } from 'react-native-paper/lib/typescript/styles/themes/v2/colors';
 
 function EventCard({ title, date, location, image, onPress }: any) {
   console.log({ image });
@@ -16,6 +17,8 @@ function EventCard({ title, date, location, image, onPress }: any) {
           borderTopLeftRadius: 10,
           marginBottom: 20,
           height: 200,
+          // borderBottomWidth: 3,
+          // borderColor: 'black'
         }}
       />
       <View
@@ -23,7 +26,7 @@ function EventCard({ title, date, location, image, onPress }: any) {
           gap: 10,
           marginBottom: 10,
           backgroundColor: '',
-          paddingHorizontal:10
+          paddingHorizontal: 10,
         }}
       >
         <View
@@ -71,7 +74,9 @@ function EventCard({ title, date, location, image, onPress }: any) {
               color="black"
               style={{ color: 'grey' }}
             />
-            <Text style={{ color: 'grey' }}>{location}</Text>
+            <Text style={{ color: 'grey' }}>
+              {location.length > 30 ? location.slice(0, 30) + '...' : location}
+            </Text>
           </View>
           <View>
             <TouchableOpacity style={styles.searchButton} onPress={onPress}>

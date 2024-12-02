@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, View, SafeAreaView } from 'react-native';
 import { Text } from 'react-native-paper';
 import Background from '@/components/Background';
 import Logo from '@/components/Logo';
@@ -63,9 +63,9 @@ export default function SignInScreen({ navigation }: Props) {
   };
 
   return (
-    <Background>
-      <BackButton />
-      <View style={{ paddingHorizontal: 5 }}>
+    <SafeAreaView style={styles.safeArea}>
+      <Background>
+        <BackButton />
         <Logo />
         <Header>Good to See You Again!</Header>
         <TextInput
@@ -79,7 +79,7 @@ export default function SignInScreen({ navigation }: Props) {
           autoCompleteType="email"
           textContentType="emailAddress"
           keyboardType="email-address"
-          description={'Please enter your email'}
+          description="Please enter your email"
         />
         <TextInput
           label="Password"
@@ -89,7 +89,7 @@ export default function SignInScreen({ navigation }: Props) {
           error={!!credentials.password.error}
           errorText={credentials.password.error}
           secureTextEntry
-          description={'Please enter your password'}
+          description="Please enter your password"
         />
         <View style={styles.forgotPassword}>
           <TouchableOpacity
@@ -107,12 +107,15 @@ export default function SignInScreen({ navigation }: Props) {
             <Text style={styles.link}>Sign up</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </Background>
+      </Background>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+  },
   forgotPassword: {
     width: '100%',
     alignItems: 'flex-end',

@@ -126,11 +126,12 @@ function RootLayoutNav() {
         <Stack.Screen
           name="ResetPasswordScreen"
           component={ResetPasswordScreen}
+          options={{ title: 'ResetPasswordScreen', headerShown: false }}
         />
         <Stack.Screen
           name="SearchScreen"
           component={SearchScreen}
-          options={{ title: 'SearchScreen' }}
+          options={{ title: 'SearchScreen', headerShown: false }}
         />
         <Stack.Screen
           name="EventListingScreen"

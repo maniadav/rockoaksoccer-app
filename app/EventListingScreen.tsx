@@ -63,58 +63,57 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
   }, [todayEvent, featuredEvent]);
 
   return (
-    <ImageBackground resizeMode="cover" style={styles.background}>
-      <SafeAreaProvider>
-        <SafeAreaView style={styles.safeArea}>
-          <Image
-            style={styles.image}
-            source={require('../assets/images/menu.png')}
-          />
-          <FlatList
-            data={data}
-            renderItem={({ item }: any) => (
-              <EventCard
-                title={item.title}
-                image={item.image}
-                date={item.date}
-                location={
-                  item?.location.length > 30
-                    ? item?.location.slice(0, 30) + '...'
-                    : item?.location
-                }
-                onPress={() =>
-                  navigation.navigate(SCREENS.eventDetail, {
-                    id: item?.uniqueId,
-                  })
-                }
-              />
-            )}
-            keyExtractor={(item: any) => `${item?.uniqueId}`}
-            ListHeaderComponent={
-              <>
-                <Text style={styles.logoText}>
-                  Rock<Text style={styles.primaryText}>Oak</Text>
-                  <Text style={styles.logoTextSmall}> Soccer</Text>
-                </Text>
-                <Text style={styles.subheading}>Find</Text>
-                <Text style={styles.trendingText}>Trending Events</Text>
-                {/* <ModularSearchBar mode="bar" /> */}
-                <SearchCard />
-                <View style={commonStyles.firstView}>
-                  <FeaturedEvent data={featuredEvent[0]} />
-                </View>
-                {/* <EventsRow
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.safeArea}>
+        <Image
+          style={styles.image}
+          source={require('../assets/images/menu.png')}
+        />
+        <FlatList
+          style={{ padding: 4 }}
+          data={data}
+          renderItem={({ item }: any) => (
+            <EventCard
+              title={item.title}
+              image={item.image}
+              date={item.date}
+              location={
+                item?.location.length > 30
+                  ? item?.location.slice(0, 30) + '...'
+                  : item?.location
+              }
+              onPress={() =>
+                navigation.navigate(SCREENS.eventDetail, {
+                  id: item?.uniqueId,
+                })
+              }
+            />
+          )}
+          keyExtractor={(item: any) => `${item?.uniqueId}`}
+          ListHeaderComponent={
+            <>
+              <Text style={styles.logoText}>
+                Rock<Text style={styles.primaryText}>Oak</Text>
+                <Text style={styles.logoTextSmall}> Soccer</Text>
+              </Text>
+              <Text style={styles.subheading}>Find</Text>
+              <Text style={styles.trendingText}>Trending Events</Text>
+              {/* <ModularSearchBar mode="bar" /> */}
+              <SearchCard />
+              <View style={commonStyles.firstView}>
+                <FeaturedEvent data={featuredEvent[0]} />
+              </View>
+              {/* <EventsRow
                   title="Popular Events"
                   data={data}
                   navigation={navigation}
                 /> */}
-              </>
-            }
-            showsVerticalScrollIndicator={false}
-          />
-        </SafeAreaView>
-      </SafeAreaProvider>
-    </ImageBackground>
+            </>
+          }
+          showsVerticalScrollIndicator={false}
+        />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
@@ -132,14 +131,10 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingBottom: 20,
   },
-  background: {
-    flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-  },
   safeArea: {
     flex: 1,
     paddingHorizontal: 10,
+    paddingBottom: 50,
   },
   image: {
     width: 24,

@@ -21,7 +21,7 @@ export default function ResetPasswordScreen({ navigation }: any) {
 
   return (
     <Background>
-      <BackButton goBack={navigation.goBack} />
+      <BackButton />
       <Logo />
       <Header>Password Reset</Header>
       <TextInput

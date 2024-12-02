@@ -35,8 +35,9 @@ export const styles = StyleSheet.create({
     height: 60,
   },
   categoryContainer: {
-    marginLeft: 30,
-    marginRight: 30,
+    // marginLeft: 30,
+    // marginRight: 30,
     marginBottom: 60,
+    backgroundColor: 'white',
   },
 });

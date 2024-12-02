@@ -1,31 +1,191 @@
-import React from 'react';
-import { View, Text, SafeAreaView, StyleSheet } from 'react-native';
-import Background from '../components/Background';
-import Logo from '../components/Logo';
-import Header from '../components/Header';
-import Button from '../components/Button';
-import Paragraph from '../components/Paragraph';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  TouchableOpacity,
+  TextInput,
+} from 'react-native';
+import NavigationBar from '@/components/NavigationBar';
+import { goBack, navigate } from '@/components/navigation/rootNavigation';
+import { settingNavigationMap } from '@/constants';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import SafeAreaComponent from '@/components/common/SafeAreaComponent';
 import TopNavigation from '@/components/navigation/TopNavigation';
 
-const SettingScreen = ({ navigation }: any) => {
+// Type definition for each setting item
+type SettingItem = {
+  icon?: string;
+  name: string;
+  navigationName: string;
+};
+
+const Setting = () => {
+  const [result, setResult] = useState<SettingItem[]>([]);
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Fetch settings data here if needed
+  }, []);
+
+  const _onSearch = (q: string) => {
+    if (q.length === 0) {
+      setResult([]);
+      setIsSearching(false);
+      return;
+    }
+    console.log({ settingNavigationMap });
+    const temp = settingNavigationMap.filter((item) =>
+      item.name.toLowerCase().includes(q.toLowerCase())
+    );
+
+    setResult(temp);
+    setIsSearching(true);
+  };
+
+  const settingsOptions = [
+    { title: 'Logins', route: null },
+    { title: 'Add Account', route: 'AddAccount' },
+    { title: 'Log Out', route: 'Logout' },
+    { title: 'Manage Notifications', route: null },
+    { title: 'Booking History', route: 'BookingHistory' },
+    { title: 'User Preferences', route: 'Preferences' },
+    { title: 'Profile', route: null },
+    { title: 'Edit Profile', route: 'EditProfileScreen' },
+  ];
+
   return (
-    <SafeAreaProvider style={styles.container}>
-      <SafeAreaView>
-        <View>
-        <TopNavigation title={'Settings'} />
-        </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    <SafeAreaComponent>
+      <TopNavigation title="Setting" />
+      <View style={styles.container}>
+        <ScrollView
+          bounces={false}
+          contentContainerStyle={styles.scrollContainer}
+        >
+          {/* <View style={styles.searchWrapper}>
+            <View style={styles.inputWrapper}>
+              <View style={styles.iconWrapper}>
+                <Icon name="magnify" size={24} />
+              </View>
+              <TextInput
+                onChangeText={_onSearch}
+                autoFocus={false}
+                placeholder="Search Settings"
+                style={styles.searchInput}
+              />
+            </View>
+            {isSearching && (
+              <View style={styles.resultWrapper}>
+                <ScrollView>
+                  {result.map((setting, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => navigate(setting.navigationName)}
+                      activeOpacity={0.9}
+                      style={styles.settingItem}
+                    >
+                      {setting.icon && <Icon name={setting.icon} size={24} />}
+                      <Text style={styles.settingItemText}>{setting.name}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </ScrollView>
+              </View>
+            )}
+          </View> */}
+          {settingsOptions.map((option, index) => (
+            <View key={index} style={styles.settingItem}>
+              {option.route ? (
+                <TouchableOpacity
+                  onPress={() => navigate(option.route)}
+                  activeOpacity={0.9}
+                >
+                  <Text style={styles.linkText}>{option.title}</Text>
+                </TouchableOpacity>
+              ) : (
+                <Text style={styles.sectionHeader}>{option.title}</Text>
+              )}
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+    </SafeAreaComponent>
   );
 };
 
-export default SettingScreen;
+export default Setting;
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
   container: {
     flex: 1,
-    padding: 10,
     backgroundColor: '#fff',
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
+  scrollContainer: {
+    paddingBottom: 50,
+  },
+  searchWrapper: {
+    zIndex: 999,
+    position: 'relative',
+    alignItems: 'center',
+    paddingVertical: 10,
+    backgroundColor: '#fff',
+    width: '100%',
+  },
+  inputWrapper: {
+    width: '90%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomColor: '#ddd',
+    borderBottomWidth: 1,
+  },
+  iconWrapper: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+    fontSize: 16,
+  },
+  resultWrapper: {
+    backgroundColor: '#fff',
+    zIndex: 999,
+    position: 'absolute',
+    top: '100%',
+    left: 0,
+    width: '100%',
+    maxHeight: 300, // Optional: limits the height of results area
+  },
+  settingItem: {
+    height: 50,
+    width: '100%',
+    backgroundColor: '#fff',
+    paddingHorizontal: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#ddd',
+  },
+  settingItemText: {
+    fontSize: 16,
+    fontWeight: '400',
+    marginLeft: 10,
+  },
+  sectionHeader: {
+    fontSize: 16,
+    fontWeight: '500',
+  },
+  linkText: {
+    fontSize: 16,
+    color: '#318bfb',
+    fontWeight: '400',
   },
 });
