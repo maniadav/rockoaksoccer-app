@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#e3edf7',
     // padding: 16,
     borderRadius: 10,
-    fontFamily: 'Orbitron',
+    // fontFamily: 'Orbitron',
     fontSize: 16,
     fontWeight: '500',
     color: 'rgb(82,79,86)',
