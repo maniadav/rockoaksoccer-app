@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, StyleSheet, Alert } from 'react-native';
-import { Searchbar, Text } from 'react-native-paper';
+import { View, FlatList } from 'react-native';
+import { Searchbar } from 'react-native-paper';
 import filter from 'lodash.filter';
 import { theme } from '@/components/theme';
 import { EventDraft } from '@/constants/event.data.constant';
@@ -10,7 +10,7 @@ import { styles } from '@/style/categories.style';
 import { getAllEvent, getEventById } from '@/api/categories';
 import SCREENS from '@/constants/screen.constant';
 import SafeAreaComponent from '@/components/common/SafeAreaComponent';
-import TopNavigation from '@/components/navigation/TopNavigation';
+import TopNavHeader from '@/components/navigation/TopNavHeader';
 
 const SearchScreen = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -49,7 +49,7 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaComponent>
-      <TopNavigation title="Search" />
+      <TopNavHeader title="Search" />
       <View style={styles.categoryContainer}>
         <Searchbar
           placeholder="Search Here..."

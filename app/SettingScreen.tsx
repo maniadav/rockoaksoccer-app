@@ -13,6 +13,10 @@ import { settingNavigationMap } from '@/constants';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import SafeAreaComponent from '@/components/common/SafeAreaComponent';
 import TopNavigation from '@/components/navigation/TopNavigation';
+import SCREENS from '@/constants/screen.constant';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackNavigationProp } from '@/types/stack.type';
+import TopNavHeader from '@/components/navigation/TopNavHeader';
 
 // Type definition for each setting item
 type SettingItem = {
@@ -24,10 +28,11 @@ type SettingItem = {
 const Setting = () => {
   const [result, setResult] = useState<SettingItem[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const navigation = useNavigation<any>();
 
-  useEffect(() => {
-    // Fetch settings data here if needed
-  }, []);
+  // useEffect(() => {
+  //   // Fetch settings data here if needed
+  // }, []);
 
   const _onSearch = (q: string) => {
     if (q.length === 0) {
@@ -45,59 +50,30 @@ const Setting = () => {
   };
 
   const settingsOptions = [
-    { title: 'Logins', route: null },
-    { title: 'Add Account', route: 'AddAccount' },
+    { title: 'Auth', route: null },
     { title: 'Log Out', route: 'Logout' },
+    { title: 'Delete Account', route: 'DeleteAccount' },
     { title: 'Manage Notifications', route: null },
     { title: 'Booking History', route: 'BookingHistory' },
     { title: 'User Preferences', route: 'Preferences' },
     { title: 'Profile', route: null },
+    { title: 'View Profile', route: SCREENS.profile },
     { title: 'Edit Profile', route: 'EditProfileScreen' },
   ];
 
   return (
     <SafeAreaComponent>
-      <TopNavigation title="Setting" />
+      <TopNavHeader title="Setting" />
       <View style={styles.container}>
         <ScrollView
           bounces={false}
           contentContainerStyle={styles.scrollContainer}
         >
-          {/* <View style={styles.searchWrapper}>
-            <View style={styles.inputWrapper}>
-              <View style={styles.iconWrapper}>
-                <Icon name="magnify" size={24} />
-              </View>
-              <TextInput
-                onChangeText={_onSearch}
-                autoFocus={false}
-                placeholder="Search Settings"
-                style={styles.searchInput}
-              />
-            </View>
-            {isSearching && (
-              <View style={styles.resultWrapper}>
-                <ScrollView>
-                  {result.map((setting, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => navigate(setting.navigationName)}
-                      activeOpacity={0.9}
-                      style={styles.settingItem}
-                    >
-                      {setting.icon && <Icon name={setting.icon} size={24} />}
-                      <Text style={styles.settingItemText}>{setting.name}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </ScrollView>
-              </View>
-            )}
-          </View> */}
           {settingsOptions.map((option, index) => (
             <View key={index} style={styles.settingItem}>
               {option.route ? (
                 <TouchableOpacity
-                  onPress={() => navigate(option.route)}
+                  onPress={() => navigation.navigate(option.route)}
                   activeOpacity={0.9}
                 >
                   <Text style={styles.linkText}>{option.title}</Text>

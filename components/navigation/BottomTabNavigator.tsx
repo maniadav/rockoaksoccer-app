@@ -3,65 +3,76 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import SCREENS from '@/constants/screen.constant';
 
 const BottomTabNavigator = () => {
   const navigation = useNavigation<any>();
   const currentRoute =
     navigation.getState().routes[navigation.getState().index]?.name;
 
-  const getTabColor = (screenName: string) => {
-    return currentRoute === screenName ? 'rgb(230,62,85)' : 'black';
-  };
+  const getTabColor = (screenName: string) =>
+    currentRoute === screenName ? 'rgb(230,62,85)' : 'black';
 
-  console.log({ currentRoute });
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.tab}
-        onPress={() => navigation.navigate('HomeScreen')}
+        onPress={() => navigation.navigate(SCREENS.home)}
       >
         <Ionicons
           name="home-outline"
           size={24}
-          color={getTabColor('HomeScreen')}
+          color={getTabColor(SCREENS.home)}
         />
-        <Text style={{ color: getTabColor('HomeScreen') }}>Home</Text>
+        <Text style={{ color: getTabColor(SCREENS.home) }}>Home</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.tab}
-        onPress={() => navigation.navigate('ProfileScreen')}
+        onPress={() => navigation.navigate(SCREENS.profile)}
       >
         <Ionicons
           name="person-outline"
           size={24}
-          color={getTabColor('ProfileScreen')}
+          color={getTabColor(SCREENS.profile)}
         />
-        <Text style={{ color: getTabColor('ProfileScreen') }}>Profile</Text>
+        <Text style={{ color: getTabColor(SCREENS.profile) }}>Profile</Text>
       </TouchableOpacity>
+
+      {/* <TouchableOpacity
+        style={styles.tab}
+        onPress={() => navigation.navigate(SCREENS.news)}
+      >
+        <Ionicons
+          name="newspaper-outline"
+          size={24}
+          color={getTabColor(SCREENS.news)}
+        />
+        <Text style={{ color: getTabColor(SCREENS.news) }}>News</Text>
+      </TouchableOpacity> */}
 
       <TouchableOpacity
         style={styles.tab}
-        onPress={() => navigation.navigate('EventListingScreen')}
+        onPress={() => navigation.navigate(SCREENS.eventListing)}
       >
         <FontAwesome6
           name="soccer-ball"
           size={24}
-          color={getTabColor('EventListingScreen')}
+          color={getTabColor(SCREENS.eventListing)}
         />
-        <Text style={{ color: getTabColor('EventListingScreen') }}>Event</Text>
+        <Text style={{ color: getTabColor(SCREENS.eventListing) }}>Event</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.tab}
-        onPress={() => navigation.navigate('SettingScreen')}
+        onPress={() => navigation.navigate(SCREENS.setting)}
       >
         <Ionicons
           name="settings-outline"
           size={24}
-          color={getTabColor('SettingScreen')}
+          color={getTabColor(SCREENS.setting)}
         />
-        <Text style={{ color: getTabColor('SettingScreen') }}>Settings</Text>
+        <Text style={{ color: getTabColor(SCREENS.setting) }}>Settings</Text>
       </TouchableOpacity>
     </View>
   );
@@ -76,8 +87,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: 'white',
-    // borderRadius: 20,
     paddingVertical: 10,
+    paddingBottom: 20,
     elevation: 5,
   },
   tab: {

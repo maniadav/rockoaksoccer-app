@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  NavigationContainer,
-  useNavigationState,
-} from '@react-navigation/native';
+import { useNavigationState } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   DarkTheme,
   DefaultTheme,
@@ -94,71 +90,62 @@ function RootLayoutNav() {
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
-          name="HomeScreen"
+          name={SCREENS.home}
           component={HomeScreen}
-          options={{ title: 'Sign In', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="OnBoardingScreen"
+          name={SCREENS.onBoarding}
           component={OnBoardingScreen}
-          options={{ title: 'On Boarding', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SettingScreen"
+          name={SCREENS.setting}
           component={SettingScreen}
-          options={{ title: 'SettingScreen', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="ProfileScreen"
+          name={SCREENS.profile}
           component={ProfileScreen}
-          options={{ title: 'ProfileScreen', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SignUpScreen"
+          name={SCREENS.signUp}
           component={SignUpScreen}
-          options={{ title: 'Sign Up', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SignInScreen"
+          name={SCREENS.signIn}
           component={SignInScreen}
-          options={{ title: 'SignInScreen', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="ResetPasswordScreen"
+          name={SCREENS.resetPassword}
           component={ResetPasswordScreen}
-          options={{ title: 'ResetPasswordScreen', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="SearchScreen"
+          name={SCREENS.search}
           component={SearchScreen}
-          options={{ title: 'SearchScreen', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="EventListingScreen"
+          name={SCREENS.eventListing}
           component={EventListingScreen}
-          options={{ title: 'EventListingScreen', headerShown: false }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={`${SCREENS.eventDetail}`}
+          name={SCREENS.eventDetail}
           component={EventDetailScreen}
-          options={({ route }: any) => ({
-            title: 'Event Detail',
+          options={{
             headerShown: false,
-            headerStyle: {
-              backgroundColor: '#ffffff',
-              shadowColor: '#ffffff',
-              elevation: 0,
-            },
+            headerStyle: { backgroundColor: '#ffffff' },
             headerTintColor: '#76468F',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-            },
-          })}
+            headerTitleStyle: { fontWeight: 'bold' },
+          }}
         />
       </Stack.Navigator>
-      {showBottomTabNav.includes(currentRouteName) ? (
-        <BottomTabNavigator />
-      ) : null}
+      {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigator />}
     </ThemeProvider>
   );
 }

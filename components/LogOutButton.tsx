@@ -4,9 +4,10 @@ import Button from './Button';
 import { LOCALSTORAGE } from '@/constants/sotrage.constant'; // Ensure the path is correct
 import { removeAsyncStorageValue } from '@/utils/localStorage';
 import { RootStackNavigationProp } from '@/types/stack.type';
+import { navigation } from '@/utils/navigation.utils';
 
 export default function LogOutButton() {
-  const navigation = useNavigation<RootStackNavigationProp>();
+
 
   const handleLogOut = async () => {
     try {
