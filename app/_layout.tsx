@@ -24,6 +24,7 @@ import EventDetailScreen from './EventDetailScreen';
 import SCREENS from '@/constants/screen.constant';
 import BottomTabNavigator from '@/components/navigation/BottomTabNavigator';
 import SettingScreen from './SettingScreen';
+import TopNavigation from '@/components/navigation/TopNavigation';
 
 const Stack = createNativeStackNavigator();
 
@@ -92,7 +93,9 @@ function RootLayoutNav() {
         <Stack.Screen
           name={SCREENS.home}
           component={HomeScreen}
-          options={{ headerShown: false }}
+          options={{
+            header: () => <TopNavigation />,
+          }}
         />
         <Stack.Screen
           name={SCREENS.onBoarding}

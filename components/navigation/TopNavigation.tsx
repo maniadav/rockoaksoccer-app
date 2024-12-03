@@ -1,20 +1,31 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { AntDesign, Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import SCREENS from '@/constants/screen.constant';
 
-const TopNavigation = ({ title }: { title: string }) => {
+const TopNavigation = () => {
   const navigation = useNavigation<any>();
-
+  const goToProfile = () => {
+    navigation.navigate(SCREENS.profile); // Navigate to the Profile screen
+  };
+  // const openDrawer = () => {
+  //   navigation.openDrawer(); // Open the left-side drawer (popup menu)
+  // };
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Ionicons name="arrow-back" size={24} color="black" />
-      </TouchableOpacity>
-      <Text style={styles.title}>{title}</Text>
-      <TouchableOpacity onPress={() => navigation.navigate(SCREENS.setting)}>
-        <Ionicons name="settings-outline" size={24} color="black" />
+      {/* <TouchableOpacity onPress={openDrawer}> */}
+      <Image
+        style={styles.image}
+        source={require('../../assets/images/menu.png')}
+      />
+      {/* </TouchableOpacity> */}
+
+      <TouchableOpacity onPress={goToProfile}>
+        <Image
+          source={require('../../assets/images/user.png')}
+          style={{ width: 36, height: 36 }}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -25,18 +36,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16,
+    alignContent: 'center',
+    paddingHorizontal: 8,
+    paddingRight: 20,
     paddingTop: 40, // Add padding for status bar
-    paddingBottom: 10,
+    paddingBottom: 5,
     backgroundColor: '#fff',
-    // height: 60,
-    elevation: 4, // For shadow on Android
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+
+  image: {
+    width: 20,
+    height: 20,
+    objectFit: 'cover',
   },
 });
 

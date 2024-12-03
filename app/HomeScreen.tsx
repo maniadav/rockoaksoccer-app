@@ -3,6 +3,7 @@ import SafeAreaComponent from '@/components/common/SafeAreaComponent';
 import HeroSection from '@/components/home/HeroSection';
 import Services from '@/components/home/Services';
 import LogOutButton from '@/components/LogOutButton';
+import TopNavigation from '@/components/navigation/TopNavigation';
 import { ScrollView } from 'react-native';
 import { View, Button } from 'react-native';
 
