@@ -14,7 +14,7 @@ const Heading = ({
   dark?: boolean;
   border?: boolean;
   borderBottom?: boolean;
-  center: boolean;
+  center?: boolean;
 }) => {
   return (
     <View style={styles.container}>

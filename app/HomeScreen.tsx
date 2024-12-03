@@ -1,7 +1,9 @@
 import Logo from '@/components/common/Logo';
 import SafeAreaComponent from '@/components/common/SafeAreaComponent';
+import FAQ from '@/components/home/FAQ';
 import HeroSection from '@/components/home/HeroSection';
 import Services from '@/components/home/Services';
+import Testimonials from '@/components/home/Testimonial';
 import LogOutButton from '@/components/LogOutButton';
 import TopNavigation from '@/components/navigation/TopNavigation';
 import { ScrollView } from 'react-native';
@@ -14,6 +16,8 @@ const HomeScreen = ({ navigation }: any) => {
         <Logo />
         <HeroSection />
         <Services />
+        <Testimonials />
+        <FAQ />
         <View
           style={{
             flex: 1,
@@ -22,22 +26,6 @@ const HomeScreen = ({ navigation }: any) => {
             gap: 20,
           }}
         >
-          <Button
-            title="Go to Event 1234"
-            onPress={() => navigation.navigate('event/1234')}
-          />
-          <Button
-            title="Go to Profile"
-            onPress={() => navigation.navigate('ProfileScreen')}
-          />
-          <Button
-            title="Go to Sign Up"
-            onPress={() => navigation.navigate('SignUpScreen')}
-          />
-          <Button
-            title="event listing"
-            onPress={() => navigation.navigate('EventListingScreen')}
-          />
           <Button
             title="Events"
             onPress={() => navigation.navigate('Events')}
