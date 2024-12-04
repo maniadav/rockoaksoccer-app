@@ -5,10 +5,8 @@ import TopNavHeader from '@/components/navigation/TopNavHeader';
 import { Link } from 'expo-router';
 import EventsRow from '@/components/event/EventsRow';
 import data from '@/constants/slider.data.constant';
-import BlogCard from '@/components/feed/BlogCard';
-import BlogRow from '@/components/feed/BlogRow';
 
-const FeedScreen = () => {
+const BlogScreen = () => {
   const blogPosts = [
     {
       title: 'Understanding React Native Navigation',
@@ -36,21 +34,37 @@ const FeedScreen = () => {
   return (
     <SafeAreaComponent>
       <TopNavHeader title="Your Feed" />
-      <BlogRow />
+      <View style={styles.container}>
+
+        <FlatList
+          data={blogPosts}
+          keyExtractor={(item) => item.slug}
+          contentContainerStyle={{ gap: 20 }}
+          renderItem={({ item }) => (
+            <View style={styles.blogItem}>
+              <Text style={styles.title}>{item.title}</Text>
+              <Text style={styles.meta}>
+                By {item.author} | {item.minRead} min read | {item.postedDate}
+              </Text>
+              <Link href={`/blog/${item.slug}`} style={styles.link}>
+                Read More
+              </Link>
+              <Link href={`/blog/${item.slug}`}>View user details</Link>
+            </View>
+          )}
+        />
+        {/* </ScrollView> */}
+      </View>
     </SafeAreaComponent>
   );
 };
 
-export default FeedScreen;
+export default BlogScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-  },
-  listContainer: {
-    gap: 20,
-    paddingHorizontal: 10,
   },
   scrollContainer: {
     paddingBottom: 50,

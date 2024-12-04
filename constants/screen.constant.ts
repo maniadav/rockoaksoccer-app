@@ -11,6 +11,7 @@ const SCREENS = {
   setting: 'SettingScreen',
   search: 'SearchScreen',
   feed: 'FeedScreen',
+  blog: 'BlogScreen',
 };
 
 export default SCREENS;

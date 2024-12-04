@@ -26,6 +26,7 @@ import BottomTabNavigator from '@/components/navigation/BottomTabNavigator';
 import SettingScreen from './SettingScreen';
 import TopNavigation from '@/components/navigation/TopNavigation';
 import FeedScreen from './FeedScreen';
+import BlogScreen from './BlogScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -104,11 +105,6 @@ function RootLayoutNav() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={SCREENS.feed}
-          component={FeedScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name={SCREENS.setting}
           component={SettingScreen}
           options={{ headerShown: false }}
@@ -151,6 +147,18 @@ function RootLayoutNav() {
             headerStyle: { backgroundColor: '#ffffff' },
             headerTintColor: '#76468F',
             headerTitleStyle: { fontWeight: 'bold' },
+          }}
+        />
+        <Stack.Screen
+          name={SCREENS.feed}
+          component={FeedScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={SCREENS.blog}
+          component={BlogScreen}
+          options={{
+            headerShown: false,
           }}
         />
       </Stack.Navigator>

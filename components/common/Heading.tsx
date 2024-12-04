@@ -9,7 +9,7 @@ const Heading = ({
   borderBottom,
   center,
 }: {
-  heading: string;
+  heading?: string;
   subHeading?: string;
   dark?: boolean;
   border?: boolean;
@@ -18,15 +18,17 @@ const Heading = ({
 }) => {
   return (
     <View style={styles.container}>
-      <Text
-        style={[
-          styles.heading,
-          border && styles.withBorder,
-          center && styles.withCenter,
-        ]}
-      >
-        {heading}
-      </Text>
+      {heading && (
+        <Text
+          style={[
+            styles.heading,
+            border && styles.withBorder,
+            center && styles.withCenter,
+          ]}
+        >
+          {heading}
+        </Text>
+      )}
       {borderBottom && <View style={styles.borderBottom} />}
       {subHeading && (
         <Text

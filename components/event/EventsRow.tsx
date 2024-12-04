@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { commonStyles } from '../../app/HomeCss';
 import Card from '@/components/event/Card';
+import { navigation } from '../navigation/rootNavigation';
 
-const EventsRow = ({ data, title, navigation }: any) => {
+const EventsRow = ({ data, title }: any) => {
   return (
     <View>
       {data.length > 0 ? (
