@@ -25,6 +25,7 @@ import SCREENS from '@/constants/screen.constant';
 import BottomTabNavigator from '@/components/navigation/BottomTabNavigator';
 import SettingScreen from './SettingScreen';
 import TopNavigation from '@/components/navigation/TopNavigation';
+import FeedScreen from './FeedScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -100,6 +101,11 @@ function RootLayoutNav() {
         <Stack.Screen
           name={SCREENS.onBoarding}
           component={OnBoardingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={SCREENS.feed}
+          component={FeedScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

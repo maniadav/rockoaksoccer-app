@@ -39,17 +39,17 @@ const BottomTabNavigator = () => {
         <Text style={{ color: getTabColor(SCREENS.profile) }}>Profile</Text>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity
+      <TouchableOpacity
         style={styles.tab}
-        onPress={() => navigation.navigate(SCREENS.news)}
+        onPress={() => navigation.navigate(SCREENS.feed)}
       >
         <Ionicons
           name="newspaper-outline"
           size={24}
-          color={getTabColor(SCREENS.news)}
+          color={getTabColor(SCREENS.feed)}
         />
-        <Text style={{ color: getTabColor(SCREENS.news) }}>News</Text>
-      </TouchableOpacity> */}
+        <Text style={{ color: getTabColor(SCREENS.feed) }}>Feed</Text>
+      </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.tab}

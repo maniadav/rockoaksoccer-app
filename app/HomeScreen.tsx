@@ -4,6 +4,7 @@ import FAQ from '@/components/home/FAQ';
 import HeroSection from '@/components/home/HeroSection';
 import Services from '@/components/home/Services';
 import Testimonials from '@/components/home/Testimonial';
+import VideoTestimonials from '@/components/home/VideoTestimonial';
 import LogOutButton from '@/components/LogOutButton';
 import TopNavigation from '@/components/navigation/TopNavigation';
 import { ScrollView } from 'react-native';
@@ -15,6 +16,7 @@ const HomeScreen = ({ navigation }: any) => {
       <ScrollView>
         <Logo />
         <HeroSection />
+        <VideoTestimonials />
         <Services />
         <Testimonials />
         <FAQ />
@@ -26,10 +28,6 @@ const HomeScreen = ({ navigation }: any) => {
             gap: 20,
           }}
         >
-          <Button
-            title="Events"
-            onPress={() => navigation.navigate('Events')}
-          />
           <LogOutButton />
         </View>
       </ScrollView>

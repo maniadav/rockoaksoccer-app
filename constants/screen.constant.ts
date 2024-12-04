@@ -10,7 +10,7 @@ const SCREENS = {
   profile: 'ProfileScreen',
   setting: 'SettingScreen',
   search: 'SearchScreen',
-  news: 'news',
+  feed: 'FeedScreen',
 };
 
 export default SCREENS;
