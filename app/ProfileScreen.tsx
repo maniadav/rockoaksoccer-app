@@ -15,6 +15,7 @@ import Paragraph from '../components/Paragraph';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ProfileCard from '@/components/profile/ProfileCard';
 import TopNavigation from '@/components/navigation/TopNavigation';
+import MyTabView from '@/components/common/TabComponent';
 
 const ProfileScreen = ({ navigation }: any) => {
   return (
@@ -25,6 +26,7 @@ const ProfileScreen = ({ navigation }: any) => {
             {/* <TopNavigation /> */}
             <ProfileCard />
           </View>
+          <MyTabView/>
         </ScrollView>
       </View>
     </SafeAreaProvider>

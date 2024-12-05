@@ -1,5 +1,6 @@
 import COLOUR from '@/constants/colour.constant';
-import { Link } from 'expo-router';
+import SCREENS from '@/constants/screen.constant';
+import { navigation } from '@/utils/navigation.utils';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
@@ -30,19 +31,26 @@ const BlogCard = ({ blog }: any) => {
               <View style={{ width: '80%' }}>
                 <Text style={styles.title}>{blog.title}</Text>
               </View>
-              <TouchableOpacity
-                style={{
-                  padding: 4,
-                  backgroundColor: COLOUR.primary,
-                  borderRadius: 3,
-                  paddingHorizontal: 4,
-                  width: '20%',
-                }}
-              >
-                <Text style={{ color: 'white', textAlign: 'center' }}>
-                  View
-                </Text>
-              </TouchableOpacity>
+
+              <View>
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: COLOUR.primary,
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderRadius: 4,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  // onPress={() => router.push(`/blog/${blog.slug}`)}
+                  onPress={() => {
+                    alert(`You tapped ${SCREENS.blog}`);
+                    navigation.push(SCREENS.blog, { id: blog.slug });
+                  }}
+                >
+                  <Text style={{ color: 'white' }}>View </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

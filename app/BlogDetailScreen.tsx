@@ -6,7 +6,7 @@ import { Link } from 'expo-router';
 import EventsRow from '@/components/event/EventsRow';
 import data from '@/constants/slider.data.constant';
 
-const BlogScreen = () => {
+const BlogDetailScreen = () => {
   const blogPosts = [
     {
       title: 'Understanding React Native Navigation',
@@ -59,7 +59,7 @@ const BlogScreen = () => {
   );
 };
 
-export default BlogScreen;
+export default BlogDetailScreen;
 
 const styles = StyleSheet.create({
   container: {

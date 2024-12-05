@@ -1,6 +1,12 @@
 import COLOUR from '@/constants/colour.constant';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  ButtonEditProfile,
+  ButtonEditProfileText,
+  CustomButton,
+  CustomText,
+} from '../common/Component';
 
 export default function ProfileCard() {
   return (
@@ -23,14 +29,9 @@ export default function ProfileCard() {
           User interface designer and {'\n'} front-end developer
         </Text>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.primaryButton}>
-            <Text style={styles.buttonText}>Edit Profile</Text>
-          </TouchableOpacity>
-          {/* <TouchableOpacity style={[styles.primaryButton, styles.ghostButton]}>
-            <Text style={[styles.buttonText, styles.ghostButtonText]}>
-              Following
-            </Text>
-          </TouchableOpacity> */}
+          <CustomButton onPress={() => alert('Edit Profile Pressed')}>
+            <CustomText>Edit Profile</CustomText>
+          </CustomButton>
         </View>
       </View>
     </View>
@@ -108,22 +109,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 20,
   },
-  primaryButton: {
-    backgroundColor: '#03BFCB',
-    borderWidth: 1,
-    borderColor: '#03BFCB',
-    borderRadius: 3,
-    paddingVertical: 10,
-    paddingHorizontal: 25,
-    marginHorizontal: 5,
-  },
   ghostButton: {
     backgroundColor: 'transparent',
-  },
-  buttonText: {
-    color: '#231E39',
-    fontWeight: '500',
-    fontSize: 16,
   },
   ghostButtonText: {
     color: '#02899C',

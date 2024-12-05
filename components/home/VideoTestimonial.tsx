@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from 'react-native';
 import { ResizeMode, Video } from 'expo-av';
-// import LinearGradient from 'react-native-linear-gradient';
 import Heading from '../common/Heading';
 
 const VideoTestimonials = () => {

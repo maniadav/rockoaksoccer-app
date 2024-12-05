@@ -20,6 +20,7 @@ import { commonStyles } from './HomeCss';
 import EventCard from '@/components/event/EventCard';
 import SCREENS from '@/constants/screen.constant';
 import SearchCard from '@/components/search/SearchCard';
+import SafeAreaComponent from '@/components/common/SafeAreaComponent';
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'EventListing'>;
@@ -63,57 +64,51 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
   }, [todayEvent, featuredEvent]);
 
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.safeArea}>
-        <Image
-          style={styles.image}
-          source={require('../assets/images/menu.png')}
-        />
-        <FlatList
-          style={{ padding: 4 }}
-          data={data}
-          renderItem={({ item }: any) => (
-            <EventCard
-              title={item.title}
-              image={item.image}
-              date={item.date}
-              location={
-                item?.location.length > 30
-                  ? item?.location.slice(0, 30) + '...'
-                  : item?.location
-              }
-              onPress={() =>
-                navigation.navigate(SCREENS.eventDetail, {
-                  id: item?.uniqueId,
-                })
-              }
-            />
-          )}
-          keyExtractor={(item: any) => `${item?.uniqueId}`}
-          ListHeaderComponent={
-            <>
-              <Text style={styles.logoText}>
-                Rock<Text style={styles.primaryText}>Oak</Text>
-                <Text style={styles.logoTextSmall}> Soccer</Text>
-              </Text>
-              <Text style={styles.subheading}>Find</Text>
-              <Text style={styles.trendingText}>Trending Events</Text>
-              {/* <ModularSearchBar mode="bar" /> */}
-              <SearchCard />
-              <View style={commonStyles.firstView}>
-                <FeaturedEvent data={featuredEvent[0]} />
-              </View>
-              {/* <EventsRow
+    <SafeAreaComponent>
+      <FlatList
+        style={{ padding: 4 }}
+        data={data}
+        renderItem={({ item }: any) => (
+          <EventCard
+            title={item.title}
+            image={item.image}
+            date={item.date}
+            location={
+              item?.location.length > 30
+                ? item?.location.slice(0, 30) + '...'
+                : item?.location
+            }
+            onPress={() =>
+              navigation.navigate(SCREENS.eventDetail, {
+                id: item?.uniqueId,
+              })
+            }
+          />
+        )}
+        keyExtractor={(item: any) => `${item?.uniqueId}`}
+        ListHeaderComponent={
+          <>
+            <Text style={styles.logoText}>
+              Rock<Text style={styles.primaryText}>Oak</Text>
+              <Text style={styles.logoTextSmall}> Soccer</Text>
+            </Text>
+            <Text style={styles.subheading}>Find</Text>
+            <Text style={styles.trendingText}>Trending Events</Text>
+            {/* <ModularSearchBar mode="bar" /> */}
+            <SearchCard />
+            <View style={commonStyles.firstView}>
+              <FeaturedEvent data={featuredEvent[0]} />
+            </View>
+            {/* <EventsRow
                   title="Popular Events"
                   data={data}
                   navigation={navigation}
                 /> */}
-            </>
-          }
-          showsVerticalScrollIndicator={false}
-        />
-      </SafeAreaView>
-    </SafeAreaProvider>
+          </>
+        }
+        showsVerticalScrollIndicator={false}
+      />
+    </SafeAreaComponent>
   );
 };
 
@@ -126,7 +121,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
   },
   contentContainer: {
     paddingBottom: 20,

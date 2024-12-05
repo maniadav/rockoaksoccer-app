@@ -37,16 +37,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     alignContent: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 12,
     paddingRight: 20,
-    paddingTop: 40, // Add padding for status bar
+    paddingTop: 40, 
     paddingBottom: 5,
     backgroundColor: '#fff',
   },
 
   image: {
-    width: 20,
-    height: 20,
+    width: 22,
+    height: 22,
     objectFit: 'cover',
   },
 });
