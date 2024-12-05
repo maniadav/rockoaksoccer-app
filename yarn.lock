@@ -3972,7 +3972,7 @@ expo-asset@~10.0.10:
 
 expo-av@^15.0.1:
   version "15.0.1"
-  resolved "https://registry.yarnpkg.com/expo-av/-/expo-av-15.0.1.tgz#c337f831c2e29174de7117c37d2f92c1275bb4c4"
+  resolved "https://registry.npmjs.org/expo-av/-/expo-av-15.0.1.tgz"
   integrity sha512-2d4j7RTH9Y5nI1FoC0woRjqnj5G8sF0al2iW6kG21PPs/CgS4QARbHxMrPxKpUXrC6iu+6EMj2h5H6T0nqteFg==
 
 expo-constants@~16.0.0:
@@ -7239,6 +7239,11 @@ react-native-vector-icons@^10.2.0:
   dependencies:
     prop-types "^15.7.2"
     yargs "^16.1.1"
+
+react-native-video@^6.8.2:
+  version "6.8.2"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-6.8.2.tgz#3c53524b9f74591b5e6d7964e7aa2e9f0328a95d"
+  integrity sha512-lAf6pa/eqksaQnZ+rx9XWx9HpfNt0xr/XmSXMASynJJ8EqMJTr8gHJe4Wfkebo5W8qAMKRuHYtZs+4Shzl3IIQ==
 
 react-native-web@~0.19.10:
   version "0.19.13"

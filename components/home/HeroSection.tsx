@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
@@ -6,27 +6,28 @@ import {
   TouchableOpacity,
   StyleSheet,
   ScrollView,
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native'; // For navigation
-import SCREENS from '@/constants/screen.constant';
-import SafeAreaComponent from '../common/SafeAreaComponent';
-import COLOUR from '@/constants/colour.constant';
+} from "react-native";
+import { useNavigation } from "@react-navigation/native"; // For navigation
+import SCREENS from "@/constants/screen.constant";
+import SafeAreaComponent from "../common/SafeAreaComponent";
+import COLOUR from "@/constants/colour.constant";
+
 
 const HeroSection = () => {
   const heroItems = [
-    'Join Rock Oak Soccer School for expert-led soccer training',
-    'Develop your skills through our dynamic and engaging training programs',
-    'Open to athletes of all ages and backgrounds',
-    'Customised training for every skill level, from beginner to advanced',
-    'Train at a top-tier facility with cutting-edge equipment',
+    "Join Rock Oak Soccer School for expert-led soccer training",
+    "Develop your skills through our dynamic and engaging training programs",
+    "Open to athletes of all ages and backgrounds",
+    "Customised training for every skill level, from beginner to advanced",
+    "Train at a top-tier facility with cutting-edge equipment",
   ];
 
   const navigation = useNavigation<any>();
-
+  
   return (
     <View style={styles.heroSection}>
       <Image
-        source={require('../../assets/images/players.png')} 
+        source={require("../../assets/images/players.png")}
         style={styles.image}
         resizeMode="contain"
       />
@@ -51,9 +52,9 @@ const HeroSection = () => {
         </Text>
         <View
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           <TouchableOpacity
@@ -74,31 +75,31 @@ const styles = StyleSheet.create({
   },
   heroSection: {
     padding: 16,
-    backgroundColor: '#F4F4F4',
+    backgroundColor: "#F4F4F4",
     color: COLOUR.primary,
     borderRadius: 20,
     margin: 8,
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
   },
   textContainer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   heading: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   subHeading: {
     fontSize: 16,
     marginVertical: 10,
-    color: '#333',
+    color: "#333",
   },
   whyJoinText: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 20,
   },
   listContainer: {
@@ -109,35 +110,39 @@ const styles = StyleSheet.create({
   },
   listItemText: {
     fontSize: 16,
-    color: '#333',
+    color: "#333",
   },
   finalText: {
     fontSize: 16,
     marginVertical: 10,
-    color: '#333',
+    color: "#333",
   },
   boldText: {
-    fontWeight: 'bold',
-    color: '#993B1F',
+    fontWeight: "bold",
+    color: "#993B1F",
   },
   button: {
     width: 200,
-    backgroundColor: '#993B1F',
+    backgroundColor: "#993B1F",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 50,
     marginTop: 20,
-    alignItems: 'center',
+    alignItems: "center",
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: "#FFFFFF",
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   image: {
     width: 300,
     height: 300,
     marginLeft: 16,
+  },
+  video:{
+    width:200,
+    height:100,
   },
 });
 
