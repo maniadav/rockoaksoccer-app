@@ -1,35 +1,34 @@
-// MyStack.tsx
-import React, { useEffect, useMemo, useState } from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useEffect, useMemo, useState } from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ThemeProvider,
   DarkTheme,
   DefaultTheme,
-} from '@react-navigation/native';
-import { useNavigationState } from '@react-navigation/native';
-import { useColorScheme } from '@/components/useColorScheme';
-import BottomTabNavigator from '@/components/navigation/BottomTabNavigator';
-import TopNavigation from '@/components/navigation/TopNavigation';
-import SCREENS from '@/constants/screen.constant';
-import { getAsyncStorageValue } from '@/utils/localStorage';
-import { LOCALSTORAGE } from '@/constants/sotrage.constant';
+} from "@react-navigation/native";
+import { useNavigationState } from "@react-navigation/native";
+import { useColorScheme } from "@/components/useColorScheme";
+import BottomTabNavigator from "@/components/navigation/BottomTabNavigator";
+import TopNavigation from "@/components/navigation/TopNavigation";
+import SCREENS from "@/constants/screen.constant";
+import { getAsyncStorageValue } from "@/utils/localStorage";
+import { LOCALSTORAGE } from "@/constants/sotrage.constant";
 // screen
-import HomeScreen from './HomeScreen';
-import ProfileScreen from './ProfileScreen';
-import SignInScreen from './SignInScreen';
-import SignUpScreen from './SignUpScreen';
-import ResetPasswordScreen from './ResetPasswordScreen';
-import OnBoardingScreen from './OnBoardingScreen';
-import EventListingScreen from './EventListingScreen';
-import SearchScreen from './SearchScreen';
-import EventDetailScreen from './EventDetailScreen';
-import SettingScreen from './SettingScreen';
-import FeedScreen from './FeedScreen';
-import BlogScreen from './BlogDetailScreen';
+import HomeScreen from "./HomeScreen";
+import ProfileScreen from "./ProfileScreen";
+import SignInScreen from "./SignInScreen";
+import SignUpScreen from "./SignUpScreen";
+import ResetPasswordScreen from "./ResetPasswordScreen";
+import OnBoardingScreen from "./OnBoardingScreen";
+import EventListingScreen from "./EventListingScreen";
+import SearchScreen from "./SearchScreen";
+import EventDetailScreen from "./EventDetailScreen";
+import SettingScreen from "./SettingScreen";
+import FeedScreen from "./FeedScreen";
+import BlogScreen from "./BlogDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
-export default function MyStack() {
+export default function RootStack() {
   const colorScheme = useColorScheme();
   const [initialRoute, setInitialRoute] = useState<string | null>(null);
 
@@ -51,21 +50,21 @@ export default function MyStack() {
       SCREENS.eventListing,
       SCREENS.profile,
       SCREENS.setting,
-      SCREENS.feed
+      SCREENS.feed,
     ],
     []
   );
 
-  const currentRouteName = useNavigationState(
-    (state) => state.routes[state.index]?.name
-  );
+  // const currentRouteName = useNavigationState(
+  //   (state) => state.routes[state.index]?.name
+  // );
 
   if (initialRoute === null) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
           name={SCREENS.home}
@@ -117,9 +116,9 @@ export default function MyStack() {
           component={EventDetailScreen}
           options={{
             headerShown: false,
-            headerStyle: { backgroundColor: '#ffffff' },
-            headerTintColor: '#76468F',
-            headerTitleStyle: { fontWeight: 'bold' },
+            headerStyle: { backgroundColor: "#ffffff" },
+            headerTintColor: "#76468F",
+            headerTitleStyle: { fontWeight: "bold" },
           }}
         />
         <Stack.Screen
@@ -133,7 +132,7 @@ export default function MyStack() {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
-      {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigator />}
+      {/* {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigator />} */}
     </ThemeProvider>
   );
 }

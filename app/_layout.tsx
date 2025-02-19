@@ -1,13 +1,13 @@
 // RootLayout.tsx
-import React, { useEffect } from 'react';
-import * as SplashScreen from 'expo-splash-screen';
-import { useFonts } from 'expo-font';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import MyStack from './MyStack';
+import React, { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
+import { useFonts } from "expo-font";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import App from "./App";
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     ...FontAwesome.font,
   });
 
@@ -25,5 +25,5 @@ export default function RootLayout() {
     return null;
   }
 
-  return <MyStack />;
+  return <App />;
 }
