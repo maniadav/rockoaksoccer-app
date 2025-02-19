@@ -3,7 +3,6 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import SCREENS from "@constants/screen.constant";
-// import { userImg } from "@images/index";
 import userImg from "@images/user.png";
 
 const TopNavigation = () => {
@@ -38,9 +37,9 @@ const styles = StyleSheet.create({
     alignContent: "center",
     paddingHorizontal: 12,
     paddingRight: 20,
-    paddingTop: 40,
+    paddingTop: 20,
     paddingBottom: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "transparent",
   },
 
   image: {

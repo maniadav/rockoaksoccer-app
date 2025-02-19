@@ -21,7 +21,7 @@ export const commonStyles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'black',
     color: 'white',
-    opacity: 0.5,
+    // opacity: 0.5,
     // width: 300,
     // top: '70%',
     bottom: '0%',
@@ -54,7 +54,7 @@ export const commonStyles = StyleSheet.create({
   },
   homeCard: {
     marginLeft: 10,
-    backgroundColor: '#e2e2e2',
+    backgroundColor: 'black',
     height: 240,
     width: 200,
     borderRadius: 4,

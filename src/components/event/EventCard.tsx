@@ -2,14 +2,14 @@ import React from "react";
 import { Image, Text, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native";
-import { styles } from "style/eventCard.style";
+import { eventCard } from "style/event.style";
 import { theme } from "../theme";
 import { black } from "react-native-paper/lib/typescript/styles/themes/v2/colors";
 
 function EventCard({ title, date, location, image, onPress }: any) {
   console.log({ image });
   return (
-    <View style={styles.searchCard}>
+    <View style={eventCard.searchCard}>
       <Image
         source={{ uri: `${image}` }}
         style={{
@@ -79,7 +79,7 @@ function EventCard({ title, date, location, image, onPress }: any) {
             </Text>
           </View>
           <View>
-            <TouchableOpacity style={styles.searchButton} onPress={onPress}>
+            <TouchableOpacity style={eventCard.searchButton} onPress={onPress}>
               <Text style={{ color: "white" }}>View Details</Text>
             </TouchableOpacity>
           </View>

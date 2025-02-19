@@ -1,7 +1,7 @@
 import COLOUR from '@constants/colour.constant';
 import { StyleSheet } from 'react-native';
 
-export const styles = StyleSheet.create({
+export const eventCard = StyleSheet.create({
   searchHeader: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -26,7 +26,7 @@ export const styles = StyleSheet.create({
     marginBottom: 440,
   },
   searchCard: {
-    // backgroundColor: 'red',
+    backgroundColor: '#F6F5EE',
     borderBottomColor: 'grey',
     // borderWidth: 1,
     paddingBottom: 20,
@@ -34,8 +34,8 @@ export const styles = StyleSheet.create({
     shadowColor: 'black',
     // borderRadius: 10
     borderRadius: 12,
-    borderBottomWidth: 2,
-    borderColor: 'black',
+    borderBottomWidth: 1,
+    borderColor: '#C7A78B',
   },
   searchButton: {
     backgroundColor: COLOUR.primary,
