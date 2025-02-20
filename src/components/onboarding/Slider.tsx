@@ -7,13 +7,15 @@ import {
   View,
   Text,
   Dimensions,
-} from 'react-native';
-import React, { useRef, useState } from 'react';
-import data from '../../constants/slider.data.constant';
-import SlideItem from './SlideItem';
-import Pagination from './Pagination';
-import Button from '../Button';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import React, { useRef, useState } from "react";
+import data from "../../constants/slider.data.constant";
+import SlideItem from "./SlideItem";
+import Pagination from "./Pagination";
+import Button from "../Button";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import SCREENS from "@constants/screen.constant";
+import { StackNavigationProp } from "@react-navigation/stack";
 
 type ViewableItemsChangedProps = {
   viewableItems: Array<{
@@ -21,12 +23,16 @@ type ViewableItemsChangedProps = {
   }>;
 };
 
-const { width, height } = Dimensions.get('screen');
+const { width, height } = Dimensions.get("screen");
 
-const Slider = () => {
+const Slider = ({
+  navigation,
+}: {
+  navigation: StackNavigationProp<ParamListBase>;
+}) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
+
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     Animated.event(
       [
@@ -74,13 +80,13 @@ const Slider = () => {
         <Pagination data={data} scrollX={scrollX} index={index} />
         <Button
           mode="contained"
-          onPress={() => navigation.navigate('SignInScreen')}
+          onPress={() => navigation.navigate(SCREENS.signIn)}
         >
           Login
         </Button>
         <Button
           mode="outlined"
-          onPress={() => navigation.navigate('SignUpScreen')}
+          onPress={() => navigation.navigate(SCREENS.signUp || "")}
         >
           Sign Up
         </Button>
@@ -96,17 +102,17 @@ const styles = StyleSheet.create({
     width,
     height,
     flex: 1,
-    justifyContent: 'flex-end',
-    position: 'relative',
+    justifyContent: "flex-end",
+    position: "relative",
   },
   content: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
     paddingHorizontal: 70,
-    paddingBottom: 20,
+    paddingBottom: 50,
   },
 });

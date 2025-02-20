@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 import {
   ImageBackground,
   StyleSheet,
   KeyboardAvoidingView,
-} from 'react-native';
-import { theme } from './theme';
+} from "react-native";
+import { theme } from "./theme";
 
 export default function Background({ children }: any) {
   return (
     <ImageBackground
-      // source={require('.././assets/images/background.jpg')}
+      source={require("../.././assets/images/leg_ball.jpg")}
       resizeMode="cover"
       style={styles.background}
     >
@@ -23,18 +23,18 @@ export default function Background({ children }: any) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
-    backgroundColor: 'white',
-    paddingVertical: 10
+    width: "100%",
+    backgroundColor: "white",
+    // paddingVertical: 10,
   },
   container: {
     flex: 1,
     // padding: 20,
-    width: '100%',
-    maxWidth: 340,
-    alignSelf: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
-    position: 'relative',
+    width: "100%",
+    maxWidth: 360,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    position: "relative",
   },
 });

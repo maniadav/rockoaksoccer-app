@@ -67,7 +67,7 @@ export default function RootStack() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator >
+      <Stack.Navigator>
         {/* <Stack.Screen
           name={SCREENS.home}
           component={HomeScreen}
@@ -137,7 +137,7 @@ export default function RootStack() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="MainTabs"
+          name={SCREENS.main}
           component={BottomTabNavigation} // Embed Bottom Tabs inside Stack
           options={{ headerShown: false }} // Hide Stack header
         />
