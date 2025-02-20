@@ -4,14 +4,15 @@ import {
   ThemeProvider,
   DarkTheme,
   DefaultTheme,
+  useNavigationState,
 } from "@react-navigation/native";
-import { useNavigationState } from "@react-navigation/native";
+// import { useNavigationState } from "@react-navigation/native";
 import { useColorScheme } from "@components/useColorScheme";
 import BottomTabNavigator from "@components/navigation/BottomTabNavigator";
 import TopNavigation from "@components/navigation/TopNavigation";
 import SCREENS from "@constants/screen.constant";
 import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/storage.constant";
+import { LOCALSTORAGE } from "constants/storage.constant";
 // screen
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -25,6 +26,7 @@ import EventDetailScreen from "./EventDetailScreen";
 import SettingScreen from "./SettingScreen";
 import FeedScreen from "./FeedScreen";
 import BlogScreen from "./BlogDetailScreen";
+import { BottomTabNavigation } from "@components/navigation/BottomTabNavigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,8 +40,8 @@ export default function RootStack() {
         LOCALSTORAGE.LOGGED_IN_USER,
         true
       );
-      const { email: userEmail } = storedUser || {};
-      setInitialRoute(userEmail ? SCREENS.eventListing : SCREENS.onBoarding);
+      const { email } = storedUser || {};
+      setInitialRoute(email ? SCREENS.eventListing : SCREENS.onBoarding);
     };
     checkLoginStatus();
   }, []);
@@ -65,15 +67,15 @@ export default function RootStack() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator initialRouteName={initialRoute}>
-        <Stack.Screen
+      <Stack.Navigator >
+        {/* <Stack.Screen
           name={SCREENS.home}
           component={HomeScreen}
           options={{
             headerShown: false,
             // header: () => <TopNavigation />
           }}
-        />
+        /> */}
         <Stack.Screen
           name={SCREENS.onBoarding}
           component={OnBoardingScreen}
@@ -84,11 +86,11 @@ export default function RootStack() {
           component={SettingScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name={SCREENS.profile}
           component={ProfileScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name={SCREENS.signUp}
           component={SignUpScreen}
@@ -134,8 +136,13 @@ export default function RootStack() {
           component={BlogScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="MainTabs"
+          component={BottomTabNavigation} // Embed Bottom Tabs inside Stack
+          options={{ headerShown: false }} // Hide Stack header
+        />
       </Stack.Navigator>
-      {/* {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigator />} */}
+      {/* {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigation />} */}
     </ThemeProvider>
   );
 }

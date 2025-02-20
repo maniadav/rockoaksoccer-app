@@ -11,7 +11,7 @@ import { theme } from "@components/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { emailValidator, passwordValidator } from "helpers/validator";
 import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/storage.constant";
+import { LOCALSTORAGE } from "constants/storage.constant";
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -55,7 +55,7 @@ export default function SignInScreen({ navigation }: Props) {
     ) {
       navigation.reset({
         index: 0,
-        routes: [{ name: "HomeScreen" }],
+        routes: [{ name: "MainTabs" }],
       });
     } else {
       alert("Please provide correct credentials");
