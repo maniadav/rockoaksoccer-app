@@ -11,7 +11,7 @@ import BottomTabNavigator from "@components/navigation/BottomTabNavigator";
 import TopNavigation from "@components/navigation/TopNavigation";
 import SCREENS from "@constants/screen.constant";
 import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/sotrage.constant";
+import { LOCALSTORAGE } from "@constants/storage.constant";
 // screen
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -69,7 +69,10 @@ export default function RootStack() {
         <Stack.Screen
           name={SCREENS.home}
           component={HomeScreen}
-          options={{ header: () => <TopNavigation /> }}
+          options={{
+            headerShown: false,
+            // header: () => <TopNavigation />
+          }}
         />
         <Stack.Screen
           name={SCREENS.onBoarding}
@@ -109,7 +112,7 @@ export default function RootStack() {
         <Stack.Screen
           name={SCREENS.eventListing}
           component={EventListingScreen}
-          options={{ header: () => <TopNavigation /> }}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name={SCREENS.eventDetail}

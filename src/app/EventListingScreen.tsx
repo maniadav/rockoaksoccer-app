@@ -21,6 +21,8 @@ import SCREENS from "@constants/screen.constant";
 import SearchCard from "@components/search/SearchCard";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import { theme } from "@components/theme";
+import TopNavigation from "@components/navigation/TopNavigation";
+import TitleTile from "@components/common/TitleTile";
 // import { RootStackParamList } from "@types/stack.type";
 
 type EventListingScreenProps = {
@@ -67,6 +69,7 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
 
   return (
     <SafeAreaComponent>
+      <TopNavigation></TopNavigation>
       <FlatList
         style={{ padding: 4 }}
         data={data}
@@ -90,10 +93,7 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
         keyExtractor={(item: any) => `${item?.uniqueId}`}
         ListHeaderComponent={
           <>
-            <Text style={styles.logoText}>
-              Rock<Text style={styles.primaryText}>Oak</Text>
-              <Text style={styles.logoTextSmall}> Soccer</Text>
-            </Text>
+            <TitleTile />
             <Text style={styles.subheading}>Find</Text>
             <Text style={styles.trendingText}>Trending Events</Text>
             {/* <ModularSearchBar mode="bar" /> */}

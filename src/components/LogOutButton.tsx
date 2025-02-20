@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import Button from "./Button";
-import { LOCALSTORAGE } from "@constants/sotrage.constant"; // Ensure the path is correct
+import { LOCALSTORAGE } from "@constants/storage.constant"; // Ensure the path is correct
 import { removeAsyncStorageValue } from "@utils/localStorage";
 import { RootStackNavigationProp } from "types/stack.type";
 import { navigation } from "@utils/navigation.utils";

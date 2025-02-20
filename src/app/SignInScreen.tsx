@@ -11,7 +11,7 @@ import { theme } from "@components/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { emailValidator, passwordValidator } from "helpers/validator";
 import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/sotrage.constant";
+import { LOCALSTORAGE } from "@constants/storage.constant";
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;

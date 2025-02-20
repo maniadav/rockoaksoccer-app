@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
@@ -22,7 +18,7 @@ import {
   getAsyncStorageValue,
   setAsyncStorageValue,
 } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/sotrage.constant";
+import { LOCALSTORAGE } from "@constants/storage.constant";
 
 const SignUpScreen = ({ navigation }: any) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -102,6 +98,7 @@ const SignUpScreen = ({ navigation }: any) => {
         onChangeText={(text: string) => setName({ value: text, error: "" })}
         error={!!name.error}
         errorText={name.error}
+        autoCapitalize="none"
       />
 
       <TextInput
