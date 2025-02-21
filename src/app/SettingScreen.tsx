@@ -1,21 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
-import NavigationBar from "@components/NavigationBar";
-import { goBack, navigate } from "@components/navigation/rootNavigation";
-// import { SettingNavigation } from "@constants/index";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
-import TopNavigation from "@components/navigation/TopNavigation";
 import SCREENS from "@constants/screen.constant";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "types/stack.type";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { settingNavigationMap } from "@constants/index";
 

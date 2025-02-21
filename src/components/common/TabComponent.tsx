@@ -1,13 +1,13 @@
-import COLOUR from '@constants/colour.constant';
-import React, { useState } from 'react';
+import COLOUR from "@constants/colour.constant";
+import React, { useState } from "react";
 import {
   View,
   TouchableOpacity,
   Text,
   StyleSheet,
   useWindowDimensions,
-} from 'react-native';
-import { TabView, SceneMap } from 'react-native-tab-view';
+} from "react-native";
+import { TabView, SceneMap } from "react-native-tab-view";
 
 interface TabProps {
   onPress: () => void;
@@ -29,7 +29,7 @@ const Tab: React.FC<TabProps> = ({ onPress, isActive, tabKey, title }) => {
   const iconColor = isActive ? COLOUR.primary : COLOUR.secondary;
   return (
     <TouchableOpacity style={styles.tab} onPress={onPress}>
-      <Text style={{ color: iconColor, fontWeight: '700' }}>{title}</Text>
+      <Text style={{ color: iconColor, fontWeight: "700" }}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -70,8 +70,8 @@ const renderScene = SceneMap({
 const MyTabView = () => {
   const [index, setIndex] = useState(0);
   const routes = [
-    { key: 'upcoming', title: 'Upcoming Events' },
-    { key: 'past', title: 'Past Events' },
+    { key: "upcoming", title: "Upcoming Events" },
+    { key: "past", title: "Past Events" },
   ];
   const layout = useWindowDimensions();
   return (
@@ -90,25 +90,25 @@ export default MyTabView;
 
 const styles = StyleSheet.create({
   tabs: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    justifyContent: "space-between",
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: "#E5E5E5",
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#E5E5E5',
+    borderBottomColor: "#E5E5E5",
   },
   tab: {
-    width: '50%',
+    width: "50%",
     height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   sceneContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'black',
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "black",
     height: 1000,
-    width: '100%'
+    width: 100,
   },
 });

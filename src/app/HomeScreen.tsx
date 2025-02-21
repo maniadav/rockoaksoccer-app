@@ -29,7 +29,7 @@ const HomeScreen = ({ navigation }: any) => {
             gap: 20,
           }}
         >
-          <LogOutButton />
+          {/* <LogOutButton /> */}
         </View>
       </ScrollView>
     </SafeAreaComponent>
