@@ -10,6 +10,7 @@ import {
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import { theme } from "@components/theme";
+import userImg from "@images/front-cat.jpg";
 
 export default function ProfileCard() {
   const [user, setUser] = useState<any>(null);
@@ -17,12 +18,9 @@ export default function ProfileCard() {
   useEffect(() => {
     getAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, true).then((res) => {
       const data = res;
-      console.log({ data });
       setUser(data);
     });
   }, []);
-
-  console.log(user, user?.username);
 
   return (
     <View>
@@ -34,7 +32,13 @@ export default function ProfileCard() {
         <Text style={styles.proBadge}>PRO</Text>
         <Image
           style={styles.roundImage}
-          source={{ uri: "https://randomuser.me/api/portraits/women/79.jpg" }}
+          source={
+            user?.profileImage
+              ? {
+                  uri: user.profileImage,
+                }
+              : userImg
+          }
         />
       </View>
       <View style={styles.details}>
@@ -77,7 +81,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     left: 30,
-    backgroundColor: COLOUR.primary,
+    backgroundColor: "black",
     color: "white",
     paddingVertical: 3,
     paddingHorizontal: 7,
@@ -89,11 +93,9 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     borderRadius: 50,
-    // borderWidth: 1,
-    borderColor: COLOUR.primary,
-    padding: 7,
+    borderWidth: 3,
+    borderColor: "black",
     position: "absolute",
-    // top: '50%',
     bottom: 0,
     zIndex: 1,
   },
