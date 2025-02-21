@@ -7,6 +7,7 @@ import FeedScreen from "app/FeedScreen";
 import EventListingScreen from "app/EventListingScreen";
 import SettingScreen from "app/SettingScreen";
 import SCREENS from "@constants/screen.constant";
+import { theme } from "@components/theme";
 
 const Tab = createBottomTabNavigator();
 
@@ -38,14 +39,12 @@ const BottomTabNavigation = ({ route }: any) => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "rgb(230,62,85)",
+        tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: "black",
         tabBarStyle: {
           backgroundColor: "white",
-          paddingVertical: 10,
-          height: 70,
+          paddingTop: 5,
           fontSize: 16,
-          fontFamily: "Georgia",
           fontWeight: 300,
         },
         headerShown: false,
