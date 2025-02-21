@@ -11,8 +11,10 @@ import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import { theme } from "@components/theme";
 import userImg from "@images/front-cat.jpg";
+import { Feather } from "@expo/vector-icons";
+import { MODALS } from "@constants/screen.constant";
 
-export default function ProfileCard() {
+export default function ProfileCard({ navigation }: any) {
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -30,6 +32,13 @@ export default function ProfileCard() {
           style={styles.image}
         />
         <Text style={styles.proBadge}>PRO</Text>
+        <TouchableOpacity
+          style={styles.imageEditButton}
+          onPress={() => navigation.navigate(MODALS.editImage)}
+          activeOpacity={0.7}
+        >
+          <Feather name="edit" size={24} color="black" />
+        </TouchableOpacity>
         <Image
           style={styles.roundImage}
           source={
@@ -76,6 +85,20 @@ const styles = StyleSheet.create({
     height: "60%",
     zIndex: -1,
     backgroundColor: "black",
+  },
+  imageEditButton: {
+    position: "absolute",
+    bottom: "10%",
+    left: "60%",
+    zIndex: 3,
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 8,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   proBadge: {
     position: "absolute",

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
-import SCREENS from "@constants/screen.constant";
+import SCREENS, { MODALS } from "@constants/screen.constant";
 import { useNavigation } from "@react-navigation/native";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { settingNavigationMap } from "@constants/index";
@@ -45,7 +45,7 @@ const Setting = () => {
 
   const settingsOptions = [
     { title: "Auth", route: null },
-    { title: "Log Out", route: "Logout" },
+    { title: "Log Out", route: MODALS.logOut },
     { title: "Delete Account", route: "DeleteAccount" },
     { title: "Manage Notifications", route: null },
     { title: "Booking History", route: "BookingHistory" },

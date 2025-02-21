@@ -24,7 +24,7 @@ const ProfileScreen = ({ navigation }: any) => {
         <ScrollView>
           <View>
             {/* <TopNavigation /> */}
-            <ProfileCard />
+            <ProfileCard navigation={navigation}/>
           </View>
           <MyTabView />
         </ScrollView>

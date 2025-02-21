@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import RootStack from "./RootStack";
+import RootNavigation from "./RootStack";
 import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SCREENS from "@constants/screen.constant";
@@ -30,7 +30,7 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <RootStack initialRoute={initialRoute} />
+      <RootNavigation initialRoute={initialRoute} />
     </NavigationContainer>
   );
 }

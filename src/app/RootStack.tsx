@@ -10,7 +10,7 @@ import {
 import { useColorScheme } from "@components/useColorScheme";
 import BottomTabNavigator from "@components/navigation/BottomTabNavigator";
 import TopNavigation from "@components/navigation/TopNavigation";
-import SCREENS from "@constants/screen.constant";
+import SCREENS, { MODALS } from "@constants/screen.constant";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "constants/storage.constant";
 // screen
@@ -27,10 +27,15 @@ import SettingScreen from "./SettingScreen";
 import FeedScreen from "./FeedScreen";
 import BlogScreen from "./BlogDetailScreen";
 import BottomTabNavigation from "@components/navigation/BottomTabNavigation";
+import { createStackNavigator } from "@react-navigation/stack";
+import LogOutModal from "@components/modal/LogOutModal";
+import TopNavHeader from "@components/navigation/TopNavHeader";
+import EditImageModal from "@components/modal/EditImage";
 
 const Stack = createNativeStackNavigator();
+const RootStack = createStackNavigator();
 
-export default function RootStack({ initialRoute = SCREENS.main }: any) {
+export default function RootNavigation({ initialRoute = SCREENS.main }: any) {
   console.log({ initialRoute });
   const colorScheme = useColorScheme();
   // const [initialRoute, setInitialRoute] = useState<string | null>("Home");
@@ -71,6 +76,19 @@ export default function RootStack({ initialRoute = SCREENS.main }: any) {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName={initialRoute}>
+        <RootStack.Group screenOptions={{ presentation: "modal" }}>
+          <RootStack.Screen
+            name={MODALS.logOut}
+            component={LogOutModal}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name={MODALS.editImage}
+            component={EditImageModal}
+            options={{ headerShown: false }}
+          />
+        </RootStack.Group>
+
         <Stack.Screen
           name={SCREENS.onBoarding}
           component={OnBoardingScreen}
@@ -115,7 +133,6 @@ export default function RootStack({ initialRoute = SCREENS.main }: any) {
           name={SCREENS.main}
           component={BottomTabNavigation}
           options={{ headerShown: false }}
-          // initialParams={{ initialRoute }}
         />
       </Stack.Navigator>
     </ThemeProvider>

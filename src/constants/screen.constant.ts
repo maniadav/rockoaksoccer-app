@@ -1,4 +1,5 @@
 const SCREENS = {
+  logOut: "Log Out",
   main: "MainScreen",
   home: "Home",
   onBoarding: "OnBoarding",
@@ -13,6 +14,11 @@ const SCREENS = {
   search: "Search",
   feed: "Feed",
   blog: "Blog",
+};
+
+export const MODALS = {
+  logOut: "LogOut",
+  editImage: "EditImage",
 };
 
 export default SCREENS;
