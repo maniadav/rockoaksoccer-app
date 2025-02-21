@@ -19,6 +19,7 @@ const SCREENS = {
 export const MODALS = {
   logOut: "LogOut",
   editImage: "EditImage",
+  editProfile: "EditProfile",
 };
 
 export default SCREENS;

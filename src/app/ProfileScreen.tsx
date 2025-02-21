@@ -1,20 +1,7 @@
 import React from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  Image,
-} from "react-native";
-import Background from "../components/Background";
-import Logo from "../components/Logo";
-import Header from "../components/Header";
-import Button from "../components/Button";
-import Paragraph from "../components/Paragraph";
+import { View, StyleSheet, ScrollView } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ProfileCard from "@components/profile/ProfileCard";
-import TopNavigation from "@components/navigation/TopNavigation";
 import MyTabView from "@components/common/TabComponent";
 
 const ProfileScreen = ({ navigation }: any) => {
@@ -24,7 +11,7 @@ const ProfileScreen = ({ navigation }: any) => {
         <ScrollView>
           <View>
             {/* <TopNavigation /> */}
-            <ProfileCard navigation={navigation}/>
+            <ProfileCard navigation={navigation} />
           </View>
           <MyTabView />
         </ScrollView>

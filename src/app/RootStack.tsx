@@ -31,6 +31,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import LogOutModal from "@components/modal/LogOutModal";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import EditImageModal from "@components/modal/EditImage";
+import EditProfile from "@components/modal/EditProfile";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createStackNavigator();
@@ -85,6 +86,11 @@ export default function RootNavigation({ initialRoute = SCREENS.main }: any) {
           <RootStack.Screen
             name={MODALS.editImage}
             component={EditImageModal}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name={MODALS.editProfile}
+            component={EditProfile}
             options={{ headerShown: false }}
           />
         </RootStack.Group>

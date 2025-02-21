@@ -1,97 +1,139 @@
+import React, { useState, useEffect } from "react";
+import { View, Text } from "react-native";
+import InputComp from "@components/common/InputComp";
 import TopNavHeader from "@components/navigation/TopNavHeader";
-import React, { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import TextInput from "@components/TextInput";
+import { CustomButton } from "@components/common/Component";
+import { getAsyncStorageValue } from "@utils/localStorage";
+import { LOCALSTORAGE } from "@constants/storage.constant";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import Entypo from "@expo/vector-icons/Entypo";
 
-const EditProfile = () => {
-  const [responseBody, setResponseBody] = useState<any>({});
+interface FormValues {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
 
-  const inputChangeHandler = (name: string, value: any) => {
-    setResponseBody({ ...responseBody, [name]: value });
+  address?: string;
+}
+
+interface FormErrors {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
+  address?: string;
+}
+
+interface ShowPasswordState {
+  password?: boolean;
+}
+
+const EditProfile: React.FC = () => {
+  const [values, setValues] = useState<FormValues>({});
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [data, setData] = useState<any | null>(null);
+  const [show, setShow] = useState<ShowPasswordState>({});
+
+  const onChangeHandler = (text: string, field: keyof FormValues) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
+    setValues((prevValues) => ({ ...prevValues, [field]: text }));
   };
 
-  const updateProfileData = async () => {
-    console.log(responseBody);
-    // let rockOakApi = new UtilityAPI();
-    // try {
-    //   const profileResponse = await rockOakApi.updateProfile(responseBody);
-    //   if (profileResponse?.data?.data) {
-    //     await AsyncStorage.setItem(
-    //       "LOGGED_IN_USER",
-    //       JSON.stringify(profileResponse.data.data)
-    //     );
-    //     Alert.alert("Success", "Profile updated");
-    //   }
-    // } catch (error) {
-    //   Alert.alert("Error", "Something went wrong");
-    // }
+  const validate = (field: keyof FormValues, message: string) => {
+    if (!values[field]) {
+      setErrors((prevErrors) => ({ ...prevErrors, [field]: message }));
+    }
   };
+
+  useEffect(() => {
+    const featchData = () =>
+      getAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, true).then((res) =>
+        setData(res)
+      );
+    featchData();
+  }, []);
 
   return (
-    <View style={{ padding: 20 }}>
-      <TopNavHeader title="Edit Profile Image" />
-      <TextInput
-        label="firstName"
-        returnKeyType="next"
-        value={responseBody.firstName}
-        onChangeText={(text: string) => inputChangeHandler("firstName", text)}
-        // error={!!credentials.firstName.error}
-        // errorText={credentials.firstName.error}
-        autoCapitalize="none"
-        autoCompleteType="firstName"
-        textContentType="emailAddress"
-        keyboardType="text"
-        // description="Please enter your email"
-      />
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={responseBody.firstName}
-        onChangeText={(text: string) => inputChangeHandler("email", text)}
-        // error={!!credentials.email.error}
-        // errorText={credentials.email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-        // description="Please enter your email"
-      />
-      <TextInput
-        placeholder="Last Name"
-        onChangeText={(value) => inputChangeHandler("lastName", value)}
-        style={{ borderBottomWidth: 1, marginTop: 10 }}
-      />
-      <TextInput
-        placeholder="Email"
-        onChangeText={(value) => inputChangeHandler("email", value)}
-        style={{ borderBottomWidth: 1, marginTop: 10 }}
-        keyboardType="email-address"
-      />
-      <TextInput
-        placeholder="Mobile Number"
-        onChangeText={(value) => inputChangeHandler("number", value)}
-        style={{ borderBottomWidth: 1, marginTop: 10 }}
-        keyboardType="phone-pad"
-      />
-      <TextInput
-        placeholder="Address"
-        onChangeText={(value) => inputChangeHandler("address", value)}
-        style={{ borderBottomWidth: 1, marginTop: 10, height: 60 }}
-        multiline
-      />
+    <View style={{ backgroundColor: "#F8F8F8", height: "100%" }}>
+      <TopNavHeader title="Edit Profile" />
 
-      <TouchableOpacity
-        onPress={updateProfileData}
+      <View
         style={{
-          marginTop: 20,
-          padding: 10,
-          backgroundColor: "blue",
-          borderRadius: 5,
+          height: "100%",
+          width: "100%",
+          display: "flex",
           alignItems: "center",
+          paddingVertical: 30,
+          paddingHorizontal: 10,
         }}
       >
-        <Text style={{ color: "white" }}>Update</Text>
-      </TouchableOpacity>
+        <InputComp
+          label="First Name"
+          onChangeHandler={(text: string) => onChangeHandler(text, "firstName")}
+          validate={() => validate("firstName", "Enter firstName name")}
+          errorMessage={errors.firstName}
+          // leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
+          placeholder={data?.firstName || ""}
+        />
+        <InputComp
+          label="Last Name"
+          onChangeHandler={(text: string) => onChangeHandler(text, "lastName")}
+          validate={() => validate("lastName", "Enter lastName name")}
+          errorMessage={errors.firstName}
+          // leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
+          placeholder={data?.lastName || ""}
+        />
+        <InputComp
+          label="Email"
+          leftIcon={<Fontisto name="email" size={24} color="black" />}
+          onChangeHandler={(text: string) => onChangeHandler(text, "email")}
+          validate={() => validate("email", "Please enter your email")}
+          errorMessage={errors.email}
+          placeholder={data?.email || ""}
+        />
+        <InputComp
+          numLines={2}
+          outlined
+          label="Address"
+          bgColor="white"
+          value={values.address}
+          leftIcon={<Entypo name="address" size={24} color="black" />}
+          onChangeHandler={(text: string) => onChangeHandler(text, "address")}
+          errorMessage={errors.address}
+          validate={() => validate("address", "Enter a address")}
+          placeholder={data?.address || ""}
+        />
+        {/* <InputComp
+        label="Password"
+        outlined
+        leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
+        rightIcon={
+          <Pressable
+            onPress={() =>
+              setShow((prev) => ({ ...prev, password: !prev.password }))
+            }
+          >
+            {show.password ? (
+              <Ionicons name="home-outline" size={10} color={"black"} />
+            ) : (
+              <Ionicons name="home-outline" size={10} color={"black"} />
+            )}
+          </Pressable>
+        }
+        secure={!show.password}
+        onChangeHandler={(text: string) => onChangeHandler(text, "password")}
+        bgColor="#fff1d2"
+      /> */}
+        <Text style={{ color: "green", textAlign: "center" }}>
+          Only edit fields you want to update
+        </Text>
+        <View style={{ padding: 30 }}>
+          <CustomButton onPress={() => alert("hey")}>
+            <Text style={{ color: "white" }}>Update</Text>
+          </CustomButton>
+        </View>
+      </View>
     </View>
   );
 };

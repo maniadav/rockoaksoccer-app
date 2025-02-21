@@ -52,7 +52,7 @@ export const ButtonEditProfile: React.FC<any> = ({
   style,
   ...props
 }) => (
-  <TouchableOpacity style={[styles.buttonEditProfile, style]} {...props}>
+  <TouchableOpacity style={[style, styles.buttonEditProfile]} {...props}>
     {children}
   </TouchableOpacity>
 );
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     borderTopColor: "#CCC",
   },
   button: {
-    backgroundColor: "#03BFCB",
+    backgroundColor: "black",
     borderWidth: 1,
     borderColor: "#03BFCB",
     borderRadius: 3,

@@ -1,12 +1,6 @@
-import COLOUR from "@constants/colour.constant";
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import {
-  ButtonEditProfile,
-  ButtonEditProfileText,
-  CustomButton,
-  CustomText,
-} from "../common/Component";
+import { CustomButton, CustomText } from "../common/Component";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import { theme } from "@components/theme";
@@ -31,6 +25,7 @@ export default function ProfileCard({ navigation }: any) {
           source={require("../../../assets/images/background.jpg")}
           style={styles.image}
         />
+        {/* <View style={styles.image}></View> */}
         <Text style={styles.proBadge}>PRO</Text>
         <TouchableOpacity
           style={styles.imageEditButton}
@@ -54,13 +49,16 @@ export default function ProfileCard({ navigation }: any) {
         <Text style={styles.name}>{`Hey, ${
           (user && user.username) || "User"
         }`}</Text>
-        <Text style={styles.location}>New York</Text>
+
+        <Text style={styles.location}>{`${
+          (user && user.address) || "please update your address"
+        }`}</Text>
         <Text style={styles.description}>{`${
           (user && user.email) || "please add your email"
         }`}</Text>
         <View style={styles.buttonContainer}>
-          <CustomButton onPress={() => alert("Edit Profile Pressed")}>
-            <CustomText>Edit Profile</CustomText>
+          <CustomButton onPress={() => navigation.navigate(MODALS.editProfile)}>
+            <CustomText style={{ color: "white" }}>Edit Profile</CustomText>
           </CustomButton>
         </View>
       </View>
