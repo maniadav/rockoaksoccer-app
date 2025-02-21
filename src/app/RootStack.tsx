@@ -26,25 +26,28 @@ import EventDetailScreen from "./EventDetailScreen";
 import SettingScreen from "./SettingScreen";
 import FeedScreen from "./FeedScreen";
 import BlogScreen from "./BlogDetailScreen";
-import { BottomTabNavigation } from "@components/navigation/BottomTabNavigation";
+import BottomTabNavigation from "@components/navigation/BottomTabNavigation";
 
 const Stack = createNativeStackNavigator();
 
-export default function RootStack() {
+export default function RootStack({ initialRoute = SCREENS.main }: any) {
+  console.log({ initialRoute });
   const colorScheme = useColorScheme();
-  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+  // const [initialRoute, setInitialRoute] = useState<string | null>("Home");
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const storedUser = await getAsyncStorageValue(
-        LOCALSTORAGE.LOGGED_IN_USER,
-        true
-      );
-      const { email } = storedUser || {};
-      setInitialRoute(email ? SCREENS.eventListing : SCREENS.onBoarding);
-    };
-    checkLoginStatus();
-  }, []);
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     const storedUser = await getAsyncStorageValue(
+  //       LOCALSTORAGE.LOGGED_IN_USER,
+  //       true
+  //     );
+  //     const { email } = storedUser || {};
+  //     console.log({ storedUser }, storedUser.email);
+  //     // setInitialRoute(email ? SCREENS.home : SCREENS.onBoarding);
+  //   };
+
+  //   checkLoginStatus();
+  // }, []);
 
   const showBottomTabNav = useMemo(
     () => [
@@ -67,30 +70,12 @@ export default function RootStack() {
 
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack.Navigator>
-        {/* <Stack.Screen
-          name={SCREENS.home}
-          component={HomeScreen}
-          options={{
-            headerShown: false,
-            // header: () => <TopNavigation />
-          }}
-        /> */}
+      <Stack.Navigator initialRouteName={initialRoute}>
         <Stack.Screen
           name={SCREENS.onBoarding}
           component={OnBoardingScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
-          name={SCREENS.setting}
-          component={SettingScreen}
-          options={{ headerShown: false }}
-        />
-        {/* <Stack.Screen
-          name={SCREENS.profile}
-          component={ProfileScreen}
-          options={{ headerShown: false }}
-        /> */}
         <Stack.Screen
           name={SCREENS.signUp}
           component={SignUpScreen}
@@ -112,11 +97,6 @@ export default function RootStack() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={SCREENS.eventListing}
-          component={EventListingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name={SCREENS.eventDetail}
           component={EventDetailScreen}
           options={{
@@ -127,22 +107,17 @@ export default function RootStack() {
           }}
         />
         <Stack.Screen
-          name={SCREENS.feed}
-          component={FeedScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={SCREENS.blog}
+          name={SCREENS.profile}
           component={BlogScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name={SCREENS.main}
-          component={BottomTabNavigation} // Embed Bottom Tabs inside Stack
-          options={{ headerShown: false }} // Hide Stack header
+          component={BottomTabNavigation}
+          options={{ headerShown: false }}
+          // initialParams={{ initialRoute }}
         />
       </Stack.Navigator>
-      {/* {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigation />} */}
     </ThemeProvider>
   );
 }

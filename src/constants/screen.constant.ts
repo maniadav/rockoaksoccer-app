@@ -1,5 +1,5 @@
 const SCREENS = {
-  main: "MainTab",
+  main: "MainScreen",
   home: "Home",
   onBoarding: "OnBoarding",
   signIn: "SignIn",

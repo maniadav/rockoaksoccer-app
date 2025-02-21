@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
+import React from "react";
+import { View, Text, ActivityIndicator, StyleSheet } from "react-native";
 
 const Loader = () => {
   return (
@@ -16,14 +16,14 @@ const Loader = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     height: 384,
   },
   text: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1f2937',
+    fontWeight: "bold",
+    color: "#1f2937",
   },
   spinner: {
     marginHorizontal: 4,

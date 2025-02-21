@@ -5,7 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 import SCREENS from "@constants/screen.constant";
 import userImg from "@images/user.png";
 import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/storage.constant";
+import { LOCALSTORAGE } from "constants/storage.constant";
 
 const TopNavigation = () => {
   const [user, setUser] = useState();
