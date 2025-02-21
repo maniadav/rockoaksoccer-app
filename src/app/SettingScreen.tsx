@@ -52,7 +52,7 @@ const Setting = () => {
     { title: "User Preferences", route: "Preferences" },
     { title: "Profile", route: null },
     { title: "View Profile", route: SCREENS.profile },
-    { title: "Edit Profile", route: "EditProfileScreen" },
+    { title: "Edit Profile", route: MODALS.editProfile },
   ];
 
   return (

@@ -60,7 +60,7 @@ const EditImage = () => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ padding: 10 }}>
       <TopNavHeader title="Edit Profile Image" />
 
       <View
