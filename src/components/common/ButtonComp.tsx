@@ -1,3 +1,4 @@
+import COLOUR from "@constants/colour.constant";
 import React from "react";
 import {
   TouchableOpacity,
@@ -18,26 +19,28 @@ interface ButtonProps {
   textColor?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
+  borderRadius?: number;
 }
 
-const Button: React.FC<ButtonProps> = ({
+const ButtonComp: React.FC<ButtonProps> = ({
   title,
   onPress,
   disabled = false,
   loading = false,
   outlined = false,
-  bgColor = "#6A50A8",
+  bgColor = COLOUR.primary,
   textColor = "white",
   rounded,
   leftIcon,
   rightIcon,
+  borderRadius = 0,
 }) => {
   const containerStyle = [
     styles.button,
     {
       backgroundColor: outlined ? "transparent" : bgColor,
       borderColor: bgColor,
-      borderRadius: rounded ? 50 : 6,
+      borderRadius: rounded ? 50 : borderRadius,
     },
 
     outlined && styles.outlined,
@@ -72,8 +75,9 @@ const styles = StyleSheet.create({
     height: 45,
     justifyContent: "center",
     alignItems: "center",
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     borderWidth: 1,
+    margin: 4,
   },
   outlined: {
     borderWidth: 1,
@@ -86,12 +90,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontSize: 16,
-    fontWeight: "500",
+    fontSize: 12,
+    fontWeight: "600",
   },
   icon: {
     marginHorizontal: 8,
   },
 });
 
-export default Button;
+export default ButtonComp;

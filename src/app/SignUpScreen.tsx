@@ -19,6 +19,7 @@ import {
   setAsyncStorageValue,
 } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
+import InputComp from "@components/common/InputComp";
 
 const SignUpScreen = ({ navigation }: any) => {
   const [name, setName] = useState({ value: "", error: "" });
@@ -91,7 +92,15 @@ const SignUpScreen = ({ navigation }: any) => {
       <BackButton />
       <Logo />
       <Header>Join the Journey to Greatness!</Header>
-      <TextInput
+      <InputComp
+        label="Last Name"
+        onChangeHandler={(text: string) => setName({ value: text, error: "" })}
+        // validate={() => validate("lastName", "Enter lastName name")}
+        errorMessage={name.error}
+        // leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
+        placeholder={name.value || ""}
+      />
+      {/* <TextInput
         label="Username"
         returnKeyType="next"
         value={name.value}
@@ -99,7 +108,7 @@ const SignUpScreen = ({ navigation }: any) => {
         error={!!name.error}
         errorText={name.error}
         autoCapitalize="none"
-      />
+      /> */}
 
       <TextInput
         label="Email"

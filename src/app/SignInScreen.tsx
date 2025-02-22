@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { TouchableOpacity, StyleSheet, View, SafeAreaView } from "react-native";
+import { TouchableOpacity, StyleSheet, View } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "@components/Background";
 import Logo from "@components/Logo";
 import Header from "@components/Header";
-import Button from "@components/Button";
 import TextInput from "@components/TextInput";
 import BackButton from "@components/BackButton";
 import { theme } from "@components/theme";
@@ -13,7 +12,8 @@ import { emailValidator, passwordValidator } from "helpers/validator";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "constants/storage.constant";
 import SCREENS from "@constants/screen.constant";
-import { glassStyle } from "./HomeCss";
+import ButtonComp from "@components/common/ButtonComp";
+import InputComp from "@components/common/InputComp";
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -118,6 +118,24 @@ export default function SignInScreen({ navigation }: Props) {
             secureTextEntry
             description="Please enter your password"
           />
+          {/* <InputComp
+            // outlined
+            bgColor="#FFFAFA"
+            label="Email"
+            onChangeHandler={(text: string) => handleChange("email", text)}
+            // validate={() => validate("lastName", "Enter lastName name")}
+            errorMessage={credentials.email.error}
+            placeholder={credentials.email.value || ""}
+          />
+          <InputComp
+            // outlined
+            bgColor="#FFFAFA"
+            label="Password"
+            onChangeHandler={(text: string) => handleChange("email", text)}
+            // validate={() => validate("lastName", "Enter lastName name")}
+            errorMessage={credentials.password.error}
+            placeholder={credentials.password.value || ""}
+          /> */}
           <View style={styles.forgotPassword}>
             <TouchableOpacity
               onPress={() => navigation.navigate("ResetPasswordScreen")}
@@ -125,9 +143,12 @@ export default function SignInScreen({ navigation }: Props) {
               <Text style={styles.forgot}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
-          <Button mode="contained" onPress={onLoginPressed}>
-            Sign In
-          </Button>
+
+          <ButtonComp
+            borderRadius={20}
+            title={"Sign In"}
+            onPress={() => onLoginPressed()}
+          />
           <View style={styles.row}>
             <Text>Don’t have an account? </Text>
             <TouchableOpacity

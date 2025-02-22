@@ -44,7 +44,7 @@ const Input: React.FC<InputProps> = ({
     numLines > 1 ? { height: 30 * numLines, paddingTop: 10 } : {};
 
   return (
-    <View style={{ padding: 10, minWidth: 300, width: "100%" }}>
+    <View style={{ paddingVertical: 10, minWidth: 300, width: "100%" }}>
       {label && <Text style={styles.buttonLabel}>{label}</Text>}
       <View
         style={[

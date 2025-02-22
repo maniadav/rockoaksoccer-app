@@ -5,17 +5,17 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   View,
-  Text,
   Dimensions,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import data from "../../constants/slider.data.constant";
 import SlideItem from "./SlideItem";
 import Pagination from "./Pagination";
-import Button from "../Button";
-import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { ParamListBase } from "@react-navigation/native";
 import SCREENS from "@constants/screen.constant";
 import { StackNavigationProp } from "@react-navigation/stack";
+import ButtonComp from "@components/common/ButtonComp";
+import COLOUR from "@constants/colour.constant";
 
 type ViewableItemsChangedProps = {
   viewableItems: Array<{
@@ -78,18 +78,18 @@ const Slider = ({
 
       <View style={styles.content}>
         <Pagination data={data} scrollX={scrollX} index={index} />
-        <Button
-          mode="contained"
+        <ButtonComp
+          borderRadius={20}
+          bgColor={COLOUR.primary || ""}
+          title={"Sign In"}
           onPress={() => navigation.navigate(SCREENS.signIn)}
-        >
-          Login
-        </Button>
-        <Button
-          mode="outlined"
+        />
+        <ButtonComp
+          borderRadius={20}
+          bgColor={COLOUR.primary || ""}
+          title={"Sign Up"}
           onPress={() => navigation.navigate(SCREENS.signUp || "")}
-        >
-          Sign Up
-        </Button>
+        />
       </View>
     </View>
   );
