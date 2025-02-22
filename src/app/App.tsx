@@ -1,36 +1,45 @@
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import RootNavigation from "./RootStack";
-import { useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 import SCREENS from "@constants/screen.constant";
 import Loader from "@components/common/Loader";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 
 export default function App() {
-  const [initialRoute, setInitialRoute] = React.useState<string | null>(null);
+  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const checkLoginStatus = async () => {
-      const storedUser = await getAsyncStorageValue(
-        LOCALSTORAGE.LOGGED_IN_USER,
-        true
-      );
-      const { email } = storedUser || {};
-      console.log({ storedUser }, storedUser.email);
-      const initialScreen = email ? SCREENS.main : SCREENS.onBoarding;
-      setInitialRoute(initialScreen);
+      try {
+        const storedUser = await getAsyncStorageValue(
+          LOCALSTORAGE.LOGGED_IN_USER,
+          true
+        );
+        const { email } = storedUser || {};
+        const initialScreen = email ? SCREENS.main : SCREENS.onBoarding;
+        setInitialRoute(initialScreen);
+      } catch (error) {
+        console.error("Error fetching async storage value:", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     checkLoginStatus();
   }, []);
 
-  if (!initialRoute) return <Loader />;
+  if (isLoading) return <Loader />;
 
   return (
     <NavigationContainer>
-      <RootNavigation initialRoute={initialRoute} />
+      {initialRoute ? (
+        <RootNavigation initialRoute={initialRoute} />
+      ) : (
+        <Loader />
+      )}
     </NavigationContainer>
   );
 }
