@@ -1,24 +1,25 @@
-import React from 'react';
+import React from "react";
 import {
   View,
   Text,
   TextInput,
   StyleSheet,
   TouchableOpacity,
-} from 'react-native';
-import Svg, { Circle, Line } from 'react-native-svg';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import Svg, { Circle, Line } from "react-native-svg";
+import { useNavigation } from "@react-navigation/native";
+import SCREENS from "@constants/screen.constant";
 
 export default function SearchCard() {
   const navigation = useNavigation<any>();
 
   const handleSearchPress = () => {
-    navigation.navigate('SearchScreen');
+    navigation.navigate(SCREENS.search);
   };
   return (
     <TouchableOpacity style={styles.card} onPress={handleSearchPress}>
       <View style={styles.cardInner}>
-        {/* <Text style={styles.label}>Search for your favourite food</Text> */}
+        {/* <Text style={styles.label}>Find your favourite event</Text> */}
         <View style={styles.container}>
           <View style={styles.icon}>
             <Svg
@@ -53,10 +54,10 @@ const styles = StyleSheet.create({
   card: {
     padding: 1,
     borderRadius: 10,
-    backgroundColor: 'rgb(238,232,245)',
-    overflow: 'hidden',
+    backgroundColor: "rgb(238,232,245)",
+    overflow: "hidden",
     // width: 380,
-    shadowColor: '#c8d8e7',
+    shadowColor: "#c8d8e7",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 12,
@@ -69,25 +70,25 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   label: {
-    fontFamily: 'Hind',
-    color: '#3c4b66',
+    fontFamily: "Hind",
+    color: "#3c4b66",
     marginBottom: 12,
     fontSize: 16,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   icon: {
     minWidth: 46,
     // minHeight: 46,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     borderRadius: 10,
     // marginRight: 12,
     // backgroundColor: '#e3edf7',
-    shadowColor: '#c8d8e7',
+    shadowColor: "#c8d8e7",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.6,
     shadowRadius: 6,
@@ -96,8 +97,8 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 1,
     borderRadius: 10,
-    overflow: 'hidden',
-    position: 'relative',
+    overflow: "hidden",
+    position: "relative",
   },
   input: {
     // backgroundColor: '#e3edf7',
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     // fontFamily: 'Orbitron',
     fontSize: 16,
-    fontWeight: '500',
-    color: 'rgb(82,79,86)',
+    fontWeight: "500",
+    color: "rgb(82,79,86)",
   },
 });

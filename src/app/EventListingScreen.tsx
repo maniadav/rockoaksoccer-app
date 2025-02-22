@@ -1,19 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  ImageBackground,
-  Image,
-  FlatList,
-  ScrollView,
-} from "react-native";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import ModularSearchBar from "@components/ModularSearchbar";
-// import { RootStackParamList } from "@types/stack.type";
 import FeaturedEvent from "./FeaturedEvent";
-import EventsRow from "../components/event/EventsRow";
 import { getAllEvent } from "@api/categories";
 import { commonStyles } from "./HomeCss";
 import EventCard from "@components/event/EventCard";
@@ -23,7 +11,6 @@ import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import { theme } from "@components/theme";
 import TopNavigation from "@components/navigation/TopNavigation";
 import TitleTile from "@components/common/TitleTile";
-// import { RootStackParamList } from "@types/stack.type";
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<any, "EventListing">;
@@ -96,7 +83,6 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
             <TitleTile />
             <Text style={styles.subheading}>Find</Text>
             <Text style={styles.trendingText}>Trending Events</Text>
-            {/* <ModularSearchBar mode="bar" /> */}
             <SearchCard />
             <View style={commonStyles.firstView}>
               <FeaturedEvent data={featuredEvent[0]} />

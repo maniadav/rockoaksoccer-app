@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { settingNavigationMap } from "@constants/index";
 
-// Type definition for each setting item
 type SettingItem = {
   icon?: string;
   name: string;
@@ -48,7 +47,7 @@ const Setting = () => {
     { title: "Log Out", route: MODALS.logOut },
     { title: "Delete Account", route: "DeleteAccount" },
     { title: "Manage Notifications", route: null },
-    { title: "Booking History", route: "BookingHistory" },
+    { title: "Booking History", route: SCREENS.profile },
     { title: "User Preferences", route: "Preferences" },
     { title: "Profile", route: null },
     { title: "View Profile", route: SCREENS.profile },
