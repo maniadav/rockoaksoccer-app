@@ -1,11 +1,9 @@
 import React, { useState } from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Pressable } from "react-native";
 import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
-import Button from "../components/Button";
-import TextInput from "../components/TextInput";
 import BackButton from "../components/BackButton";
 import { theme } from "@components/theme";
 import Toast from "react-native-toast-message";
@@ -20,21 +18,51 @@ import {
 } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import InputComp from "@components/common/InputComp";
+import ButtonComp from "@components/common/ButtonComp";
+import SCREENS from "@constants/screen.constant";
+import Fontisto from "@expo/vector-icons/Fontisto";
+import Feather from "@expo/vector-icons/Feather";
+
+interface FormValues {
+  username: string;
+  email: string;
+  password: string;
+}
+
+interface FormErrors {
+  username?: string;
+  email?: string;
+  password?: string;
+}
 
 const SignUpScreen = ({ navigation }: any) => {
-  const [name, setName] = useState({ value: "", error: "" });
-  const [email, setEmail] = useState({ value: "", error: "" });
-  const [password, setPassword] = useState({ value: "", error: "" });
+  const [values, setValues] = useState<FormValues>({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+
+  const [show, setShow] = useState<boolean>();
+
+  const onChangeHandler = (text: string, field: keyof FormValues) => {
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
+
+    setValues((prevValues) => ({ ...prevValues, [field]: text }));
+  };
 
   const onSignUpPressed = async () => {
-    const nameError = usernameValidator(name.value);
-    const emailError = emailValidator(email.value);
-    const passwordError = passwordValidator(password.value);
+    const nameError = usernameValidator(values.username);
+    const emailError = emailValidator(values.email);
+    const passwordError = passwordValidator(values.password);
 
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError });
-      setEmail({ ...email, error: emailError });
-      setPassword({ ...password, error: passwordError });
+    if (nameError || emailError || passwordError) {
+      setErrors((prev) => ({
+        username: nameError,
+        email: emailError,
+        password: passwordError,
+      }));
       return;
     }
 
@@ -45,7 +73,7 @@ const SignUpScreen = ({ navigation }: any) => {
 
     if (existingUser) {
       const { email: storedEmail, username: storedUsername } = existingUser;
-      if (storedEmail === email.value || storedUsername === name.value) {
+      if (storedEmail === values.email || storedUsername === values.username) {
         Toast.show({
           type: "error",
           text1: "Something went wrong!",
@@ -59,17 +87,14 @@ const SignUpScreen = ({ navigation }: any) => {
       await setAsyncStorageValue(
         LOCALSTORAGE.LOGGED_IN_USER,
         {
-          username: name.value,
-          email: email.value,
-          password: password.value,
+          ...values,
         },
         true
       );
 
       await setAsyncStorageValue(
         LOCALSTORAGE.MFA_ACCESS_TOKEN,
-        "mfatokenfromapiresponse",
-        true
+        "mfatokenfromapiresponse"
       );
 
       Toast.show({
@@ -77,7 +102,7 @@ const SignUpScreen = ({ navigation }: any) => {
         text2: "Your account has been created successfully!",
       });
 
-      navigation.replace("SignInScreen");
+      navigation.replace(SCREENS.signIn);
     } catch (error) {
       Toast.show({
         type: "error",
@@ -88,73 +113,108 @@ const SignUpScreen = ({ navigation }: any) => {
 
   return (
     <Background>
-      <Toast />
-      <BackButton />
-      <Logo />
-      <Header>Join the Journey to Greatness!</Header>
-      <InputComp
-        label="Last Name"
-        onChangeHandler={(text: string) => setName({ value: text, error: "" })}
-        // validate={() => validate("lastName", "Enter lastName name")}
-        errorMessage={name.error}
-        // leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
-        placeholder={name.value || ""}
-      />
-      {/* <TextInput
-        label="Username"
-        returnKeyType="next"
-        value={name.value}
-        onChangeText={(text: string) => setName({ value: text, error: "" })}
-        error={!!name.error}
-        errorText={name.error}
-        autoCapitalize="none"
-      /> */}
-
-      <TextInput
-        label="Email"
-        returnKeyType="next"
-        value={email.value}
-        onChangeText={(text: string) => setEmail({ value: text, error: "" })}
-        error={!!email.error}
-        errorText={email.error}
-        autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
-      />
-
-      <TextInput
-        label="Password"
-        returnKeyType="done"
-        value={password.value}
-        onChangeText={(text: string) => setPassword({ value: text, error: "" })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
-      />
-
-      <Button
-        mode="contained"
-        onPress={onSignUpPressed}
-        style={{ marginTop: 24 }}
+      <View
+        style={{
+          width: "100%",
+          height: "90%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 30,
+          position: "relative",
+        }}
       >
-        Sign Up
-      </Button>
+        <BackButton />
+        <View style={[styles.container]}>
+          <Logo />
+          <Header>Join the Journey to Greatness!</Header>
 
-      <View style={styles.row}>
-        <Text>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.replace("SignInScreen")}>
-          <Text style={styles.link}>Sign In</Text>
-        </TouchableOpacity>
+          <InputComp
+            label="Username"
+            onChangeHandler={(text: string) =>
+              onChangeHandler(text, "username")
+            }
+            errorMessage={errors.username}
+          />
+          <InputComp
+            label="Email"
+            leftIcon={<Fontisto name="email" size={24} color="black" />}
+            onChangeHandler={(text: string) => onChangeHandler(text, "email")}
+            errorMessage={errors.email}
+          />
+          <InputComp
+            label="Password"
+            outlined
+            errorMessage={errors.password}
+            rightIcon={
+              <Pressable onPress={() => setShow((prev) => !show)}>
+                {show ? (
+                  <Feather name="eye" size={24} color="black" />
+                ) : (
+                  <Feather name="eye-off" size={24} color="black" />
+                )}
+              </Pressable>
+            }
+            secure={!show}
+            onChangeHandler={(text: string) =>
+              onChangeHandler(text, "password")
+            }
+          />
+          <View style={styles.forgotPassword}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ResetPasswordScreen")}
+            >
+              <Text style={styles.forgot}>Forgot your password?</Text>
+            </TouchableOpacity>
+          </View>
+
+          <ButtonComp
+            borderRadius={20}
+            title={"Sign Up"}
+            onPress={() => onSignUpPressed()}
+          />
+
+          <View style={styles.row}>
+            <Text>Already have an account? </Text>
+            <TouchableOpacity
+              onPress={() => navigation.replace(SCREENS.signIn)}
+            >
+              <Text style={styles.link}>Sign In</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </Background>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    width: "100%",
+    // height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingVertical: 30,
+    backgroundColor: "white",
+    paddingHorizontal: 20,
+    borderRadius: 30,
+  },
+  safeArea: {
+    flex: 1,
+  },
+  forgotPassword: {
+    width: "100%",
+    alignItems: "flex-end",
+    marginBottom: 24,
+  },
   row: {
     flexDirection: "row",
     marginTop: 4,
+  },
+  forgot: {
+    fontSize: 13,
+    color: theme.colors.secondary,
   },
   link: {
     fontWeight: "bold",

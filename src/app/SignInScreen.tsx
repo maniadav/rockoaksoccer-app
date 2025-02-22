@@ -13,7 +13,6 @@ import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "constants/storage.constant";
 import SCREENS from "@constants/screen.constant";
 import ButtonComp from "@components/common/ButtonComp";
-import InputComp from "@components/common/InputComp";
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -48,7 +47,7 @@ export default function SignInScreen({ navigation }: Props) {
       LOCALSTORAGE.LOGGED_IN_USER,
       true
     );
-
+    console.log({ storedUser });
     const { email: userEmail, password: userPassword } = storedUser || {};
 
     if (

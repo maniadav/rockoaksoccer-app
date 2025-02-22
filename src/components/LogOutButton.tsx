@@ -13,6 +13,7 @@ export default function LogOutButton() {
       await removeAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER);
       await removeAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
       navigation.navigate(SCREENS.signIn);
+      alert("You have been logged out successfully.");
     } catch (error) {
       console.error("Error during logout:", error);
       alert("Something went wrong while logging out. Please try again.");

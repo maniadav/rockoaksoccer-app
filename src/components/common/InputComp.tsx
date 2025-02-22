@@ -23,7 +23,7 @@ interface InputProps extends TextInputProps {
   bgColor?: string;
 }
 
-const Input: React.FC<InputProps> = ({
+const InputComp: React.FC<InputProps> = ({
   label,
   placeholder,
   onChangeHandler,
@@ -63,7 +63,7 @@ const Input: React.FC<InputProps> = ({
           multiline={numLines > 1}
           numberOfLines={numLines}
           onEndEditing={validate}
-          style={{ flex: 5 }}
+          style={{ flex: 5, textTransform: "none" }}
           {...rest}
         />
         {rightIcon && <View style={{ paddingRight: 8 }}>{rightIcon}</View>}
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Input;
+export default InputComp;
