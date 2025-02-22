@@ -1,42 +1,21 @@
-import React from 'react';
-import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
-import SafeAreaComponent from '@components/common/SafeAreaComponent';
-import TopNavHeader from '@components/navigation/TopNavHeader';
-import { Link } from 'expo-router';
-import EventsRow from '@components/event/EventsRow';
-import data from '@constants/slider.data.constant';
-import BlogCard from '@components/feed/BlogCard';
-import BlogRow from '@components/feed/BlogRow';
+import React from "react";
+import { ScrollView, StyleSheet } from "react-native";
+import SafeAreaComponent from "@components/common/SafeAreaComponent";
+import TopNavHeader from "@components/navigation/TopNavHeader";
+import BlogRow from "@components/feed/BlogRow";
+import ImageFeed from "@components/feed/ImageFeed";
 
 const FeedScreen = () => {
-  const blogPosts = [
-    {
-      title: 'Understanding React Native Navigation',
-      author: 'John Doe',
-      minRead: 5,
-      postedDate: '2024-11-28',
-      slug: 'react-native-navigation',
-    },
-    {
-      title: 'Building a Blog with Expo Router',
-      author: 'Jane Smith',
-      minRead: 8,
-      postedDate: '2024-11-29',
-      slug: 'expo-router-blog',
-    },
-    {
-      title: '10 Tips for Writing Clean JavaScript Code',
-      author: 'Alex Johnson',
-      minRead: 7,
-      postedDate: '2024-11-30',
-      slug: 'clean-javascript-tips',
-    },
-  ];
-
   return (
     <SafeAreaComponent>
       <TopNavHeader title="Your Feed" />
-      <BlogRow />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 60 }}
+      >
+        <BlogRow />
+        <ImageFeed />
+      </ScrollView>
     </SafeAreaComponent>
   );
 };
@@ -46,7 +25,7 @@ export default FeedScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff",
   },
   listContainer: {
     gap: 20,
@@ -56,26 +35,26 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
   },
   blogItem: {
-    backgroundColor: '#f9f9f9',
+    backgroundColor: "#f9f9f9",
     padding: 15,
     borderRadius: 8,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   meta: {
     fontSize: 14,
-    color: '#777',
+    color: "#777",
     marginVertical: 5,
   },
   link: {
     fontSize: 16,
-    color: '#318bfb',
+    color: "#318bfb",
     marginTop: 5,
   },
 });
