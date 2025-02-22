@@ -1,5 +1,6 @@
-import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import COLOUR from "@constants/colour.constant";
+import React from "react";
+import { Text, View, StyleSheet } from "react-native";
 
 const Heading = ({
   heading,
@@ -44,41 +45,44 @@ const Heading = ({
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 16,
-    alignItems: 'flex-start',
+    alignItems: "flex-start",
+    width: "100%",
   },
   heading: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    backgroundColor: 'transparent',
-    textAlign: 'left',
+    fontSize: 22,
+    fontWeight: "bold",
+    backgroundColor: "transparent",
+    textAlign: "left",
     marginBottom: 6,
+    color: COLOUR.primary,
   },
   withCenter: {
-    textAlign: 'center',
+    textAlign: "center",
   },
   subHeading: {
-    fontSize: 18,
-    textAlign: 'left',
+    fontSize: 12,
+    textAlign: "left",
+    color: COLOUR.secondary,
   },
   textBlack: {
-    color: 'black',
+    color: "black",
   },
   textGray: {
-    color: '#d1d5db',
+    color: "#d1d5db",
   },
   break: {
     marginBottom: 8,
   },
   withBorder: {
     borderLeftWidth: 8,
-    borderColor: 'black',
+    borderColor: "black",
     paddingLeft: 16,
   },
   borderBottom: {
-    width: '25%',
+    width: "25%",
     height: 3,
     marginTop: 1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
   },
 });
 

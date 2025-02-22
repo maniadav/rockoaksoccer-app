@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import React, { Suspense, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+} from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import FeaturedEvent from "./FeaturedEvent";
 import { getAllEvent } from "@api/categories";
@@ -11,6 +17,9 @@ import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import { theme } from "@components/theme";
 import TopNavigation from "@components/navigation/TopNavigation";
 import TitleTile from "@components/common/TitleTile";
+import EventsRow from "@components/event/EventsRow";
+import EventMenu from "@components/event/EventMenu";
+import EVENT_TYPE from "@constants/event.constant";
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<any, "EventListing">;
@@ -20,9 +29,11 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
   navigation,
 }: any) => {
   const [data, setData] = useState([]);
+  const [sportSeleted, setSportSelected] = useState(EVENT_TYPE[0]?.id);
   const [todayEvent, setTodayEvent] = useState([]);
   const [featuredEvent, setFeaturedEvent] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState([]);
 
   const weekendEventGet = async () => {
     if (data.length === 0) return;
@@ -54,12 +65,25 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
     }
   }, [todayEvent, featuredEvent]);
 
+  useEffect(() => {
+    filterGameData();
+  }, [sportSeleted, data]);
+
+  const filterGameData = () => {
+    if (sportSeleted === "all-events") {
+      setFilteredData(data);
+    } else {
+      const filtered = data.filter((game: any) => game.type === sportSeleted);
+      setFilteredData(filtered);
+    }
+  };
+
   return (
     <SafeAreaComponent>
       <TopNavigation></TopNavigation>
       <FlatList
         style={{ padding: 4 }}
-        data={data}
+        data={filteredData}
         renderItem={({ item }: any) => (
           <EventCard
             title={item.title}
@@ -85,13 +109,21 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
             <Text style={styles.trendingText}>Trending Events</Text>
             <SearchCard />
             <View style={commonStyles.firstView}>
-              <FeaturedEvent data={featuredEvent[0]} />
+              <FeaturedEvent filteredData={featuredEvent[0]} />
             </View>
             {/* <EventsRow
-                  title="Popular Events"
-                  data={data}
-                  navigation={navigation}
-                /> */}
+              title="Popular Events"
+              data={data}
+              navigation={navigation}
+            /> */}
+            <Suspense
+              fallback={<ActivityIndicator size="large" color="#000" />}
+            >
+              <EventMenu
+                onFilterClick={setSportSelected}
+                sportSelected={sportSeleted}
+              />
+            </Suspense>
           </>
         }
         showsVerticalScrollIndicator={false}

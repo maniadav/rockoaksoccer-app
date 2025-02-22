@@ -7,7 +7,7 @@ export const commonStyles = StyleSheet.create({
   },
   firstView: {
     alignItems: "center",
-    paddingVertical: 20,
+    marginTop: -25,
   },
   secondView: {
     marginHorizontal: 10,
