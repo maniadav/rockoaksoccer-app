@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   ScrollView,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
-import NavigationBar from "@components/NavigationBar";
-import { goBack, navigate } from "@components/navigation/rootNavigation";
-// import { SettingNavigation } from "@constants/index";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
-import TopNavigation from "@components/navigation/TopNavigation";
-import SCREENS from "@constants/screen.constant";
+import SCREENS, { MODALS } from "@constants/screen.constant";
 import { useNavigation } from "@react-navigation/native";
-import { RootStackNavigationProp } from "types/stack.type";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { settingNavigationMap } from "@constants/index";
 
-// Type definition for each setting item
 type SettingItem = {
   icon?: string;
   name: string;
@@ -52,14 +44,14 @@ const Setting = () => {
 
   const settingsOptions = [
     { title: "Auth", route: null },
-    { title: "Log Out", route: "Logout" },
+    { title: "Log Out", route: MODALS.logOut },
     { title: "Delete Account", route: "DeleteAccount" },
     { title: "Manage Notifications", route: null },
-    { title: "Booking History", route: "BookingHistory" },
+    { title: "Booking History", route: SCREENS.profile },
     { title: "User Preferences", route: "Preferences" },
     { title: "Profile", route: null },
     { title: "View Profile", route: SCREENS.profile },
-    { title: "Edit Profile", route: "EditProfileScreen" },
+    { title: "Edit Profile", route: MODALS.editProfile },
   ];
 
   return (

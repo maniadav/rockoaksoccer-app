@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
-import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
-import SCREENS from '@constants/screen.constant';
+import React from "react";
+import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
+import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
+import SCREENS from "@constants/screen.constant";
 
 const BottomTabNavigator = () => {
   const navigation = useNavigation<any>();
@@ -11,7 +11,7 @@ const BottomTabNavigator = () => {
     navigation.getState().routes[navigation.getState().index]?.name;
 
   const getTabColor = (screenName: string) =>
-    currentRoute === screenName ? 'rgb(230,62,85)' : 'black';
+    currentRoute === screenName ? "rgb(230,62,85)" : "black";
 
   return (
     <View style={styles.container}>
@@ -80,19 +80,19 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 0,
     left: 0,
     right: 0,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: 'white',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    backgroundColor: "white",
     paddingVertical: 10,
     paddingBottom: 20,
     elevation: 5,
   },
   tab: {
-    alignItems: 'center',
+    alignItems: "center",
   },
 });
 

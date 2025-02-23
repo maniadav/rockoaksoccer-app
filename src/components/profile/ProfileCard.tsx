@@ -1,36 +1,64 @@
-import COLOUR from '@constants/colour.constant';
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import {
-  ButtonEditProfile,
-  ButtonEditProfileText,
-  CustomButton,
-  CustomText,
-} from '../common/Component';
+import React, { useEffect, useState } from "react";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import { CustomButton, CustomText } from "../common/Component";
+import { getAsyncStorageValue } from "@utils/localStorage";
+import { LOCALSTORAGE } from "@constants/storage.constant";
+import { theme } from "@components/theme";
+import userImg from "@images/front-cat.jpg";
+import { Feather } from "@expo/vector-icons";
+import { MODALS } from "@constants/screen.constant";
 
-export default function ProfileCard() {
+export default function ProfileCard({ navigation }: any) {
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    getAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, true).then((res) => {
+      const data = res;
+      setUser(data);
+    });
+  }, []);
+
   return (
     <View>
       <View style={styles.cardContainer}>
         <Image
-          source={require('../../../assets/images/background.jpg')}
+          source={require("../../../assets/images/background.jpg")}
           style={styles.image}
         />
+        {/* <View style={styles.image}></View> */}
         <Text style={styles.proBadge}>PRO</Text>
+        <TouchableOpacity
+          style={styles.imageEditButton}
+          onPress={() => navigation.navigate(MODALS.editImage)}
+          activeOpacity={0.7}
+        >
+          <Feather name="edit" size={24} color="black" />
+        </TouchableOpacity>
         <Image
           style={styles.roundImage}
-          source={{ uri: 'https://randomuser.me/api/portraits/women/79.jpg' }}
+          source={
+            user?.profileImage
+              ? {
+                  uri: user.profileImage,
+                }
+              : userImg
+          }
         />
       </View>
       <View style={styles.details}>
-        <Text style={styles.name}>Ricky Park</Text>
-        <Text style={styles.location}>New York</Text>
-        <Text style={styles.description}>
-          User interface designer and {'\n'} front-end developer
-        </Text>
+        <Text style={styles.name}>{`Hey, ${
+          (user && user.username) || "User"
+        }`}</Text>
+
+        <Text style={styles.location}>{`${
+          (user && user.address) || "please update your address"
+        }`}</Text>
+        <Text style={styles.description}>{`${
+          (user && user.email) || "please add your email"
+        }`}</Text>
         <View style={styles.buttonContainer}>
-          <CustomButton onPress={() => alert('Edit Profile Pressed')}>
-            <CustomText>Edit Profile</CustomText>
+          <CustomButton onPress={() => navigation.navigate(MODALS.editProfile)}>
+            <CustomText style={{ color: "white" }}>Edit Profile</CustomText>
           </CustomButton>
         </View>
       </View>
@@ -40,79 +68,92 @@ export default function ProfileCard() {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    maxWidth: '100%',
+    maxWidth: "100%",
     height: 200,
-    alignItems: 'center',
+    alignItems: "center",
     // shadowColor: '#000',
     // shadowOpacity: 0.75,
     // shadowRadius: 10,
     // shadowOffset: { width: 0, height: 10 },
-    position: 'relative',
+    position: "relative",
   },
   image: {
     top: 0,
-    width: '100%',
-    height: '60%',
+    width: "100%",
+    height: "60%",
     zIndex: -1,
-    backgroundColor: 'black',
+    backgroundColor: "black",
+  },
+  imageEditButton: {
+    position: "absolute",
+    bottom: "10%",
+    left: "60%",
+    zIndex: 3,
+    backgroundColor: "white",
+    borderRadius: 5,
+    padding: 8,
+    elevation: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   proBadge: {
-    position: 'absolute',
+    position: "absolute",
     bottom: 30,
     left: 30,
-    backgroundColor: COLOUR.primary,
-    color: 'white',
+    backgroundColor: "black",
+    color: "white",
     paddingVertical: 3,
     paddingHorizontal: 7,
     borderRadius: 8,
     fontSize: 14,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   roundImage: {
     width: 150,
     height: 150,
-    borderRadius: 150,
-    borderWidth: 1,
-    borderColor: COLOUR.primary,
-    padding: 7,
-    position: 'absolute',
-    // top: '50%',
+    borderRadius: 50,
+    borderWidth: 3,
+    borderColor: "black",
+    position: "absolute",
     bottom: 0,
     zIndex: 1,
   },
   details: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+    alignItems: "center",
     paddingVertical: 5,
   },
   name: {
     fontSize: 18,
-    color: 'black',
+    color: "black",
     marginVertical: 10,
+    textTransform: "capitalize",
   },
   location: {
     fontSize: 12,
-    color: '#B3B8CD',
-    textTransform: 'uppercase',
+    color: "#B3B8CD",
+    textTransform: "uppercase",
     marginBottom: 5,
     fontWeight: 600,
   },
   description: {
     fontSize: 14,
-    color: '#B3B8CD',
-    textAlign: 'center',
+    color: "#B3B8CD",
+    textAlign: "center",
     lineHeight: 21,
   },
   buttonContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 20,
   },
   ghostButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   ghostButtonText: {
-    color: '#02899C',
+    color: theme.colors.primary,
   },
 });

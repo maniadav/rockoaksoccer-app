@@ -5,15 +5,17 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   View,
-  Text,
   Dimensions,
-} from 'react-native';
-import React, { useRef, useState } from 'react';
-import data from '../../constants/slider.data.constant';
-import SlideItem from './SlideItem';
-import Pagination from './Pagination';
-import Button from '../Button';
-import { useNavigation } from '@react-navigation/native';
+} from "react-native";
+import React, { useRef, useState } from "react";
+import data from "../../constants/slider.data.constant";
+import SlideItem from "./SlideItem";
+import Pagination from "./Pagination";
+import { ParamListBase } from "@react-navigation/native";
+import SCREENS from "@constants/screen.constant";
+import { StackNavigationProp } from "@react-navigation/stack";
+import ButtonComp from "@components/common/ButtonComp";
+import COLOUR from "@constants/colour.constant";
 
 type ViewableItemsChangedProps = {
   viewableItems: Array<{
@@ -21,12 +23,16 @@ type ViewableItemsChangedProps = {
   }>;
 };
 
-const { width, height } = Dimensions.get('screen');
+const { width, height } = Dimensions.get("screen");
 
-const Slider = () => {
+const Slider = ({
+  navigation,
+}: {
+  navigation: StackNavigationProp<ParamListBase>;
+}) => {
   const [index, setIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
+
   const handleOnScroll = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     Animated.event(
       [
@@ -72,18 +78,18 @@ const Slider = () => {
 
       <View style={styles.content}>
         <Pagination data={data} scrollX={scrollX} index={index} />
-        <Button
-          mode="contained"
-          onPress={() => navigation.navigate('SignInScreen')}
-        >
-          Login
-        </Button>
-        <Button
-          mode="outlined"
-          onPress={() => navigation.navigate('SignUpScreen')}
-        >
-          Sign Up
-        </Button>
+        <ButtonComp
+          borderRadius={20}
+          bgColor={COLOUR.primary || ""}
+          title={"Sign In"}
+          onPress={() => navigation.navigate(SCREENS.signIn)}
+        />
+        <ButtonComp
+          borderRadius={20}
+          bgColor={COLOUR.primary || ""}
+          title={"Sign Up"}
+          onPress={() => navigation.navigate(SCREENS.signUp || "")}
+        />
       </View>
     </View>
   );
@@ -96,17 +102,17 @@ const styles = StyleSheet.create({
     width,
     height,
     flex: 1,
-    justifyContent: 'flex-end',
-    position: 'relative',
+    justifyContent: "flex-end",
+    position: "relative",
   },
   content: {
     flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
+    justifyContent: "flex-end",
+    alignItems: "center",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
     paddingHorizontal: 70,
-    paddingBottom: 20,
+    paddingBottom: 50,
   },
 });

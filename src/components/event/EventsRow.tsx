@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Text, TouchableOpacity, View } from 'react-native';
-import { commonStyles } from '../../app/HomeCss';
-import Card from '@components/event/Card';
-import { navigation } from '../navigation/rootNavigation';
+import React, { useEffect, useState } from "react";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { commonStyles } from "app/HomeCss";
+import Card from "@components/event/Card";
+import { navigation } from "../navigation/rootNavigation";
 
 const EventsRow = ({ data, title }: any) => {
   return (
@@ -13,7 +13,7 @@ const EventsRow = ({ data, title }: any) => {
             <Text
               style={{
                 fontSize: 20,
-                fontWeight: 'bold',
+                fontWeight: "bold",
               }}
             >
               {title}
@@ -30,15 +30,15 @@ const EventsRow = ({ data, title }: any) => {
                   key={item?.uniqueId}
                   title={
                     item?.title.length > 20
-                      ? item?.title.slice(0, 20) + '...'
+                      ? item?.title.slice(0, 20) + "..."
                       : item?.title
                   }
                   location={
                     item?.location.length > 20
-                      ? item?.location.slice(0, 20) + '...'
+                      ? item?.location.slice(0, 20) + "..."
                       : item?.location
                   }
-                  date={item?.date.toString().split('T')[0]}
+                  date={item?.date.toString().split("T")[0]}
                   id={item?.uniqueId}
                   eventImage={item?.image}
                   navigation={navigation}

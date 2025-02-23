@@ -1,14 +1,14 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { Button as PaperButton } from 'react-native-paper';
-import { theme } from './theme';
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Button as PaperButton } from "react-native-paper";
+import { theme } from "./theme";
 
-export default function Button({ mode, style, ...props }: any) {
+export default function ButtonComp2({ mode, style, ...props }: any) {
   return (
     <PaperButton
       style={[
         styles.button,
-        mode === 'outlined' && { backgroundColor: theme.colors.surface },
+        mode === "outlined" && { backgroundColor: theme.colors.surface },
         style,
       ]}
       labelStyle={styles.text}
@@ -20,12 +20,12 @@ export default function Button({ mode, style, ...props }: any) {
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
+    width: "auto",
     marginVertical: 5,
     backgroundColor: theme.colors.primary,
   },
   text: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 12,
     lineHeight: 26,
   },

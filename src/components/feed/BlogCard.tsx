@@ -63,7 +63,7 @@ export default BlogCard;
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 350,
+    width: 300,
     height: '95%',
     // marginVertical: 10,
     alignSelf: 'center',

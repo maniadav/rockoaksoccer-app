@@ -1,10 +1,8 @@
-import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
-
-import { commonStyles } from '@/src/app/HomeCss';
-
-import { FontAwesome } from '@expo/vector-icons';
-import SCREENS from '@constants/screen.constant';
+import React from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import { commonStyles } from "app/HomeCss";
+import { FontAwesome } from "@expo/vector-icons";
+import SCREENS from "@constants/screen.constant";
 
 function Card({ title, location, date, id, navigation, eventImage }: any) {
   const goToDetailPage = () => {
@@ -24,23 +22,23 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
           }}
           style={{
             borderRadius: 4,
-            width: '100%',
-            height: '100%',
-            maxHeight: '100%',
-            resizeMode: 'stretch',
+            width: "100%",
+            height: "100%",
+            maxHeight: "100%",
+            resizeMode: "stretch",
           }}
         />
       </View>
       <View
         style={{
           paddingHorizontal: 10,
-          paddingVertical: 5
+          paddingVertical: 5,
         }}
       >
         <Text
           style={{
             fontSize: 15,
-            fontWeight: 'bold',
+            fontWeight: "bold",
             marginBottom: 10,
           }}
         >
@@ -57,7 +55,7 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
           </View>
           <View style={commonStyles.cardDetailText}>
             <FontAwesome name="calendar" size={15} color="black" />
-            <Text>{date?.split('-').reverse().join(' ')}</Text>
+            <Text>{date?.split("-").reverse().join(" ")}</Text>
           </View>
         </View>
       </View>
@@ -65,7 +63,7 @@ function Card({ title, location, date, id, navigation, eventImage }: any) {
         style={commonStyles.cardDetailsButton}
         onPress={goToDetailPage}
       >
-        <Text style={{ color: 'white', fontSize: 10 }}>View Details</Text>
+        <Text style={{ color: "white", fontSize: 10 }}>View Details</Text>
       </TouchableOpacity>
     </View>
   );

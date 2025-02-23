@@ -56,7 +56,7 @@ const SearchScreen = () => {
           value={searchValue}
           onChangeText={searchFunction}
           onIconPress={iconPressHandle}
-          mode="view"
+          mode="bar"
           iconColor={theme.colors.primary}
           onClearIconPress={handlClearIconPress}
           style={{ marginBottom: 20 }}
@@ -64,7 +64,7 @@ const SearchScreen = () => {
         {data?.length ? (
           <FlatList
             data={data}
-            renderItem={({ item }: any) => (
+            renderItem={({ item, index }: any) => (
               <EventCard
                 title={item.title}
                 image={item.image}
@@ -75,7 +75,7 @@ const SearchScreen = () => {
                 }
               />
             )}
-            keyExtractor={(item) => `${item?.id}`}
+            keyExtractor={(item, index) => `${item?.id}-${index}`}
             scrollEnabled={true}
             showsVerticalScrollIndicator={false}
           />

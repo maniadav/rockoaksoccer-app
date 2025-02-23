@@ -4,14 +4,15 @@ import {
   ThemeProvider,
   DarkTheme,
   DefaultTheme,
+  useNavigationState,
 } from "@react-navigation/native";
-import { useNavigationState } from "@react-navigation/native";
+// import { useNavigationState } from "@react-navigation/native";
 import { useColorScheme } from "@components/useColorScheme";
 import BottomTabNavigator from "@components/navigation/BottomTabNavigator";
 import TopNavigation from "@components/navigation/TopNavigation";
-import SCREENS from "@constants/screen.constant";
+import SCREENS, { MODALS } from "@constants/screen.constant";
 import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/sotrage.constant";
+import { LOCALSTORAGE } from "constants/storage.constant";
 // screen
 import HomeScreen from "./HomeScreen";
 import ProfileScreen from "./ProfileScreen";
@@ -25,24 +26,34 @@ import EventDetailScreen from "./EventDetailScreen";
 import SettingScreen from "./SettingScreen";
 import FeedScreen from "./FeedScreen";
 import BlogScreen from "./BlogDetailScreen";
+import BottomTabNavigation from "@components/navigation/BottomTabNavigation";
+import { createStackNavigator } from "@react-navigation/stack";
+import LogOutModal from "@components/modal/LogOutModal";
+import TopNavHeader from "@components/navigation/TopNavHeader";
+import EditImageModal from "@components/modal/EditImage";
+import EditProfile from "@components/modal/EditProfile";
 
 const Stack = createNativeStackNavigator();
+const RootStack = createStackNavigator();
 
-export default function RootStack() {
+export default function RootNavigation({ initialRoute = SCREENS.main }: any) {
+  console.log({ initialRoute });
   const colorScheme = useColorScheme();
-  const [initialRoute, setInitialRoute] = useState<string | null>(null);
+  // const [initialRoute, setInitialRoute] = useState<string | null>("Home");
 
-  useEffect(() => {
-    const checkLoginStatus = async () => {
-      const storedUser = await getAsyncStorageValue(
-        LOCALSTORAGE.LOGGED_IN_USER,
-        true
-      );
-      const { email: userEmail } = storedUser || {};
-      setInitialRoute(userEmail ? SCREENS.eventListing : SCREENS.onBoarding);
-    };
-    checkLoginStatus();
-  }, []);
+  // useEffect(() => {
+  //   const checkLoginStatus = async () => {
+  //     const storedUser = await getAsyncStorageValue(
+  //       LOCALSTORAGE.LOGGED_IN_USER,
+  //       true
+  //     );
+  //     const { email } = storedUser || {};
+  //     console.log({ storedUser }, storedUser.email);
+  //     // setInitialRoute(email ? SCREENS.home : SCREENS.onBoarding);
+  //   };
+
+  //   checkLoginStatus();
+  // }, []);
 
   const showBottomTabNav = useMemo(
     () => [
@@ -66,24 +77,27 @@ export default function RootStack() {
   return (
     <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <Stack.Navigator initialRouteName={initialRoute}>
-        <Stack.Screen
-          name={SCREENS.home}
-          component={HomeScreen}
-          options={{ header: () => <TopNavigation /> }}
-        />
+        <RootStack.Group screenOptions={{ presentation: "modal" }}>
+          <RootStack.Screen
+            name={MODALS.logOut}
+            component={LogOutModal}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name={MODALS.editImage}
+            component={EditImageModal}
+            options={{ headerShown: false }}
+          />
+          <RootStack.Screen
+            name={MODALS.editProfile}
+            component={EditProfile}
+            options={{ headerShown: false }}
+          />
+        </RootStack.Group>
+
         <Stack.Screen
           name={SCREENS.onBoarding}
           component={OnBoardingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={SCREENS.setting}
-          component={SettingScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={SCREENS.profile}
-          component={ProfileScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -107,11 +121,6 @@ export default function RootStack() {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={SCREENS.eventListing}
-          component={EventListingScreen}
-          options={{ header: () => <TopNavigation /> }}
-        />
-        <Stack.Screen
           name={SCREENS.eventDetail}
           component={EventDetailScreen}
           options={{
@@ -122,17 +131,16 @@ export default function RootStack() {
           }}
         />
         <Stack.Screen
-          name={SCREENS.feed}
-          component={FeedScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={SCREENS.blog}
+          name={SCREENS.profile}
           component={BlogScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name={SCREENS.main}
+          component={BottomTabNavigation}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
-      {/* {showBottomTabNav.includes(currentRouteName) && <BottomTabNavigator />} */}
     </ThemeProvider>
   );
 }
