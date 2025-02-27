@@ -6,6 +6,7 @@ import SCREENS from "@constants/screen.constant";
 import Loader from "@components/common/Loader";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
+// import { SCREENS } from "@constants/screen.constant";
 
 export default function App() {
   const [initialRoute, setInitialRoute] = useState<string | null>(null);

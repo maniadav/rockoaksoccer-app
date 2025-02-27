@@ -90,7 +90,7 @@ export default function SignInScreen({ navigation }: Props) {
           //   borderRadius: 30,
           // }}
           style={[styles.container]}
-          // style={glassStyle.glassContainer}
+        // style={glassStyle.glassContainer}
         >
           <Logo />
           <Header>Good to See You Again!</Header>
