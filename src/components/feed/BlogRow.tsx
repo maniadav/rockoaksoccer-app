@@ -31,16 +31,14 @@ const BlogRow = () => {
   return (
     <View style={{ width: "100%", height: 350, paddingHorizontal: 12 }}>
       <Text style={styles.title}>Blog Content</Text>
-      <View style={styles.container}>
-        <FlatList
-          data={blogPosts}
-          keyExtractor={(item) => item.slug}
-          horizontal
-          showsHorizontalScrollIndicator={true}
-          contentContainerStyle={styles.listContainer}
-          renderItem={({ item }) => <BlogCard blog={item} />}
-        />
-      </View>
+      <FlatList
+        horizontal={true}
+        data={blogPosts}
+        keyExtractor={(item) => item.slug}
+        showsHorizontalScrollIndicator={true}
+        contentContainerStyle={styles.listContainer}
+        renderItem={({ item }) => <BlogCard blog={item} />}
+      />
     </View>
   );
 };

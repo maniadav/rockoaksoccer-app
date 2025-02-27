@@ -1,5 +1,4 @@
 import * as React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import RootNavigation from "./RootStack";
 import { useEffect, useState } from "react";
 import SCREENS from "@constants/screen.constant";
@@ -34,13 +33,5 @@ export default function App() {
 
   if (isLoading) return <Loader />;
 
-  return (
-    <NavigationContainer>
-      {initialRoute ? (
-        <RootNavigation initialRoute={initialRoute} />
-      ) : (
-        <Loader />
-      )}
-    </NavigationContainer>
-  );
+  return initialRoute ? <RootNavigation initialRoute={initialRoute} /> : <Loader />;
 }

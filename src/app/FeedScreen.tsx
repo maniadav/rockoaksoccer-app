@@ -1,21 +1,32 @@
 import React from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { FlatList, View, StyleSheet } from "react-native";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import BlogRow from "@components/feed/BlogRow";
 import ImageFeed from "@components/feed/ImageFeed";
 
 const FeedScreen = () => {
+  // Create a data array for the main FlatList
+  const sections = [
+    { id: '1', type: 'blog', component: BlogRow },
+    { id: '2', type: 'image', component: ImageFeed },
+  ];
+
+  const renderItem = ({ item }) => {
+    const Component = item.component;
+    return <Component />;
+  };
+
   return (
     <SafeAreaComponent>
       <TopNavHeader title="Your Feed" />
-      <ScrollView
+      <FlatList
+        data={sections}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 60 }}
-      >
-        <BlogRow />
-        <ImageFeed />
-      </ScrollView>
+      />
     </SafeAreaComponent>
   );
 };

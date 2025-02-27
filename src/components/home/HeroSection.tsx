@@ -23,7 +23,7 @@ const HeroSection = () => {
   ];
 
   const navigation = useNavigation<any>();
-  
+
   return (
     <View style={styles.heroSection}>
       <Image
@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
     height: 300,
     marginLeft: 16,
   },
-  video:{
-    width:200,
-    height:100,
+  video: {
+    width: 200,
+    height: 100,
   },
 });
 

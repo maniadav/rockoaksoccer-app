@@ -9,13 +9,14 @@ import LogOutButton from "@components/LogOutButton";
 import TopNavigation from "@components/navigation/TopNavigation";
 import { ScrollView } from "react-native";
 import { View } from "react-native";
-
+import HomeBanner from "@components/home/HomeBanner";
 const HomeScreen = ({ navigation }: any) => {
   return (
     <SafeAreaComponent>
       <TopNavigation />
       <ScrollView>
         <Logo />
+        <HomeBanner />
         <HeroSection />
         <VideoTestimonials />
         <Services />
