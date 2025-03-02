@@ -26,13 +26,14 @@ const HeroSection = () => {
 
   return (
     <View style={styles.heroSection}>
-      <Image
+      {/* <Image
         source={require("../../../assets/images/players.png")}
         style={styles.image}
         resizeMode="contain"
-      />
+      /> */}
       <View style={styles.textContainer}>
         <Text style={styles.heading}>Future Star Soccer Program</Text>
+        <View style={styles.redDivider} />
         <Text style={styles.subHeading}>
           Start your soccer journey with Rock Oak Soccer School! Take your game
           to the next level with our experienced coaches and premium facility!
@@ -75,8 +76,8 @@ const styles = StyleSheet.create({
   },
   heroSection: {
     padding: 16,
-    backgroundColor: "#F4F4F4",
-    color: COLOUR.primary,
+    // backgroundColor: "#F4F4F4",
+    // color: COLOUR.primary,
     borderRadius: 20,
     margin: 8,
     display: "flex",
@@ -87,20 +88,30 @@ const styles = StyleSheet.create({
   textContainer: {
     flex: 1,
     justifyContent: "center",
+    alignItems: "center",
   },
   heading: {
     fontSize: 24,
     fontWeight: "bold",
+    textAlign: 'center'
+  },
+  redDivider: {
+    width: 60,
+    height: 3,
+    backgroundColor: "#d32f2f",
+    marginVertical: 10,
   },
   subHeading: {
     fontSize: 16,
     marginVertical: 10,
     color: "#333",
+    textAlign: 'center'
   },
   whyJoinText: {
     fontSize: 18,
     fontWeight: "bold",
     marginTop: 20,
+    textAlign: 'center'
   },
   listContainer: {
     marginTop: 10,

@@ -1,6 +1,8 @@
 import { View, Text, ScrollView, ImageBackground, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 import { LinearGradient } from 'expo-linear-gradient';
 import { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import SCREENS from "@constants/screen.constant";
 
 const carouselData = [
     {
@@ -27,6 +29,8 @@ const carouselData = [
 const { width, height } = Dimensions.get('window')
 export default function HomeBanner() {
     const [activeSlide, setActiveSlide] = useState<number>(0);
+    const navigation = useNavigation<any>();
+
 
 
     //useEffect to handle the carousel
@@ -50,8 +54,8 @@ export default function HomeBanner() {
                 <View style={styles.carouselContent}>
                     <Text style={styles.carouselTitle}>{carouselData[activeSlide].title}</Text>
                     <Text style={styles.carouselSubtitle}>{carouselData[activeSlide].subtitle}</Text>
-                    <TouchableOpacity style={styles.carouselButton}>
-                        <Text style={styles.carouselButtonText}>LEARN MORE</Text>
+                    <TouchableOpacity style={styles.carouselButton} onPress={() => navigation.navigate(SCREENS.feed)}>
+                        <Text style={styles.carouselButtonText} >LEARN MORE</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.dotsContainer}>

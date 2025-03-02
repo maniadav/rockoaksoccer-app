@@ -10,6 +10,10 @@ import TopNavigation from "@components/navigation/TopNavigation";
 import { ScrollView } from "react-native";
 import { View } from "react-native";
 import HomeBanner from "@components/home/HomeBanner";
+import QuickLinks from "@components/home/QuickLinks";
+import Program from "@components/home/Program";
+import UpcomingEvents from "@components/home/UpcomingEvents";
+import LatestFeed from "@components/home/LatestFeed";
 const HomeScreen = ({ navigation }: any) => {
   return (
     <SafeAreaComponent>
@@ -17,10 +21,14 @@ const HomeScreen = ({ navigation }: any) => {
       <ScrollView>
         <Logo />
         <HomeBanner />
+        <QuickLinks />
         <HeroSection />
-        <VideoTestimonials />
-        <Services />
-        <Testimonials />
+        <Program />
+        <UpcomingEvents />
+        <LatestFeed />
+        {/* <VideoTestimonials /> */}
+        {/* <Services /> */}
+        {/* <Testimonials /> */}
         <FAQ />
         <View
           style={{

@@ -54,7 +54,7 @@ interface FAQItem {
 
 const dummyFAQs: FAQItem[] = [
   {
-    question: 'Can I get a refund for my subscription?',
+    question: 'Can I get a refund?',
     answer:
       'We offer a 30-day money-back guarantee for most of our subscription plans. If you are not satisfied within the first 30 days, you can request a full refund. Refunds for subscriptions active for longer than 30 days may be considered on a case-by-case basis.',
   },
@@ -89,7 +89,7 @@ const dummyFAQs: FAQItem[] = [
       'We have two training sessions, morning and evening sessions. The morning session starts at 6:00AM and the evening session starts at 5PM. Refer Program Page for more detailed information.',
   },
   {
-    question: 'How secure is my personal information?',
+    question: 'Is my personal information secured?',
     answer:
       'We take the security of your personal information very seriously. Our platform uses industry-standard encryption and security measures to protect your data.',
   },
