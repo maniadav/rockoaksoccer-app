@@ -5,6 +5,7 @@ import SCREENS from "@constants/screen.constant";
 import Loader from "@components/common/Loader";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
+import { NavigationContainer } from "@react-navigation/native";
 // import { SCREENS } from "@constants/screen.constant";
 
 export default function App() {
@@ -33,5 +34,13 @@ export default function App() {
 
   if (isLoading) return <Loader />;
 
-  return initialRoute ? <RootNavigation initialRoute={initialRoute} /> : <Loader />;
+  return (
+    <NavigationContainer>
+      {initialRoute ? (
+        <RootNavigation initialRoute={initialRoute} />
+      ) : (
+        <Loader />
+      )}
+    </NavigationContainer>
+  );
 }
