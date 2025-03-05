@@ -46,7 +46,7 @@ function EventDetailScreen({ route }: any) {
         <View style={{ flex: 1 }}>
           <ScrollView>
             <Image
-              source={{ uri: `${eventData.images.landscape}` }}
+              source={{ uri: `${eventData.image.landscape}` }}
               style={styles.image}
             />
             <View style={styles.backButtonContainer}>
@@ -54,7 +54,7 @@ function EventDetailScreen({ route }: any) {
             </View>
             <View style={styles.eventDetailsContainer}>
               <EventDetailsDesc
-                title={eventData.images.landscape}
+                title={eventData.image.landscape}
                 date={eventData.timing.start}
               />
             </View>

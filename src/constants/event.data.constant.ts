@@ -7,6 +7,7 @@ export const EventDraft = [
     date: "2024-10-15T10:00:00.000Z",
     location: "Melbourne Cricket Ground, Melbourne, Australia",
     image: ["https://images.unsplash.com/photo-1553778263-73a83bab9b0c"],
+    isTrending: true,
   },
   {
     uniqueId: "319600b7-87e4-41f6-ae28-8103e8b156b5",

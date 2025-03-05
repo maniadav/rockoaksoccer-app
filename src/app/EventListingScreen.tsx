@@ -1,24 +1,12 @@
-import React, { Suspense, useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  FlatList,
-  ActivityIndicator,
-  TouchableOpacity,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import FeaturedEvent from "./FeaturedEvent";
 import { getAllEvent } from "@api/categories";
-import { commonStyles } from "./HomeCss";
-import EventCard from "@components/event/EventCard";
 import SCREENS from "@constants/screen.constant";
 import SearchCard from "@components/search/SearchCard";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import { theme } from "@components/theme";
-import TopNavigation from "@components/navigation/TopNavigation";
 import TitleTile from "@components/common/TitleTile";
-import EventMenu from "@components/event/EventMenu";
 import EVENT_TYPE from "@constants/event.constant";
 import MiniEventCard from "@components/event/MiniEventCard";
 import Loader from "@components/common/Loader";

@@ -10,9 +10,9 @@ import EVENT_TYPE from "@constants/event.constant";
 
 const FILTER_OPTIONS = [
   { ...EVENT_TYPE[0], icon: "trending-up" },
-  { ...EVENT_TYPE[1], icon: "home" },
-  { ...EVENT_TYPE[2], icon: "cabin" },
-  { ...EVENT_TYPE[3], icon: "villa" },
+  { ...EVENT_TYPE[1], icon: "boy" },
+  { ...EVENT_TYPE[2], icon: "beach-access" },
+  { ...EVENT_TYPE[3], icon: "auto-awesome" },
 ];
 
 // const FILTER_OPTIONS = EVENT_TYPE.map((item, index) => {});

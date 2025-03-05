@@ -95,8 +95,6 @@ const MiniEventCard = ({
           {` ${property.location}`}
         </Text>
 
-        {/* <Text style={styles.propertyType}>{property.type}</Text> */}
-
         <View
           style={{
             flexDirection: "row",
@@ -140,9 +138,9 @@ const MiniEventCard = ({
         </View>
       </View>
 
-      {property.isSuperHost && (
+      {property.isTrending && (
         <View style={styles.superHostBadge}>
-          <Text style={styles.superHostText}>Superhost</Text>
+          <Text style={styles.superHostText}>trending</Text>
         </View>
       )}
     </View>

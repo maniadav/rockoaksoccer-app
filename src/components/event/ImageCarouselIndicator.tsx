@@ -3,7 +3,7 @@ import { View, StyleSheet } from "react-native";
 const ImageCarouselIndicator = ({ images, activeIndex }: any) => {
   return (
     <View style={styles.indicatorContainer}>
-      {images.map((_: any, index: number) => (
+      {images?.map((_: any, index: number) => (
         <View
           key={index}
           style={[
