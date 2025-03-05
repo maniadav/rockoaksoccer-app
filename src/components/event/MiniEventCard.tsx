@@ -11,12 +11,18 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import ImageCarouselIndicator from "./ImageCarouselIndicator";
+import ButtonComp from "@components/common/ButtonComp";
 
 const { width } = Dimensions.get("window");
 const cardWidth = width / 2 - 24;
 const carouselItemWidth = cardWidth;
 
-const MiniEventCard = ({ property, isWishlist, handleWishlist }: any) => {
+const MiniEventCard = ({
+  property,
+  isWishlist,
+  handleWishlist,
+  onPress,
+}: any) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const scrollX = useRef(new Animated.Value(0)).current;
   const flatListRef = useRef(null);
@@ -77,20 +83,60 @@ const MiniEventCard = ({ property, isWishlist, handleWishlist }: any) => {
           <Text style={styles.propertyTitle} numberOfLines={1}>
             {property.title}
           </Text>
-          <View style={styles.ratingContainer}>
-            <FontAwesome name="star" size={14} color="#000" />
-            <Text style={styles.ratingText}>{property.rating}</Text>
-          </View>
         </View>
 
         <Text style={styles.propertyLocation} numberOfLines={1}>
-          {property.location}
+          <FontAwesome
+            name="map-marker"
+            size={20}
+            color="black"
+            style={{ color: "grey" }}
+          />
+          {` ${property.location}`}
         </Text>
-        <Text style={styles.propertyType}>{property.type}</Text>
 
-        <View style={styles.priceContainer}>
-          <Text style={styles.price}>${property.price}</Text>
-          <Text style={styles.nightText}> night</Text>
+        {/* <Text style={styles.propertyType}>{property.type}</Text> */}
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              gap: 10,
+              paddingVertical: 4,
+            }}
+          >
+            <FontAwesome
+              name="calendar"
+              size={20}
+              color="black"
+              style={{ color: "grey" }}
+            />
+            <Text style={{ color: "grey" }}>
+              {property.date?.split("T")[0].split("-").reverse().join(" ")}
+            </Text>
+          </View>
+        </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <View>
+            <ButtonComp
+              bgColor="black"
+              borderRadius={20}
+              title={"View Details"}
+              onPress={() => onPress()}
+            />
+          </View>
         </View>
       </View>
 

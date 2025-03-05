@@ -126,6 +126,11 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
               property={item}
               handleWishlist={() => toggleWishlist(item.id)}
               isWishlist={wishlist[item.id]}
+              onPress={() =>
+                navigation.navigate(SCREENS.eventDetail, {
+                  id: item?.uniqueId,
+                })
+              }
             />
           )}
           contentContainerStyle={styles.listContent}
