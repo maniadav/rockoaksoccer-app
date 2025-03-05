@@ -14,6 +14,7 @@ const SCREENS = {
   search: "Search",
   feed: "Feed",
   blog: "Blog",
+  pricing: "Pricing",
 };
 
 export const MODALS = {

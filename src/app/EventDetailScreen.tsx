@@ -4,7 +4,6 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import BackButton from "@components/BackButton";
 import { getEventById } from "@api/categories";
 import EventDetailsDesc from "@components/event/EventDetailsDesc";
-import BookingButton from "@components/button/BookingButton";
 import ContentView from "@components/event/ContentView";
 import { formatDate } from "helpers/convert";
 import { View, StyleSheet, ScrollView, Image } from "react-native";
@@ -12,6 +11,7 @@ import { EventData } from "types/event.type";
 import Loader from "@components/common/Loader";
 import NoData from "@components/common/NoData";
 import EventMap from "@components/event/EventMap";
+import BookingButton from "@components/event/BookingButton";
 
 function EventDetailScreen({ route }: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);

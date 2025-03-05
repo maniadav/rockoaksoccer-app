@@ -12,6 +12,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import ImageCarouselIndicator from "./ImageCarouselIndicator";
 import ButtonComp from "@components/common/ButtonComp";
+import BookingButton from "./BookingButton";
 
 const { width } = Dimensions.get("window");
 const cardWidth = width / 2 - 24;
@@ -127,14 +128,12 @@ const MiniEventCard = ({
             alignItems: "center",
           }}
         >
-          <View>
-            <ButtonComp
-              bgColor="black"
-              borderRadius={20}
-              title={"View Details"}
-              onPress={() => onPress()}
-            />
-          </View>
+          <ButtonComp
+            bgColor="black"
+            borderRadius={20}
+            title={"View Details!"}
+            onPress={() => onPress()}
+          />
         </View>
       </View>
 

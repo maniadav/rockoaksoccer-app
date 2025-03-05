@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 
 export default function Example() {
+  
   return (
     <View style={styles.overlay}>
       {/* <View style={styles.overlayContent}>

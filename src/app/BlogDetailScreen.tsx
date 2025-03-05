@@ -35,7 +35,6 @@ const BlogDetailScreen = () => {
     <SafeAreaComponent>
       <TopNavHeader title="Your Feed" />
       <View style={styles.container}>
-
         <FlatList
           data={blogPosts}
           keyExtractor={(item) => item.slug}

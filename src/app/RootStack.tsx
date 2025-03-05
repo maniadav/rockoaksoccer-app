@@ -32,6 +32,7 @@ import LogOutModal from "@components/modal/LogOutModal";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import EditImageModal from "@components/modal/EditImage";
 import EditProfile from "@components/modal/EditProfile";
+import PricingScreen from "./PricingScreen";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createStackNavigator();
@@ -98,6 +99,11 @@ export default function RootNavigation({ initialRoute = SCREENS.main }: any) {
         <Stack.Screen
           name={SCREENS.onBoarding}
           component={OnBoardingScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={SCREENS.pricing}
+          component={PricingScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
