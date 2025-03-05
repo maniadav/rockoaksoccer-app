@@ -5,6 +5,7 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import FeaturedEvent from "./FeaturedEvent";
@@ -17,9 +18,12 @@ import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import { theme } from "@components/theme";
 import TopNavigation from "@components/navigation/TopNavigation";
 import TitleTile from "@components/common/TitleTile";
-import EventsRow from "@components/event/EventsRow";
 import EventMenu from "@components/event/EventMenu";
 import EVENT_TYPE from "@constants/event.constant";
+import MiniEventCard from "@components/event/MiniEventCard";
+import Loader from "@components/common/Loader";
+import EventFilterOption from "@components/event/EventFilterOption";
+import { Ionicons } from "@expo/vector-icons";
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<any, "EventListing">;
@@ -34,6 +38,14 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
   const [featuredEvent, setFeaturedEvent] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filteredData, setFilteredData] = useState([]);
+  const [wishlist, setWishlist] = useState<any>({});
+
+  const toggleWishlist = (propertyId: string) => {
+    setWishlist((prev: any) => ({
+      ...prev,
+      [propertyId]: !prev[propertyId],
+    }));
+  };
 
   const weekendEventGet = async () => {
     if (data.length === 0) return;
@@ -49,9 +61,13 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
   };
 
   const fetchData = async () => {
-    const allData: any = await getAllEvent();
-    setData(allData);
-    setFeaturedEvent(allData[0]);
+    try {
+      const allData: any = await getAllEvent();
+      setData(allData);
+      setFeaturedEvent(allData[0]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -80,54 +96,41 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
 
   return (
     <SafeAreaComponent>
-      <TopNavigation></TopNavigation>
-      <FlatList
-        style={{ padding: 4 }}
-        data={filteredData}
-        renderItem={({ item }: any) => (
-          <EventCard
-            title={item.title}
-            image={item.image}
-            date={item.date}
-            location={
-              item?.location.length > 30
-                ? item?.location.slice(0, 30) + "..."
-                : item?.location
-            }
-            onPress={() =>
-              navigation.navigate(SCREENS.eventDetail, {
-                id: item?.uniqueId,
-              })
-            }
-          />
-        )}
-        keyExtractor={(item: any) => `${item?.uniqueId}`}
-        ListHeaderComponent={
-          <>
-            <TitleTile />
-            <Text style={styles.subheading}>Find</Text>
-            <Text style={styles.trendingText}>Trending Events</Text>
-            <SearchCard />
-            <View style={commonStyles.firstView}>
-              <FeaturedEvent filteredData={featuredEvent[0]} />
-            </View>
-            {/* <EventsRow
-              title="Popular Events"
-              data={data}
-              navigation={navigation}
-            /> */}
-            <Suspense
-              fallback={<ActivityIndicator size="large" color="#000" />}
-            >
-              <EventMenu
-                onFilterClick={setSportSelected}
-                sportSelected={sportSeleted}
-              />
-            </Suspense>
-          </>
-        }
-        showsVerticalScrollIndicator={false}
+      {/* <TopNavigation /> */}
+      <TitleTile />
+      <View style={styles.header}>
+        <View style={styles.searchBar}>
+          <SearchCard />
+          <TouchableOpacity style={styles.filterIconButton}>
+            <Ionicons name="options-outline" size={18} color="#000" />
+          </TouchableOpacity>
+        </View>
+      </View>
+      {/* <View style={commonStyles.firstView}>
+        <FeaturedEvent filteredData={featuredEvent[0]} />
+      </View> */}
+      <EventFilterOption
+        selectedFilter={sportSeleted}
+        setSelectedFilter={setSportSelected}
       />
+      {loading ? (
+        <Loader />
+      ) : (
+        <FlatList
+          data={data}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          keyExtractor={(item: any) => item.id}
+          renderItem={({ item }) => (
+            <MiniEventCard
+              property={item}
+              handleWishlist={() => toggleWishlist(item.id)}
+              isWishlist={wishlist[item.id]}
+            />
+          )}
+          contentContainerStyle={styles.listContent}
+        />
+      )}
     </SafeAreaComponent>
   );
 };
@@ -135,8 +138,13 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
 export default EventListingScreen;
 
 const styles = StyleSheet.create({
-  scrollViewContent: {
-    paddingBottom: 20,
+  listContent: {
+    // padding: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   container: {
     flex: 1,
@@ -182,5 +190,28 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
     paddingLeft: 20,
     paddingBottom: 6,
+  },
+  header: {
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: "#f0f0f0",
+  },
+  searchBar: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  filterIconButton: {
+    width: 40,
+    height: 40,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 12,
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
 });

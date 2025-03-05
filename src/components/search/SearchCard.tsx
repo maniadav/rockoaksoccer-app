@@ -53,20 +53,20 @@ export default function SearchCard() {
 const styles = StyleSheet.create({
   card: {
     padding: 1,
-    borderRadius: 10,
-    backgroundColor: "rgb(238,232,245)",
+    borderRadius: 50,
     overflow: "hidden",
-    // width: 380,
     shadowColor: "#c8d8e7",
     shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 12,
     marginTop: 4,
-    marginBottom: 10,
+    marginBottom: 3,
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
   cardInner: {
     padding: 16,
-    // backgroundColor: 'rgb(238,232,245)',
     borderRadius: 10,
   },
   label: {

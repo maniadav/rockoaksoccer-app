@@ -6,7 +6,11 @@ const Loader = () => {
     <View style={styles.container}>
       <Text style={styles.text}>
         L
-        <ActivityIndicator size="small" color="#000" style={styles.spinner} />
+        <ActivityIndicator
+          size="small"
+          color="#FF385C"
+          style={styles.spinner}
+        />
         ading . . .
       </Text>
     </View>

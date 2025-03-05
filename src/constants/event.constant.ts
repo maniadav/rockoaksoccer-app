@@ -1,8 +1,8 @@
 const EVENT_TYPE = [
-  { id: "all-events", title: "all events" },
-  { id: "kidterm", title: "Kid Term" },
-  { id: "kidholiday", title: "Kid Holiday" },
-  { id: "adultterm", title: "Adult Term" },
+  { id: "all-events", title: "All Events" },
+  { id: "kidterm", title: "Kid Term Events" },
+  { id: "kidholiday", title: "Kid Holiday Events" },
+  { id: "adultterm", title: "Adult Term Events" },
 ];
 
 export default EVENT_TYPE;

@@ -6,7 +6,7 @@ export const EventDraft = [
       "Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!",
     date: "2024-10-15T10:00:00.000Z",
     location: "Melbourne Cricket Ground, Melbourne, Australia",
-    image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
+    image: ["https://images.unsplash.com/photo-1553778263-73a83bab9b0c"],
   },
   {
     uniqueId: "319600b7-87e4-41f6-ae28-8103e8b156b5",
@@ -16,7 +16,7 @@ export const EventDraft = [
     date: "2024-10-15T10:00:00.000Z",
     location: "Melbourne Cricket Ground, Melbourne, Australia",
     type: "football",
-    image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
+    image: ["https://images.unsplash.com/photo-1553778263-73a83bab9b0c"],
   },
   {
     uniqueId: "cbf85437-279a-404a-9827-ac9ceeeb703a",
@@ -26,7 +26,7 @@ export const EventDraft = [
     date: "2024-10-15T10:00:00.000Z",
     location: "Melbourne Cricket Ground, Melbourne, Australia",
     type: "basketball",
-    image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
+    image: ["https://images.unsplash.com/photo-1553778263-73a83bab9b0c"],
   },
   {
     uniqueId: "71f9209d-48c5-412d-9708-676572fd4404",
@@ -36,7 +36,7 @@ export const EventDraft = [
     date: "2024-10-15T10:00:00.000Z",
     location: "Melbourne Cricket Ground, Melbourne, Australia",
     type: "basketball",
-    image: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
+    image: ["https://images.unsplash.com/photo-1553778263-73a83bab9b0c"],
   },
 ];
 
@@ -57,7 +57,7 @@ const DATA = [
       userId: "admin_football_001",
       name: "Sports Australia",
     },
-    images: {
+    image: {
       landscape: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
       portrait: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
     },
@@ -91,7 +91,7 @@ const DATA = [
       userId: "admin_football_001",
       name: "Sports Australia",
     },
-    images: {
+    image: {
       landscape: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
       portrait: "https://images.unsplash.com/photo-1553778263-73a83bab9b0c",
     },
