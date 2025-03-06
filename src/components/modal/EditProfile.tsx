@@ -7,6 +7,7 @@ import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Entypo from "@expo/vector-icons/Entypo";
+import FormField from "@components/profile/FormField";
 
 interface FormValues {
   firstName?: string;
@@ -54,10 +55,30 @@ const EditProfile: React.FC = () => {
     featchData();
   }, []);
 
+  const [formData, setFormData] = useState<any>({});
+
+  const handleChange = (key: keyof any, value: string) => {
+    setFormData({
+      ...formData,
+      [key]: value,
+    });
+  };
+
+  const handleSubmit = () => {
+    // onSave(formData);
+  };
+
   return (
     <View style={{ backgroundColor: "#F8F8F8", height: "100%" }}>
       <TopNavHeader title="Edit Profile" />
-
+      <FormField
+        label="Phone"
+        icon="phone"
+        value={formData?.phone || "6393241779"}
+        onChangeText={(text) => handleChange("phone", text)}
+        placeholder="Enter your phone number"
+        keyboardType="phone-pad"
+      />
       <View
         style={{
           height: "100%",

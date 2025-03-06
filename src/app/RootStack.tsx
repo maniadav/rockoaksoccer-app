@@ -23,6 +23,7 @@ import EditImageModal from "@components/modal/EditImage";
 import EditProfile from "@components/modal/EditProfile";
 import PricingScreen from "./PricingScreen";
 import BookingScreen from "./BookingScreen";
+import ProfileScreen from "./ProfileScreen";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createStackNavigator();
@@ -93,6 +94,11 @@ export default function RootNavigation({
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name={SCREENS.profile}
+          component={ProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name={SCREENS.eventDetail}
           component={EventDetailScreen}
           options={{
@@ -102,11 +108,11 @@ export default function RootNavigation({
             headerTitleStyle: { fontWeight: "bold" },
           }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name={SCREENS.profile}
           component={BlogScreen}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name={SCREENS.main}
           component={BottomTabNavigation}

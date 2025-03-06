@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { CustomButton, CustomText } from "../common/Component";
-import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "@constants/storage.constant";
 import { theme } from "@components/theme";
 import userImg from "@images/front-cat.jpg";
-import { Feather } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 import { MODALS } from "@constants/screen.constant";
+import COLOUR from "@constants/colour.constant";
+import { CustomButton, CustomText } from "@components/common/Component";
 
-export default function ProfileCard({ navigation }: any) {
-  const [user, setUser] = useState<any>(null);
+type ProfileHeaderProps = {
+  navigation: any;
+  profileImage: string;
+  name: string;
+  email: string;
+  // onEditImage: () => void;
+};
 
-  useEffect(() => {
-    getAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, true).then((res) => {
-      const data = res;
-      setUser(data);
-    });
-  }, []);
-
+export default function ProfileCard({
+  navigation,
+  profileImage,
+  name,
+  email,
+}: // onEditImage,
+ProfileHeaderProps) {
   return (
     <View>
       <View style={styles.cardContainer}>
@@ -25,36 +29,31 @@ export default function ProfileCard({ navigation }: any) {
           source={require("../../../assets/images/background.jpg")}
           style={styles.image}
         />
-        {/* <View style={styles.image}></View> */}
-        <Text style={styles.proBadge}>PRO</Text>
         <TouchableOpacity
           style={styles.imageEditButton}
           onPress={() => navigation.navigate(MODALS.editImage)}
           activeOpacity={0.7}
         >
-          <Feather name="edit" size={24} color="black" />
+          <MaterialIcons name="edit" size={16} color="black" />
         </TouchableOpacity>
         <Image
           style={styles.roundImage}
           source={
-            user?.profileImage
+            profileImage
               ? {
-                  uri: user.profileImage,
+                  uri: profileImage,
                 }
               : userImg
           }
         />
       </View>
       <View style={styles.details}>
-        <Text style={styles.name}>{`Hey, ${
-          (user && user.username) || "User"
-        }`}</Text>
-
-        <Text style={styles.location}>{`${
-          (user && user.address) || "please update your address"
-        }`}</Text>
-        <Text style={styles.description}>{`${
-          (user && user.email) || "please add your email"
+        <Text style={styles.name}>{`Hey, ${name || "User"}`}</Text>
+        {/* <Text style={styles.location}>{`${
+          address || "please update your address"
+        }`}</Text> */}
+        <Text style={styles.email}>{`${
+          email || "please add your email"
         }`}</Text>
         <View style={styles.buttonContainer}>
           <CustomButton onPress={() => navigation.navigate(MODALS.editProfile)}>
@@ -87,16 +86,18 @@ const styles = StyleSheet.create({
   imageEditButton: {
     position: "absolute",
     bottom: "10%",
-    left: "60%",
+    left: "63%",
     zIndex: 3,
-    backgroundColor: "white",
-    borderRadius: 5,
+    backgroundColor: COLOUR.secondary,
+    borderRadius: 50,
     padding: 8,
     elevation: 5,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowRadius: 50,
+    borderWidth: 2,
+    borderColor: "white",
   },
   proBadge: {
     position: "absolute",
@@ -125,14 +126,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
     alignItems: "center",
-    paddingVertical: 5,
+    paddingVertical: 20,
   },
-  name: {
-    fontSize: 18,
-    color: "black",
-    marginVertical: 10,
-    textTransform: "capitalize",
-  },
+
   location: {
     fontSize: 12,
     color: "#B3B8CD",
@@ -140,12 +136,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontWeight: 600,
   },
-  description: {
-    fontSize: 14,
-    color: "#B3B8CD",
-    textAlign: "center",
-    lineHeight: 21,
-  },
+
   buttonContainer: {
     flexDirection: "row",
     marginTop: 20,
@@ -155,5 +146,14 @@ const styles = StyleSheet.create({
   },
   ghostButtonText: {
     color: theme.colors.primary,
+  },
+  name: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  email: {
+    fontSize: 16,
+    color: "#666",
   },
 });
