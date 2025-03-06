@@ -1,16 +1,11 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
+import RunningImg from "@images/leg_ball.jpg";
 
 const TopImageBackground = () => {
   return (
     <View style={styles.heroSection}>
-      <Image
-        source={{
-          uri: "https://api.a0.dev/assets/image?text=elite soccer training facility with players&aspect=16:9",
-        }}
-        style={styles.heroImage}
-        resizeMode="cover"
-      />
+      <Image source={RunningImg} style={styles.heroImage} resizeMode="cover" />
       <View style={styles.heroContent}>
         <Text style={styles.heroText}>Join Our Elite Soccer Program</Text>
         <Text style={styles.heroSubtext}>
@@ -26,7 +21,7 @@ export default TopImageBackground;
 const styles = StyleSheet.create({
   heroSection: {
     width: "100%",
-    height: 260,
+    height: 360,
     marginBottom: 24,
   },
   heroImage: {
