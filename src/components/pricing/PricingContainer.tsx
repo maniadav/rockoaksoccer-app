@@ -1,41 +1,73 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
 import PricingCard from "@components/pricing/PricingCard";
 
 const { width } = Dimensions.get("window");
+
+export interface Membership {
+  id: string | number;
+  title: string;
+  price: number;
+  benefits: string[];
+  // Add other required properties here
+}
+
+interface PricingContainerProps {
+  selectedMembership: any;
+  setSelectedMembership: (membership: any) => void;
+  currency: string;
+  membershipData: any[];
+}
 
 export default function PricingContainer({
   selectedMembership,
   setSelectedMembership,
   currency,
   membershipData,
-}: any) {
+}: PricingContainerProps) {
   const handleMembershipSelect = (membership: any) => {
     setSelectedMembership(membership);
   };
+
+  const cardWidth = width * 0.8;
+  const scrollViewRef = useRef<ScrollView>(null);
+  const initialScrollIndex = 1;
+
+  useEffect(() => {
+    const scrollTimeout = setTimeout(() => {
+      if (scrollViewRef.current) {
+        const initialOffset = initialScrollIndex * cardWidth + 20;
+        scrollViewRef.current.scrollTo({ x: initialOffset, animated: true });
+      }
+    }, 100);
+
+    return () => clearTimeout(scrollTimeout);
+  }, []);
 
   return (
     <View style={styles.pricingSection}>
       <Text style={styles.sectionTitle}>Choose Your Membership</Text>
       <Text style={styles.sectionSubtitle}>
         Select the plan that fits your needs
-      </Text>{" "}
+      </Text>
       <ScrollView
+        ref={scrollViewRef}
         horizontal
-        // showsHorizontalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.cardContainer}
-        // snapToInterval={width * 1 + 16} // Card width + margin
-        // decelerationRate="fast"
-        // snapToAlignment="center"
-        // contentOffset={{ x: width * 0, y: 0 }} // Initial offset to center the middle card
-        pagingEnabled={true}
+        snapToInterval={cardWidth + 10}
+        decelerationRate="fast"
+        snapToAlignment="center"
+        pagingEnabled
       >
-        {membershipData.map((membership: any, index: number) => (
+        {membershipData.map((membership, index) => (
           <View
-            key={membership.id}
+            key={membership.id.toString()}
             style={[
               styles.cardWrapper,
-              index === 1 && { marginHorizontal: 0 }, // Add extra margin to middle card
+              {
+                width: cardWidth,
+              },
             ]}
           >
             <PricingCard
@@ -51,6 +83,7 @@ export default function PricingContainer({
   );
 }
 
+// Styles remain the same
 const styles = StyleSheet.create({
   pricingSection: {
     marginTop: 14,
@@ -72,7 +105,6 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 26,
     fontWeight: "bold",
-    // color: "#",
     textAlign: "center",
     marginBottom: 8,
     letterSpacing: 0.5,
@@ -90,9 +122,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     alignItems: "center",
   },
-
   cardWrapper: {
-    height: 350, // Fixed height for all cards
+    height: 350,
     justifyContent: "center",
   },
 });
