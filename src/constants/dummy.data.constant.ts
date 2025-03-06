@@ -1,0 +1,98 @@
+export const clubData = {
+  currency: {
+    name: "Australian Dollar",
+    symbol: "$",
+    code: "AUD",
+  },
+  _id: "67542dba47ec2f9a22821826",
+  offers: [
+    {
+      id: 1,
+      type: "Training",
+      details: "3 x training per week (Mon, Wed & Fri) with mini-matches",
+      _id: "675470ef92574294c9a8c4c4",
+    },
+    {
+      id: 2,
+      type: "Matches",
+      details: "1 x game per week with live guidance by coaches (Sun)",
+      _id: "675470ef92574294c9a8c4c5",
+    },
+    {
+      id: 3,
+      type: "Equipment",
+      details: "Access to world-class equipment",
+      _id: "675470ef92574294c9a8c4c6",
+    },
+    {
+      id: 4,
+      type: "Training Program",
+      details: "Structured training program",
+      _id: "675470ef92574294c9a8c4c7",
+    },
+    {
+      id: 5,
+      type: "Technology",
+      details: "Rotateplay10 system technology",
+      _id: "675470ef92574294c9a8c4c8",
+    },
+    {
+      id: 6,
+      type: "Video Analysis",
+      details: "Post-match access to GoPro footage to see your goals",
+      _id: "675470ef92574294c9a8c4c9",
+    },
+    {
+      id: 7,
+      type: "Mobile App",
+      details: "Access to premium mobile application",
+      _id: "675470ef92574294c9a8c4ca",
+    },
+    {
+      id: 8,
+      type: "Nutrition",
+      details: "Healthy nutritional guidance via premium app",
+      _id: "675470ef92574294c9a8c4cb",
+    },
+    {
+      id: 9,
+      type: "Holiday Clinic",
+      details:
+        "Daily holiday clinic masterclass (Term 1 - 3): Morning: '09:00 - 11:00', Afternoon: '13:00 - 15:00'",
+      _id: "675470ef92574294c9a8c4cc",
+    },
+  ],
+  clubName: "ROCK OAK SOCCER",
+  memberships: [
+    {
+      id: "kidterm",
+      name: "Kid Term",
+      per: "term",
+      price: 299,
+      description: "Basic kid's term membership",
+      valueAdded: false,
+      includedOffers: [1, 2, 3, 4, 5, 6, 7, 8],
+      _id: "675470ef92574294c9a8c4cd",
+    },
+    {
+      id: "kidholiday",
+      name: "Kid Term + School Holiday Clinic",
+      per: "term",
+      price: 399,
+      description: "Kid's term membership with added school holiday clinic",
+      valueAdded: true,
+      includedOffers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      _id: "675470ef92574294c9a8c4ce",
+    },
+    {
+      id: "adultterm",
+      name: "Adult Membership",
+      per: "week",
+      price: 49,
+      description: "Weekly adult membership",
+      valueAdded: false,
+      includedOffers: [1, 2, 3, 4, 5, 6, 7, 8],
+      _id: "675470ef92574294c9a8c4cf",
+    },
+  ],
+};

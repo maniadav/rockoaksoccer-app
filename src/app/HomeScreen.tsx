@@ -14,7 +14,9 @@ import QuickLinks from "@components/home/QuickLinks";
 import Program from "@components/home/Program";
 import UpcomingEvents from "@components/home/UpcomingEvents";
 import LatestFeed from "@components/home/LatestFeed";
-const HomeScreen = ({ navigation }: any) => {
+import { RootStackNavigationProp } from "types/stack.type";
+
+const HomeScreen = ({ navigation, route }: RootStackNavigationProp) => {
   return (
     <SafeAreaComponent>
       <TopNavigation />
@@ -23,7 +25,7 @@ const HomeScreen = ({ navigation }: any) => {
         <HomeBanner />
         <QuickLinks />
         <HeroSection />
-        <Program />
+        <Program navigation={navigation} route={route} />
         <UpcomingEvents />
         <LatestFeed />
         {/* <VideoTestimonials /> */}
