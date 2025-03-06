@@ -96,3 +96,88 @@ export const clubData = {
     },
   ],
 };
+
+export const upcomingBookings = [
+  {
+    id: "1",
+    type: "Training Session",
+    location: "City Stadium Field 3",
+    date: "March 8, 2025",
+    time: "6:00 PM - 8:00 PM",
+    eventType: "Midterm",
+    image:
+      "https://api.a0.dev/assets/image?text=soccer%20practice%20field%20with%20cones%20and%20players&aspect=16:9&seed=123",
+    status: "Confirmed",
+    teamInfo: "FC Warriors",
+    participants: 16,
+  },
+  {
+    id: "2",
+    type: "Friendly Match",
+    location: "Urban Sports Center",
+    date: "March 15, 2025",
+    time: "2:00 PM - 4:00 PM",
+    eventType: "Term Holiday",
+    image:
+      "https://api.a0.dev/assets/image?text=indoor%20soccer%20arena%20with%20teams%20warming%20up&aspect=16:9&seed=456",
+    status: "Pending",
+    teamInfo: "City Strikers vs Metro United",
+    participants: 22,
+  },
+  {
+    id: "3",
+    type: "League Game",
+    location: "Memorial Park",
+    date: "March 22, 2025",
+    time: "7:30 PM - 9:30 PM",
+    eventType: "Adult Term",
+    image:
+      "https://api.a0.dev/assets/image?text=evening%20soccer%20match%20on%20well-lit%20field%20with%20spectators&aspect=16:9&seed=789",
+    status: "Confirmed",
+    teamInfo: "Regional Cup Qualifier",
+    participants: 28,
+  },
+];
+
+// Mock data for past bookings
+export const pastBookings = [
+  {
+    id: "4",
+    type: "Training Session",
+    location: "City Stadium Field 1",
+    date: "February 25, 2025",
+    time: "6:00 PM - 8:00 PM",
+    eventType: "Midterm",
+    image:
+      "https://api.a0.dev/assets/image?text=soccer%20field%20after%20training%20session%20with%20equipment&aspect=16:9&seed=101",
+    status: "Completed",
+    teamInfo: "Skills Development",
+    participants: 14,
+  },
+  {
+    id: "5",
+    type: "Friendly Match",
+    location: "Community Center",
+    date: "February 18, 2025",
+    time: "3:00 PM - 5:00 PM",
+    eventType: "Term Holiday",
+    image:
+      "https://api.a0.dev/assets/image?text=soccer%20teams%20shaking%20hands%20after%20match&aspect=16:9&seed=102",
+    status: "Completed",
+    teamInfo: "Local Derby",
+    participants: 22,
+  },
+  {
+    id: "6",
+    type: "Skill Workshop",
+    location: "Elite Training Academy",
+    date: "February 10, 2025",
+    time: "5:30 PM - 7:30 PM",
+    eventType: "Adult Term",
+    image:
+      "https://api.a0.dev/assets/image?text=empty%20indoor%20soccer%20facility%20with%20training%20equipment&aspect=16:9&seed=103",
+    status: "Canceled",
+    teamInfo: "Advanced Techniques",
+    participants: 0,
+  },
+];

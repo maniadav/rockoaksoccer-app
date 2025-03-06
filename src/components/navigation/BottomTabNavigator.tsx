@@ -27,7 +27,7 @@ const BottomTabNavigator = () => {
         <Text style={{ color: getTabColor(SCREENS.home) }}>Home</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.tab}
         onPress={() => navigation.navigate(SCREENS.profile)}
       >
@@ -37,7 +37,7 @@ const BottomTabNavigator = () => {
           color={getTabColor(SCREENS.profile)}
         />
         <Text style={{ color: getTabColor(SCREENS.profile) }}>Profile</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       <TouchableOpacity
         style={styles.tab}

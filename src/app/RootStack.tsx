@@ -1,75 +1,36 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
   ThemeProvider,
   DarkTheme,
   DefaultTheme,
-  useNavigationState,
 } from "@react-navigation/native";
 // import { useNavigationState } from "@react-navigation/native";
 import { useColorScheme } from "@components/useColorScheme";
-import BottomTabNavigator from "@components/navigation/BottomTabNavigator";
-import TopNavigation from "@components/navigation/TopNavigation";
 import SCREENS, { MODALS } from "@constants/screen.constant";
-import { getAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "constants/storage.constant";
 // screen
-import HomeScreen from "./HomeScreen";
-import ProfileScreen from "./ProfileScreen";
 import SignInScreen from "./SignInScreen";
 import SignUpScreen from "./SignUpScreen";
 import ResetPasswordScreen from "./ResetPasswordScreen";
 import OnBoardingScreen from "./OnBoardingScreen";
-import EventListingScreen from "./EventListingScreen";
 import SearchScreen from "./SearchScreen";
 import EventDetailScreen from "./EventDetailScreen";
-import SettingScreen from "./SettingScreen";
-import FeedScreen from "./FeedScreen";
 import BlogScreen from "./BlogDetailScreen";
 import BottomTabNavigation from "@components/navigation/BottomTabNavigation";
 import { createStackNavigator } from "@react-navigation/stack";
 import LogOutModal from "@components/modal/LogOutModal";
-import TopNavHeader from "@components/navigation/TopNavHeader";
 import EditImageModal from "@components/modal/EditImage";
 import EditProfile from "@components/modal/EditProfile";
 import PricingScreen from "./PricingScreen";
+import BookingScreen from "./BookingScreen";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createStackNavigator();
 
-export default function RootNavigation({ initialRoute = SCREENS.main }: any) {
-  console.log({ initialRoute });
+export default function RootNavigation({
+  initialRoute = SCREENS.booking,
+}: any) {
   const colorScheme = useColorScheme();
-  // const [initialRoute, setInitialRoute] = useState<string | null>("Home");
-
-  // useEffect(() => {
-  //   const checkLoginStatus = async () => {
-  //     const storedUser = await getAsyncStorageValue(
-  //       LOCALSTORAGE.LOGGED_IN_USER,
-  //       true
-  //     );
-  //     const { email } = storedUser || {};
-  //     console.log({ storedUser }, storedUser.email);
-  //     // setInitialRoute(email ? SCREENS.home : SCREENS.onBoarding);
-  //   };
-
-  //   checkLoginStatus();
-  // }, []);
-
-  const showBottomTabNav = useMemo(
-    () => [
-      SCREENS.home,
-      SCREENS.eventListing,
-      SCREENS.profile,
-      SCREENS.setting,
-      SCREENS.feed,
-    ],
-    []
-  );
-
-  // const currentRouteName = useNavigationState(
-  //   (state) => state.routes[state.index]?.name
-  // );
 
   if (initialRoute === null) {
     return null;
@@ -114,6 +75,11 @@ export default function RootNavigation({ initialRoute = SCREENS.main }: any) {
         <Stack.Screen
           name={SCREENS.signIn}
           component={SignInScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={SCREENS.booking}
+          component={BookingScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

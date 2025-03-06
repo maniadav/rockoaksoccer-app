@@ -2,12 +2,12 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import HomeScreen from "app/HomeScreen";
-import ProfileScreen from "app/ProfileScreen";
 import FeedScreen from "app/FeedScreen";
 import EventListingScreen from "app/EventListingScreen";
 import SettingScreen from "app/SettingScreen";
 import SCREENS from "@constants/screen.constant";
 import { theme } from "@components/theme";
+import BookingScreen from "app/BookingScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,14 +21,14 @@ const BottomTabNavigation = ({ route }: any) => {
           let iconName:
             | "football-outline"
             | "home-outline"
-            | "person-outline"
+            | "calendar-outline"
             | "newspaper-outline"
             | "settings-outline" = "home-outline";
 
           if (route.name === SCREENS.home) {
             iconName = "home-outline";
-          } else if (route.name === SCREENS.profile) {
-            iconName = "person-outline";
+          } else if (route.name === SCREENS.booking) {
+            iconName = "calendar-outline";
           } else if (route.name === SCREENS.feed) {
             iconName = "newspaper-outline";
           } else if (route.name === SCREENS.eventListing) {
@@ -51,7 +51,7 @@ const BottomTabNavigation = ({ route }: any) => {
       })}
     >
       <Tab.Screen name={SCREENS.home} component={HomeScreen} />
-      <Tab.Screen name={SCREENS.profile} component={ProfileScreen} />
+      <Tab.Screen name={SCREENS.booking} component={BookingScreen} />
       <Tab.Screen name={SCREENS.eventListing} component={EventListingScreen} />
       <Tab.Screen name={SCREENS.feed} component={FeedScreen} />
       <Tab.Screen name={SCREENS.setting} component={SettingScreen} />

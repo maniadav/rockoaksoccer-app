@@ -31,13 +31,17 @@ const TopNavHeader = ({ title }: any) => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 50,
     display: "flex",
     position: "relative",
     flexDirection: "row",
     alignItems: "center",
     zIndex: 1,
-    backgroundColor: "",
+    paddingHorizontal: 16,
+    paddingVertical: 18,
+    backgroundColor: "white",
+    borderBottomWidth: 1,
+    borderBottomColor: "#eaeaea",
+    // marginBottom: 10,
   },
   backButton: {
     position: "absolute",
@@ -49,11 +53,11 @@ const styles = StyleSheet.create({
     height: 24,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
-    textAlign: "center",
+    color: "#333",
     flex: 1,
-    zIndex: 1,
+    textAlign: "center",
   },
 });
 
