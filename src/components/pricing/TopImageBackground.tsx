@@ -1,10 +1,23 @@
 import React from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import RunningImg from "@images/leg_ball.jpg";
+import BackButton from "@components/BackButton";
 
 const TopImageBackground = () => {
   return (
     <View style={styles.heroSection}>
+      <View
+        style={{
+          padding: 30,
+          position: "absolute",
+          top: 50,
+          left: 20,
+          backgroundColor: "black",
+        }}
+      >
+        <BackButton />
+      </View>
+
       <Image source={RunningImg} style={styles.heroImage} resizeMode="cover" />
       <View style={styles.heroContent}>
         <Text style={styles.heroText}>Join Our Elite Soccer Program</Text>
@@ -23,6 +36,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 360,
     marginBottom: 24,
+    position: "relative",
   },
   heroImage: {
     width: "100%",

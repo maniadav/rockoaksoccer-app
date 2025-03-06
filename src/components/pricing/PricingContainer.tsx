@@ -15,7 +15,7 @@ export interface Membership {
 interface PricingContainerProps {
   selectedMembership: any;
   setSelectedMembership: (membership: any) => void;
-  currency: string;
+  currency: any;
   membershipData: any[];
 }
 
@@ -36,7 +36,7 @@ export default function PricingContainer({
   useEffect(() => {
     const scrollTimeout = setTimeout(() => {
       if (scrollViewRef.current) {
-        const initialOffset = initialScrollIndex * cardWidth + 20;
+        const initialOffset = initialScrollIndex * cardWidth + 10;
         scrollViewRef.current.scrollTo({ x: initialOffset, animated: true });
       }
     }, 100);

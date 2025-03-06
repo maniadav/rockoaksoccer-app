@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import EVENT_TYPE from "@constants/event.constant";
+import COLOUR from "@constants/colour.constant";
 
 const FILTER_OPTIONS = [
   { ...EVENT_TYPE[0], icon: "trending-up" },
@@ -47,7 +48,7 @@ const FilterOption = ({ selectedFilter, option, setSelectedFilter }: any) => (
     <MaterialIcons
       name={option.icon}
       size={22}
-      color={selectedFilter === option.id ? "#000" : "#717171"}
+      color={selectedFilter === option.id ? COLOUR.primary : "#717171"}
     />
     <Text
       style={[
@@ -81,11 +82,11 @@ const styles = StyleSheet.create({
   filterOptionText: {},
   selectedFilterOption: {
     borderBottomWidth: 2,
-    borderBottomColor: "#000",
+    borderBottomColor: COLOUR.primary,
     opacity: 1,
   },
   selectedFilterText: {
-    color: "#000",
+    color: COLOUR.primary,
     fontWeight: "500",
   },
   filterText: {
