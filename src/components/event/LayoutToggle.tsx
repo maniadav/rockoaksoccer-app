@@ -32,7 +32,7 @@ const LayoutToggle = ({ grid, toggleLayout }: any) => {
         <MaterialIcons
           name={grid ? "grid-view" : "view-agenda"}
           size={24}
-          color="black"
+          color={COLOUR.primary}
         />
       </TouchableOpacity>
     </Animated.View>
@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   layoutToggle: {
-    // backgroundColor: COLOUR.primary,
+    borderColor: COLOUR.primary,
     borderWidth: 1.5,
-    borderColor: "gray",
+    // borderColor: "gray",
     width: 40,
     height: 40,
     borderRadius: 20,
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: COLOUR.primary,
     borderRadius: 12,
     marginBottom: 16,
     shadowColor: "#000",
