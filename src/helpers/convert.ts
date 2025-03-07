@@ -14,7 +14,7 @@ export default function convertToBase64(file: any) {
   });
 }
 
-export function formatDate(inputDate: string) {
+export function formatDate(inputDate: string | number | Date) {
   const date = new Date(inputDate);
 
   // Extract day, month, and year
@@ -31,15 +31,15 @@ export function formatDate(inputDate: string) {
 export const numberToStringDate = (milliseconds: number) => {
   const date = new Date(milliseconds);
   const isDate = new Date(date.getTime());
-  const istDate = isDate.toLocaleString('en-IN', {
-    timeZone: 'Asia/Kolkata',
+  const istDate = isDate.toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
     hour12: true,
   });
   return istDate;
 };
 
 export function hexToRgba(hex: string, opacity: number) {
-  const normalizedHex = hex.replace('#', '');
+  const normalizedHex = hex.replace("#", "");
   const bigint = parseInt(normalizedHex, 16);
   const r = (bigint >> 16) & 255;
   const g = (bigint >> 8) & 255;

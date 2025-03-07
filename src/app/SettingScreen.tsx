@@ -47,7 +47,7 @@ const Setting = () => {
     { title: "Log Out", route: MODALS.logOut },
     { title: "Delete Account", route: "DeleteAccount" },
     { title: "Manage Notifications", route: null },
-    { title: "Booking History", route: SCREENS.profile },
+    { title: "Booking History", route: SCREENS.booking },
     { title: "User Preferences", route: "Preferences" },
     { title: "Profile", route: null },
     { title: "View Profile", route: SCREENS.profile },

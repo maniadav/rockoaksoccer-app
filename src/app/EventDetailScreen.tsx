@@ -12,6 +12,7 @@ import Loader from "@components/common/Loader";
 import NoData from "@components/common/NoData";
 import EventMap from "@components/event/EventMap";
 import BookingButton from "@components/event/BookingButton";
+import EventMap2 from "@components/event/EventMap2";
 
 function EventDetailScreen({ route }: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,7 +28,7 @@ function EventDetailScreen({ route }: any) {
     setIsLoading(true);
     try {
       // const res = await rockOakApi.fetchEventDetails(params.slug);
-      const eventByID = (await getEventById(id)) || null;
+      const eventByID: any = (await getEventById(id)) || null;
       setData(eventByID);
     } catch (error) {
       console.error("Fetching events failed", error);
@@ -79,7 +80,11 @@ function EventDetailScreen({ route }: any) {
                 description={eventData.organizer?.name}
               />
             </View>
-            <EventMap
+            {/* <EventMap
+              locationDetail={eventData.locationDetail}
+              date={eventData.timing.start}
+            /> */}
+            <EventMap2
               locationDetail={eventData.locationDetail}
               date={eventData.timing.start}
             />
