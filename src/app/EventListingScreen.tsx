@@ -1,5 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { View, StyleSheet, FlatList, TouchableOpacity } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  TouchableOpacity,
+  Animated,
+} from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { getAllEvent } from "@api/categories";
 import SCREENS from "@constants/screen.constant";
@@ -12,6 +18,7 @@ import MiniEventCard from "@components/event/MiniEventCard";
 import Loader from "@components/common/Loader";
 import EventFilterOption from "@components/event/EventFilterOption";
 import { Ionicons } from "@expo/vector-icons";
+import LayoutToggle from "@components/event/LayoutToggle";
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<any, "EventListing">;
@@ -82,6 +89,12 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
     }
   };
 
+  const [gridLayout, setGridLayout] = useState<"single" | "double">("single");
+
+  const toggleLayout = () => {
+    setGridLayout((prev) => (prev === "single" ? "double" : "single"));
+  };
+
   return (
     <SafeAreaComponent>
       {/* <TopNavigation /> */}
@@ -89,9 +102,10 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
       <View style={styles.header}>
         <View style={styles.searchBar}>
           <SearchCard />
-          <TouchableOpacity style={styles.filterIconButton}>
+          {/* <TouchableOpacity style={styles.filterIconButton}>
             <Ionicons name="options-outline" size={18} color="#000" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
+          <LayoutToggle layout={gridLayout} toggleLayout={toggleLayout} />
         </View>
       </View>
       {/* <View style={commonStyles.firstView}>
@@ -196,6 +210,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    gap: 10,
   },
   filterIconButton: {
     width: 40,
