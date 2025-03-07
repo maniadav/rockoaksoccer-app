@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
   FlatList,
-  TouchableOpacity,
-  Animated,
+  Dimensions,
 } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { getAllEvent } from "@api/categories";
@@ -14,11 +13,11 @@ import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import { theme } from "@components/theme";
 import TitleTile from "@components/common/TitleTile";
 import EVENT_TYPE from "@constants/event.constant";
-import MiniEventCard from "@components/event/MiniEventCard";
-import Loader from "@components/common/Loader";
 import EventFilterOption from "@components/event/EventFilterOption";
-import { Ionicons } from "@expo/vector-icons";
 import LayoutToggle from "@components/event/LayoutToggle";
+import { EVENTS } from "@constants/dummy.data.constant";
+import FlexiEventCard from "@components/event/FlexiEventCard";
+const { width } = Dimensions.get("window");
 
 type EventListingScreenProps = {
   navigation: NativeStackNavigationProp<any, "EventListing">;
@@ -93,14 +92,11 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
 
   return (
     <SafeAreaComponent>
-      {/* <TopNavigation /> */}
       <TitleTile />
       <View style={styles.header}>
         <View style={styles.searchBar}>
           <SearchCard />
-          {/* <TouchableOpacity style={styles.filterIconButton}>
-            <Ionicons name="options-outline" size={18} color="#000" />
-          </TouchableOpacity> */}
+
           <LayoutToggle
             grid={gridLayout}
             toggleLayout={() => setGridLayout((prev) => !prev)}
@@ -114,12 +110,66 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
         selectedFilter={sportSeleted}
         setSelectedFilter={setSportSelected}
       />
-      {loading ? (
+      <FlatList
+        key={gridLayout ? "grid-2-col" : "grid-1-col"}
+        data={EVENTS}
+        extraData={gridLayout}
+        keyExtractor={(item) => item.id}
+        numColumns={gridLayout ? 2 : 1}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.eventsContainer}
+        columnWrapperStyle={gridLayout ? styles.columnWrapper : null}
+        renderItem={({ item: event }) => (
+          <FlexiEventCard
+            event={event}
+            grid={gridLayout}
+            onPress={() =>
+              navigation.navigate(SCREENS.eventDetail, { id: event.id })
+            }
+          />
+        )}
+      />
+      {/* <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={styles.eventsContainer}>
+          {gridLayout ? (
+            // Double grid layout (two columns)
+            <View style={gridLayout && styles.doubleGrid}>
+              {EVENTS.map((event, index) => (
+                <FlexiEventCard
+                  event={event}
+                  index={index}
+                  grid={gridLayout}
+                  onPress={() =>
+                    navigation.navigate(SCREENS.eventDetail, {
+                      id: event?.id,
+                    })
+                  }
+                />
+              ))}
+            </View>
+          ) : (
+            // Single grid layout (one column)
+            EVENTS.map((event, index) => (
+              <FlexiEventCard
+                event={event}
+                index={index}
+                grid={gridLayout}
+                onPress={() =>
+                  navigation.navigate(SCREENS.eventDetail, {
+                    id: event?.id,
+                  })
+                }
+              />
+            ))
+          )}
+        </View>
+      </ScrollView> */}
+      {/* {loading ? (
         <Loader />
       ) : (
         <FlatList
           data={data}
-          numColumns={2}
+          numColumns={gridLayout ? 2 : 1}
           showsVerticalScrollIndicator={false}
           keyExtractor={(item: any) => item.id}
           renderItem={({ item }) => (
@@ -136,7 +186,7 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
           )}
           contentContainerStyle={styles.listContent}
         />
-      )}
+      )} */}
     </SafeAreaComponent>
   );
 };
@@ -146,6 +196,17 @@ export default EventListingScreen;
 const styles = StyleSheet.create({
   listContent: {
     // padding: 16,
+  },
+  columnWrapper: {
+    justifyContent: "space-between",
+    marginBottom: 16, // Add spacing between rows
+  },
+  eventsContainer: {
+    // padding: 12,
+  },
+  doubleGridCard: {
+    width: (width - 32) / 2, // Account for padding and small gap
+    marginBottom: 12,
   },
   loadingContainer: {
     flex: 1,
@@ -176,6 +237,12 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     color: theme.colors.primary,
+  },
+  doubleGrid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    // backgroundColor: "black",
   },
   logoTextSmall: {
     fontSize: 16,

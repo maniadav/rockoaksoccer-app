@@ -181,3 +181,142 @@ export const pastBookings = [
     participants: 0,
   },
 ];
+
+export const EVENT_DATA = {
+  id: "6704f3f8193b7f0a2ec48346",
+  uniqueId: "319600b7-87e4-41f6-ae28-8103e8b156b5",
+  title: "Australian Football Championship",
+  date: "Tuesday, October 15, 2024",
+  timing: {
+    start: "2024-10-15T10:00:00.000Z",
+    end: "2024-10-15T17:00:00.000Z",
+    duration: "7 hours",
+  },
+  location: {
+    name: "Melbourne Cricket Ground",
+    address: "Melbourne Cricket Ground, Melbourne, Australia",
+    coordinates: {
+      latitude: -37.819967,
+      longitude: 144.983449,
+    },
+  },
+  isTrending: true,
+  isFeatured: false,
+  shortDescription:
+    "Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!",
+  longDescription:
+    "Get ready for an action-packed event as the best football teams from across Australia come together to battle it out for the championship title. With thrilling matches, live commentary, and fan activities, the Australian Football Championship promises an unforgettable experience for all football enthusiasts. Don't miss out on this chance to witness the nation's top talent and immerse yourself in the excitement of the game!",
+  organizer: {
+    name: "Sports Australia",
+    role: "admin",
+    userId: "admin_football_001",
+    image:
+      "https://api.a0.dev/assets/image?text=sports%20australia%20logo&aspect=1:1&seed=123",
+    contact: "+61 3 9657 8888",
+  },
+  attendees: {
+    joined: 256,
+    interested: 438,
+    recentAvatars: [
+      "https://api.a0.dev/assets/image?text=person%20avatar%201&aspect=1:1&seed=1",
+      "https://api.a0.dev/assets/image?text=person%20avatar%202&aspect=1:1&seed=2",
+      "https://api.a0.dev/assets/image?text=person%20avatar%203&aspect=1:1&seed=3",
+      "https://api.a0.dev/assets/image?text=person%20avatar%204&aspect=1:1&seed=4",
+    ],
+  },
+  type: "football",
+  status: "active",
+  tags: ["football", "sports", "championship", "australia", "event"],
+  images: [
+    "https://api.a0.dev/assets/image?text=football%20match%20action&aspect=16:9&seed=1",
+    "https://api.a0.dev/assets/image?text=australian%20football%20players&aspect=16:9&seed=2",
+    "https://api.a0.dev/assets/image?text=football%20stadium%20crowd&aspect=16:9&seed=3",
+    "https://api.a0.dev/assets/image?text=football%20championship%20trophy&aspect=16:9&seed=4",
+    "https://api.a0.dev/assets/image?text=football%20fans%20celebrating&aspect=16:9&seed=5",
+  ],
+  mainImage:
+    "https://api.a0.dev/assets/image?text=australian%20football%20championship&aspect=16:9&seed=123",
+  createdAt: "2024-10-08T08:57:28.201Z",
+  updatedAt: "2024-10-08T08:57:28.201Z",
+};
+
+export const EVENTS = [
+  {
+    id: "1",
+    title: "Sunday Soccer Tournament",
+    date: "March 10, 2025",
+    location: "Central Park Soccer Field",
+    going: 24,
+    interested: 43,
+    eventType: "adult-term",
+    isTrending: true,
+    isFeatured: false,
+    image:
+      "https://api.a0.dev/assets/image?text=soccer%20tournament%20aerial%20view&aspect=16:9&seed=123",
+  },
+  {
+    id: "2",
+    title: "Indoor Soccer League",
+    date: "March 15, 2025",
+    location: "NYC Indoor Sports Complex",
+    going: 18,
+    interested: 32,
+    eventType: "adult-term",
+    isTrending: false,
+    isFeatured: false,
+    image:
+      "https://api.a0.dev/assets/image?text=indoor%20soccer%20tournament&aspect=16:9&seed=456",
+  },
+  {
+    id: "3",
+    title: "Youth Soccer Training",
+    date: "March 18, 2025",
+    location: "Riverside Park Fields",
+    going: 32,
+    interested: 15,
+    eventType: "kid-term",
+    isTrending: false,
+    isFeatured: true,
+    image:
+      "https://api.a0.dev/assets/image?text=youth%20soccer%20training&aspect=16:9&seed=789",
+  },
+  {
+    id: "4",
+    title: "Women's Soccer Cup",
+    date: "March 22, 2025",
+    location: "Brooklyn Soccer Stadium",
+    going: 45,
+    interested: 78,
+    eventType: "adult-term",
+    isTrending: true,
+    isFeatured: false,
+    image:
+      "https://api.a0.dev/assets/image?text=womens%20soccer%20match&aspect=16:9&seed=101",
+  },
+  {
+    id: "5",
+    title: "Corporate Soccer Challenge",
+    date: "March 25, 2025",
+    location: "Manhattan Sports Fields",
+    going: 18,
+    interested: 27,
+    eventType: "adult-term",
+    isTrending: false,
+    isFeatured: false,
+    image:
+      "https://api.a0.dev/assets/image?text=corporate%20soccer%20event&aspect=16:9&seed=202",
+  },
+  {
+    id: "6",
+    title: "International Friendly Match",
+    date: "April 2, 2025",
+    location: "Queens International Stadium",
+    going: 87,
+    interested: 124,
+    eventType: "kid-holiday",
+    isTrending: true,
+    isFeatured: true,
+    image:
+      "https://api.a0.dev/assets/image?text=international%20soccer%20match&aspect=16:9&seed=303",
+  },
+];
