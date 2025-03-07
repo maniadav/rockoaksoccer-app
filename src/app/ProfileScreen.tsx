@@ -7,6 +7,9 @@ import MembershipBadge from "@components/profile/MembershipBadge";
 import ProfileHeader from "@components/profile/ProfileHeader";
 import { MODALS } from "@constants/screen.constant";
 import ProfileDetailCard from "@components/profile/ProfileDetailsCard";
+import TopNavigation from "@components/navigation/TopNavigation";
+import TopNavHeader from "@components/navigation/TopNavHeader";
+import BackButton from "@components/BackButton";
 
 export type ProfileData = {
   name: string;
@@ -61,7 +64,9 @@ const ProfileScreen = ({ navigation }: any) => {
       <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={styles.content}>
-            {/* <TopNavigation /> */}
+            <View style={styles.backButtonContainer}>
+              <BackButton />
+            </View>
             <ProfileCard
               profileImage={profileImage}
               name={profileData.name}
@@ -144,6 +149,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+  },
+  backButtonContainer: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    zIndex: 1,
   },
   image: {
     top: 0,
