@@ -89,11 +89,7 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
     }
   };
 
-  const [gridLayout, setGridLayout] = useState<"single" | "double">("single");
-
-  const toggleLayout = () => {
-    setGridLayout((prev) => (prev === "single" ? "double" : "single"));
-  };
+  const [gridLayout, setGridLayout] = useState<boolean>(false);
 
   return (
     <SafeAreaComponent>
@@ -105,7 +101,10 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
           {/* <TouchableOpacity style={styles.filterIconButton}>
             <Ionicons name="options-outline" size={18} color="#000" />
           </TouchableOpacity> */}
-          <LayoutToggle layout={gridLayout} toggleLayout={toggleLayout} />
+          <LayoutToggle
+            grid={gridLayout}
+            toggleLayout={() => setGridLayout((prev) => !prev)}
+          />
         </View>
       </View>
       {/* <View style={commonStyles.firstView}>

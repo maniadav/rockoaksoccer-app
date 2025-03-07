@@ -3,7 +3,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import React, { useRef } from "react";
 import { Animated, TouchableOpacity, StyleSheet } from "react-native";
 
-const LayoutToggle = ({ layout, toggleLayout }: any) => {
+const LayoutToggle = ({ grid, toggleLayout }: any) => {
   const buttonScale = useRef(new Animated.Value(1)).current;
 
   const handleToggle = () => {
@@ -19,19 +19,20 @@ const LayoutToggle = ({ layout, toggleLayout }: any) => {
         useNativeDriver: true,
       }),
     ]).start();
-    
+    toggleLayout();
   };
+
   return (
     <Animated.View style={{ transform: [{ scale: buttonScale }] }}>
       <TouchableOpacity
         style={styles.layoutToggle}
-        onPress={toggleLayout}
+        onPress={handleToggle}
         activeOpacity={0.7}
       >
         <MaterialIcons
-          name={layout === "single" ? "grid-view" : "view-agenda"}
+          name={grid ? "grid-view" : "view-agenda"}
           size={24}
-          color="#fff"
+          color="black"
         />
       </TouchableOpacity>
     </Animated.View>
@@ -59,7 +60,9 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   layoutToggle: {
-    backgroundColor: COLOUR.primary,
+    // backgroundColor: COLOUR.primary,
+    borderWidth: 1.5,
+    borderColor: "gray",
     width: 40,
     height: 40,
     borderRadius: 20,
