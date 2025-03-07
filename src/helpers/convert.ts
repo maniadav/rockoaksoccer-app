@@ -13,6 +13,27 @@ export default function convertToBase64(file: any) {
     };
   });
 }
+export const formatDate2 = (dateString: string) => {
+  const date = new Date(dateString);
+  return date.toLocaleTimeString("en-US", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
+};
+
+export const formatEventType = (type: string): string => {
+  switch (type) {
+    case "adult-term":
+      return "ADULT";
+    case "kid-term":
+      return "KIDS";
+    case "kid-holiday":
+      return "HOLIDAY";
+    default:
+      return type.toUpperCase();
+  }
+};
 
 export function formatDate(inputDate: string | number | Date) {
   const date = new Date(inputDate);

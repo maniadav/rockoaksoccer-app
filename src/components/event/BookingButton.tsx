@@ -91,7 +91,7 @@ const BookingButton = ({ uniqueID, planType }: any) => {
           {isLoading ? (
             <ActivityIndicator color="#FFF" />
           ) : (
-            <Text style={{ color: "#FFF", fontWeight: "bold" }}>Book</Text>
+            <Text style={{ color: "#FFF", fontWeight: "bold" }}>Book Now!</Text>
           )}
         </View>
       </TouchableOpacity>

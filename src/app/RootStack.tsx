@@ -24,6 +24,7 @@ import EditProfile from "@components/modal/EditProfile";
 import PricingScreen from "./PricingScreen";
 import BookingScreen from "./BookingScreen";
 import ProfileScreen from "./ProfileScreen";
+import TestingScreen from "./TestingScreen";
 
 const Stack = createNativeStackNavigator();
 const RootStack = createStackNavigator();
@@ -100,7 +101,7 @@ export default function RootNavigation({
         />
         <Stack.Screen
           name={SCREENS.eventDetail}
-          component={EventDetailScreen}
+          component={TestingScreen}
           options={{
             headerShown: false,
             headerStyle: { backgroundColor: "#ffffff" },

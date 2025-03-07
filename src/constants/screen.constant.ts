@@ -16,6 +16,7 @@ const SCREENS = {
   blog: "Blog",
   pricing: "Pricing",
   booking: "Booking",
+  testing: "Testing",
 };
 
 export const MODALS = {
