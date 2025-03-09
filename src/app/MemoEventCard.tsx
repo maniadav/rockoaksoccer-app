@@ -43,7 +43,7 @@ const MemoEventList = memo(({ data, gridLayout, navigation }: any) => (
         event={event}
         grid={gridLayout}
         onPress={() =>
-          navigation.navigate(SCREENS.eventDetail, { id: event.id })
+          navigation.navigate(SCREENS.eventDetail, { id: event.uniqueId })
         }
       />
     )}

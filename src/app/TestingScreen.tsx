@@ -1,28 +1,16 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
   StyleSheet,
   ScrollView,
   Image,
-  TouchableOpacity,
   Dimensions,
-  FlatList,
   Animated,
-  Share,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import {
-  Ionicons,
-  MaterialIcons,
-  FontAwesome,
-  Feather,
-  AntDesign,
-} from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import IconInfoRow from "@components/event/IconInfoRow";
 import EventDetailHeader from "@components/event/EventDetailHeader";
-import EventMap2 from "@components/event/EventMap2";
 import LocationMap from "@components/event/LocationMap";
 import ActionButtons from "@components/event/ActionButton";
 import ParticipantComp from "@components/event/ParticipantsComp";
@@ -34,71 +22,11 @@ import OrganizerInfo from "@components/event/OrganizerInfo";
 import ImageGallery from "@components/event/ImageGallery";
 import BookingButton from "@components/event/BookingButton";
 import SafeAreaBackButton from "@components/button/SafeAreaBackButton";
-
-// Define MapView component as a placeholder
-const MapView = () => null;
-const Marker = () => null;
-
-// In a real mobile app, you would import these from react-native-maps
-// This approach ensures the code builds in all environments
-
-const EVENT_DATA = {
-  id: "6704f3f8193b7f0a2ec48346",
-  uniqueId: "319600b7-87e4-41f6-ae28-8103e8b156b5",
-  title: "Australian Football Championship",
-  date: "Tuesday, October 15, 2024",
-  timing: {
-    start: "2024-10-15T10:00:00.000Z",
-    end: "2024-10-15T17:00:00.000Z",
-    duration: "7 hours",
-  },
-  location: {
-    name: "Melbourne Cricket Ground",
-    address: "Melbourne Cricket Ground, Melbourne, Australia",
-    coordinates: {
-      latitude: -37.819967,
-      longitude: 144.983449,
-    },
-  },
-  isTrending: true,
-  isFeatured: false,
-  shortDescription:
-    "Join us for an exhilarating day of football at the Australian Football Championship, where the top teams compete for glory!",
-  longDescription:
-    "Get ready for an action-packed event as the best football teams from across Australia come together to battle it out for the championship title. With thrilling matches, live commentary, and fan activities, the Australian Football Championship promises an unforgettable experience for all football enthusiasts. Don't miss out on this chance to witness the nation's top talent and immerse yourself in the excitement of the game!",
-  organizer: {
-    name: "Sports Australia",
-    role: "admin",
-    userId: "admin_football_001",
-    image:
-      "https://api.a0.dev/assets/image?text=sports%20australia%20logo&aspect=1:1&seed=123",
-    contact: "+61 3 9657 8888",
-  },
-  attendees: {
-    joined: 256,
-    interested: 438,
-    recentAvatars: [
-      "https://api.a0.dev/assets/image?text=person%20avatar%201&aspect=1:1&seed=1",
-      "https://api.a0.dev/assets/image?text=person%20avatar%202&aspect=1:1&seed=2",
-      "https://api.a0.dev/assets/image?text=person%20avatar%203&aspect=1:1&seed=3",
-      "https://api.a0.dev/assets/image?text=person%20avatar%204&aspect=1:1&seed=4",
-    ],
-  },
-  type: "football",
-  status: "active",
-  tags: ["football", "sports", "championship", "australia", "event"],
-  images: [
-    "https://api.a0.dev/assets/image?text=football%20match%20action&aspect=16:9&seed=1",
-    "https://api.a0.dev/assets/image?text=australian%20football%20players&aspect=16:9&seed=2",
-    "https://api.a0.dev/assets/image?text=football%20stadium%20crowd&aspect=16:9&seed=3",
-    "https://api.a0.dev/assets/image?text=football%20championship%20trophy&aspect=16:9&seed=4",
-    "https://api.a0.dev/assets/image?text=football%20fans%20celebrating&aspect=16:9&seed=5",
-  ],
-  mainImage:
-    "https://api.a0.dev/assets/image?text=australian%20football%20championship&aspect=16:9&seed=123",
-  createdAt: "2024-10-08T08:57:28.201Z",
-  updatedAt: "2024-10-08T08:57:28.201Z",
-};
+import UtilityAPI from "service/utility";
+import DATA from "@constants/event.data.constant";
+import Loader from "@components/common/Loader";
+import NoDataComponent from "@components/event/NoDataComponent";
+import SCREENS from "@constants/screen.constant";
 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
@@ -111,45 +39,49 @@ const formatDate = (dateString: string) => {
 
 const { width } = Dimensions.get("window");
 
-export default function TestingScreen() {
-  const navigation = useNavigation();
+export default function TestingScreen({ navigation }: any) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [joined, setJoined] = useState<number>(1);
+  const [intereseted, setIntereseted] = useState<number>(1);
+  const [data, setData] = useState<any | null>(null);
+  const route = useRoute<any>();
+  const { id } = route.params;
+
+  useEffect(() => {
+    fetchData();
+  }, [id]);
+
+  const fetchData = async () => {
+    const rockOakApi = new UtilityAPI();
+    try {
+      setLoading(true);
+      const res = await rockOakApi.fetchEventDetails(id);
+      if (res && res.data) {
+        setData(res.data);
+        console.log(res.data);
+      } else {
+        console.warn("No data received!");
+        setData(DATA[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setData(DATA[0]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const [userStatus, setUserStatus] = useState<
     "none" | "interested" | "joined"
   >("none");
 
-  const shareButtonScale = useRef(new Animated.Value(1)).current;
+  useEffect(() => {
+    userStatus === "joined" ? setJoined(2) : setJoined(1);
+    userStatus === "interested" ? setIntereseted(2) : setIntereseted(1);
+  }, [userStatus]);
+
   const joinButtonScale = useRef(new Animated.Value(1)).current;
   const interestedButtonScale = useRef(new Animated.Value(1)).current;
-
-  const handleBackPress = () => {
-    navigation.navigate("Home");
-  };
-
-  // const handleShare = async () => {
-  //   // Button animation
-  //   Animated.sequence([
-  //     Animated.timing(shareButtonScale, {
-  //       toValue: 0.8,
-  //       duration: 100,
-  //       useNativeDriver: true,
-  //     }),
-  //     Animated.timing(shareButtonScale, {
-  //       toValue: 1,
-  //       duration: 100,
-  //       useNativeDriver: true,
-  //     }),
-  //   ]).start();
-
-  //   try {
-  //     await Share.share({
-  //       title: EVENT_DATA.title,
-  //       message: `Check out this event: ${EVENT_DATA.title} on ${EVENT_DATA.date} at ${EVENT_DATA.location.name}. ${EVENT_DATA.shortDescription}`,
-  //       url: `https://events.example.com/event/${EVENT_DATA.uniqueId}`,
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const handleStatusChange = (newStatus: "interested" | "joined") => {
     // Button animation
@@ -176,99 +108,112 @@ export default function TestingScreen() {
     }
   };
 
-  const renderImageItem = ({ item }: { item: string }) => (
-    <Image
-      source={{ uri: item }}
-      style={styles.galleryImage}
-      resizeMode="cover"
-    />
-  );
-
-  const renderAvatarItem = ({ item }: { item: string }) => (
-    <Image source={{ uri: item }} style={styles.attendeeAvatar} />
-  );
-
   return (
-    <View style={styles.container}>
-      <ScrollView
-        style={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
-        <SafeAreaBackButton />
-        <Image
-          source={{ uri: EVENT_DATA.mainImage }}
-          style={styles.mainImage}
-          resizeMode="cover"
-        />
-
-        <View style={styles.detailsContainer}>
-          <EventDetailHeader
-            title={EVENT_DATA.title}
-            type={EVENT_DATA.type.toUpperCase()}
-            uniqueId={EVENT_DATA.uniqueId}
-          />
-          <View style={styles.timeLocationContainer}>
-            <IconInfoRow iconName="calendar-outline" text={EVENT_DATA.date} />
-
-            <IconInfoRow
-              iconName="time-outline"
-              text={`${formatDate(EVENT_DATA.timing.start)} - ${formatDate(
-                EVENT_DATA.timing.end
-              )}`}
-              extraText={`(${EVENT_DATA.timing.duration})`}
+    <View style={{ width: "100%", height: "100%" }}>
+      {loading ? (
+        <Loader />
+      ) : data ? (
+        <View style={styles.container}>
+          <ScrollView
+            style={styles.scrollView}
+            showsVerticalScrollIndicator={false}
+          >
+            <SafeAreaBackButton />
+            <Image
+              source={{ uri: data.images.landscape }}
+              style={styles.mainImage}
+              resizeMode="cover"
             />
 
-            <IconInfoRow
-              iconName="location-outline"
-              text={EVENT_DATA.location.name}
-            />
+            <View style={styles.detailsContainer}>
+              <EventDetailHeader
+                title={data.title}
+                type={data.type.toUpperCase()}
+                uniqueId={data.uniqueId}
+              />
+              <View style={styles.timeLocationContainer}>
+                <IconInfoRow
+                  iconName="calendar-outline"
+                  text={data.timing.start}
+                />
 
-            <Text style={styles.address}>{EVENT_DATA.location.address}</Text>
-          </View>
-          {/* EVENT MAP */}
-          <LocationMap
-            name={EVENT_DATA.location.name}
-            address={EVENT_DATA.location.address}
-            coordinates={EVENT_DATA.location.coordinates}
-          />
-          <ActionButtons
-            userStatus={userStatus}
-            joinButtonScale={joinButtonScale}
-            interestedButtonScale={interestedButtonScale}
-            onStatusChange={handleStatusChange}
-          />
-          <ParticipantComp
-            joined={EVENT_DATA.attendees.joined}
-            interested={EVENT_DATA.attendees.interested}
-            avatars={EVENT_DATA.attendees.recentAvatars}
-          />
-          {/* Short Description */}
-          <ShortDescription description={EVENT_DATA.shortDescription} />
-          {/* Tags */}
-          <TagComp tags={EVENT_DATA.tags} />
-          {/* Long Description */}
-          <LongDescription description={EVENT_DATA.longDescription} />
-          {/* Timing Details */}
-          <EventTiming
-            start={EVENT_DATA.timing.start}
-            end={EVENT_DATA.timing.end}
-            duration={EVENT_DATA.timing.duration}
-          />
-          {/* Organizer */}
-          <OrganizerInfo
-            organizer={EVENT_DATA.organizer}
-            isTrending={true}
-            isFeatured={true}
-            type={EVENT_DATA.type}
-          />
+                <IconInfoRow
+                  iconName="time-outline"
+                  text={`${formatDate(data.timing.start)} - ${formatDate(
+                    data.timing.end
+                  )}`}
+                  extraText={`(${data.timing.duration})`}
+                />
 
-          {/* Image Gallery */}
-          <ImageGallery images={EVENT_DATA.images} title="Event Gallery" />
+                <IconInfoRow
+                  iconName="location-outline"
+                  text={data.locationDetail.location}
+                />
+
+                <Text style={styles.address}>
+                  {data.locationDetail.location}
+                </Text>
+              </View>
+              {/* EVENT MAP */}
+              <LocationMap
+                name={data.locationDetail.location}
+                address={data.locationDetail.location}
+                coordinates={{
+                  longitude: data.locationDetail.lng,
+                  latitude: data.locationDetail.lat,
+                }}
+              />
+              <ActionButtons
+                userStatus={userStatus}
+                joinButtonScale={joinButtonScale}
+                interestedButtonScale={interestedButtonScale}
+                onStatusChange={handleStatusChange}
+              />
+              <ParticipantComp
+                joined={joined} //EVENT_DATA.attendees
+                interested={intereseted}
+                avatars={[
+                  "https://api.a0.dev/assets/image?text=person%20avatar%201&aspect=1:1&seed=1",
+                  "https://api.a0.dev/assets/image?text=person%20avatar%202&aspect=1:1&seed=2",
+                  "https://api.a0.dev/assets/image?text=person%20avatar%203&aspect=1:1&seed=3",
+                  "https://api.a0.dev/assets/image?text=person%20avatar%204&aspect=1:1&seed=4",
+                  "https://api.a0.dev/assets/image?text=person%20avatar%203&aspect=1:1&seed=3",
+                ]}
+              />
+              {/* Short Description */}
+              <ShortDescription description={data.shortDescription} />
+              {/* Tags */}
+              <TagComp tags={data.tags} />
+              {/* Long Description */}
+              <LongDescription description={data.longDescription} />
+              {/* Timing Details */}
+              <EventTiming
+                start={data.timing.start}
+                end={data.timing.end}
+                duration={data.timing.duration}
+              />
+              {/* Organizer */}
+              <OrganizerInfo
+                organizer={data.organizer}
+                isTrending={true}
+                isFeatured={true}
+                type={data.type}
+              />
+
+              {/* Image Gallery */}
+              <ImageGallery
+                images={[data.images.landscape]}
+                title="Event Gallery"
+              />
+            </View>
+          </ScrollView>{" "}
+          {/* <SafeAreaView style={{ backgroundColor: "white" }}> */}
+          <BookingButton />
+          {/* </SafeAreaView> */}
         </View>
-      </ScrollView>{" "}
-      {/* <SafeAreaView style={{ backgroundColor: "white" }}> */}
-      <BookingButton />
-      {/* </SafeAreaView> */}
+      ) : (
+        <NoDataComponent onRefresh={() => navigation.navigate(SCREENS.main)} />
+      )}
     </View>
   );
 }

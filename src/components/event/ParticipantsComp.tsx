@@ -33,7 +33,7 @@ const ParticipantComp: React.FC<AttendeeSectionProps> = ({
             showsHorizontalScrollIndicator={false}
           />
           <View style={styles.moreAttendees}>
-            <Text style={styles.moreAttendeesText}>+{joined - 4}</Text>
+            <Text style={styles.moreAttendeesText}>+{joined}</Text>
           </View>
         </View>
 

@@ -5,11 +5,10 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
-  Image,
   Share,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import TypeBadge from "./TypeBadge";
+import EventTypeChip from "./EventTypeChip";
 
 interface EventDetailHeaderProps {
   title: string;
@@ -57,6 +56,7 @@ const EventDetailHeader: React.FC<EventDetailHeaderProps> = ({
           <View style={styles.typeContainer}>
             <Text style={styles.typeText}>{type.toUpperCase()}</Text>
           </View>
+          <EventTypeChip eventType={type} />
         </View>
       </View>
       <Animated.View style={{ transform: [{ scale: shareButtonScale }] }}>

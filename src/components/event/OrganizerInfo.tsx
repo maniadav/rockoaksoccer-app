@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { Ionicons, Feather, AntDesign } from "@expo/vector-icons";
+import { Ionicons, Feather, AntDesign, Fontisto } from "@expo/vector-icons";
 import COLOUR from "@constants/colour.constant";
 
 interface OrganizerInfoProps {
@@ -9,6 +9,7 @@ interface OrganizerInfoProps {
     role: string;
     image: string;
     contact: string;
+    email: string;
   };
   isTrending: boolean;
   isFeatured: boolean;
@@ -26,7 +27,11 @@ const OrganizerInfo: React.FC<OrganizerInfoProps> = ({
       <Text style={styles.sectionTitle}>Organizer</Text>
       <View style={styles.organizerContainer}>
         <Image
-          source={{ uri: organizer.image }}
+          source={{
+            uri:
+              organizer.image ||
+              "https://api.a0.dev/assets/image?text=sports%20australia%20logo&aspect=1:1&seed=123",
+          }}
           style={styles.organizerImage}
         />
         <View style={styles.organizerInfo}>
@@ -36,7 +41,16 @@ const OrganizerInfo: React.FC<OrganizerInfoProps> = ({
           </Text>
           <View style={styles.contactRow}>
             <Ionicons name="call-outline" size={16} color={COLOUR.primary} />
-            <Text style={styles.contactText}>{organizer.contact}</Text>
+            <Text style={styles.contactText}>
+              {organizer.contact || "0415305990"}
+            </Text>
+          </View>
+
+          <View style={styles.contactRow}>
+            <Fontisto name="email" size={16} color={COLOUR.primary} />
+            <Text style={styles.contactText}>
+              {organizer.email || "info@rockoaksoccer.com.au"}
+            </Text>
           </View>
 
           <View style={styles.tagBadges}>
