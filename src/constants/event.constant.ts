@@ -5,4 +5,10 @@ const EVENT_TYPE = [
   { id: "adultterm", title: "Adult Term Events" },
 ];
 
+export const EVENT_CHIP_TYPE = {
+  kidterm: "Kid Term",
+  kidholiday: "Kid Holiday",
+  adultterm: "Adult Term",
+};
+
 export default EVENT_TYPE;

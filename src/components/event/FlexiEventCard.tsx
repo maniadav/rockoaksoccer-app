@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import COLOUR from "@constants/colour.constant";
+import EventTypeChip from "./EventTypeChip";
 
 const { width } = Dimensions.get("window");
 
@@ -50,15 +51,9 @@ const FlexiEventCard = ({ event, index, grid, onPress }: any) => {
         <Text style={styles.eventTitle} numberOfLines={grid ? 1 : 2}>
           {event.title}
         </Text>
-        <View style={styles.typeContainer}>
-          <Text style={styles.typeText}>
-            {event.eventType === "adult-term"
-              ? "ADULT"
-              : event.eventType === "kid-term"
-              ? "KIDS"
-              : "KIDS HOLIDAY"}
-          </Text>
-        </View>
+
+        <EventTypeChip eventType={event.type} />
+
         <View style={styles.infoRow}>
           <Ionicons name="calendar-outline" size={14} color="#5E5E5E" />
           <Text style={styles.infoText}>{event.date}</Text>
@@ -71,7 +66,7 @@ const FlexiEventCard = ({ event, index, grid, onPress }: any) => {
         </View>
         <View style={styles.countRow}>
           <Text style={styles.countText}>
-            {event.going} going • {event.interested} interested
+            {event.going || 1} going • {event.interested || 1} interested
           </Text>
         </View>
       </View>

@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  Dimensions,
-} from "react-native";
+import { View, StyleSheet, Dimensions } from "react-native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { getAllEvent } from "@api/categories";
 import SCREENS from "@constants/screen.constant";
 import SearchCard from "@components/search/SearchCard";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
@@ -15,8 +9,10 @@ import TitleTile from "@components/common/TitleTile";
 import EVENT_TYPE from "@constants/event.constant";
 import EventFilterOption from "@components/event/EventFilterOption";
 import LayoutToggle from "@components/event/LayoutToggle";
-import { EVENTS } from "@constants/dummy.data.constant";
-import FlexiEventCard from "@components/event/FlexiEventCard";
+import UtilityAPI from "service/utility";
+import { MemoEventList, MemoShimmerList } from "./MemoEventCard";
+import NoDataComponent from "@components/event/NoDataComponent";
+
 const { width } = Dimensions.get("window");
 
 type EventListingScreenProps = {
@@ -27,53 +23,14 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
   navigation,
 }: any) => {
   const [data, setData] = useState([]);
+  const [gridLayout, setGridLayout] = useState<boolean>(false);
   const [sportSeleted, setSportSelected] = useState(EVENT_TYPE[0]?.id);
-  const [todayEvent, setTodayEvent] = useState([]);
-  const [featuredEvent, setFeaturedEvent] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [filteredData, setFilteredData] = useState([]);
-  const [wishlist, setWishlist] = useState<any>({});
-
-  const toggleWishlist = (propertyId: string) => {
-    setWishlist((prev: any) => ({
-      ...prev,
-      [propertyId]: !prev[propertyId],
-    }));
-  };
-
-  const weekendEventGet = async () => {
-    if (data.length === 0) return;
-    const today = new Date();
-    const thisWeekEvents = data.filter((item: any) => {
-      const eventDate = new Date(item.EtkinlikBaslamaTarihi);
-      return (
-        eventDate > today &&
-        (eventDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24) <= 7
-      );
-    });
-    setTodayEvent(thisWeekEvents);
-  };
-
-  const fetchData = async () => {
-    try {
-      const allData: any = await getAllEvent();
-      setData(allData);
-      setFeaturedEvent(allData[0]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [loading, setLoading] = useState(false);
+  const [filteredData, setFilteredData] = useState<any>([]);
 
   useEffect(() => {
     fetchData();
-    weekendEventGet();
   }, []);
-
-  useEffect(() => {
-    if (todayEvent.length > 0 && featuredEvent.length > 0) {
-      setLoading(false);
-    }
-  }, [todayEvent, featuredEvent]);
 
   useEffect(() => {
     filterGameData();
@@ -83,12 +40,29 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
     if (sportSeleted === "all-events") {
       setFilteredData(data);
     } else {
-      const filtered = data.filter((game: any) => game.type === sportSeleted);
+      const filtered = data.filter((item: any) => item.type === sportSeleted);
       setFilteredData(filtered);
     }
   };
 
-  const [gridLayout, setGridLayout] = useState<boolean>(false);
+  const fetchData = async () => {
+    const rockOakApi = new UtilityAPI();
+    try {
+      setLoading(true);
+      const res = await rockOakApi.fetchEvents();
+      if (res && res.data) {
+        setData(res.data);
+      } else {
+        console.warn("No data received!");
+        setData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <SafeAreaComponent>
@@ -103,14 +77,64 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
           />
         </View>
       </View>
-      {/* <View style={commonStyles.firstView}>
-        <FeaturedEvent filteredData={featuredEvent[0]} />
-      </View> */}
+
       <EventFilterOption
         selectedFilter={sportSeleted}
         setSelectedFilter={setSportSelected}
       />
-      <FlatList
+
+      {loading ? (
+        <MemoShimmerList
+          gridLayout={gridLayout}
+          count={5} // Default can be set in component
+        />
+      ) : data?.length > 0 ? (
+        <MemoEventList
+          data={filteredData}
+          gridLayout={gridLayout}
+          navigation={navigation}
+        />
+      ) : (
+        <NoDataComponent onRefresh={() => navigation.navigate(SCREENS.home)} />
+      )}
+
+      {/* {loading ? (
+        <FlatList
+          key={"grid-1-col"}
+          data={[0, 0, 0, 0, 0]}
+          extraData={gridLayout}
+          numColumns={1}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item: event }) => <FlexiEventCardShimmer />}
+        />
+      ) : (
+        <>
+          {data && data.length > 0 ? (
+            <FlatList
+              key={gridLayout ? "grid-2-col" : "grid-1-col"}
+              data={data}
+              extraData={gridLayout}
+              keyExtractor={(item) => item.id}
+              numColumns={gridLayout ? 2 : 1}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={styles.eventsContainer}
+              columnWrapperStyle={gridLayout ? styles.columnWrapper : null}
+              renderItem={({ item: event }) => (
+                <FlexiEventCard
+                  event={event}
+                  grid={gridLayout}
+                  onPress={() =>
+                    navigation.navigate(SCREENS.eventDetail, { id: event.id })
+                  }
+                />
+              )}
+            />
+          ) : (
+            <View></View>
+          )}
+        </>
+      )} */}
+      {/* <FlatList
         key={gridLayout ? "grid-2-col" : "grid-1-col"}
         data={EVENTS}
         extraData={gridLayout}
@@ -128,7 +152,7 @@ const EventListingScreen: React.FC<EventListingScreenProps> = ({
             }
           />
         )}
-      />
+      /> */}
       {/* <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.eventsContainer}>
           {gridLayout ? (
@@ -199,13 +223,11 @@ const styles = StyleSheet.create({
   },
   columnWrapper: {
     justifyContent: "space-between",
-    marginBottom: 16, // Add spacing between rows
+    marginBottom: 16,
   },
-  eventsContainer: {
-    // padding: 12,
-  },
+  eventsContainer: {},
   doubleGridCard: {
-    width: (width - 32) / 2, // Account for padding and small gap
+    width: (width - 32) / 2,
     marginBottom: 12,
   },
   loadingContainer: {
@@ -216,7 +238,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    // backgroundColor: '#fff',
   },
   contentContainer: {
     paddingBottom: 20,
@@ -242,7 +263,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    // backgroundColor: "black",
   },
   logoTextSmall: {
     fontSize: 16,
