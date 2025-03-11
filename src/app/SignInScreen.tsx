@@ -8,11 +8,13 @@ import TextInput from "@components/TextInput";
 import BackButton from "@components/BackButton";
 import { theme } from "@components/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { emailValidator, passwordValidator } from "helpers/validator";
-import { getAsyncStorageValue } from "@utils/localStorage";
+import { usernameValidator, passwordValidator } from "helpers/validator";
+import { getAsyncStorageValue, setAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "constants/storage.constant";
 import SCREENS from "@constants/screen.constant";
 import ButtonComp from "@components/common/ButtonComp";
+import Toast from "react-native-toast-message";
+import UtilityAPI from "service/utility";
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -20,11 +22,14 @@ type Props = {
 
 export default function SignInScreen({ navigation }: Props) {
   const [credentials, setCredentials] = useState({
-    email: { value: "", error: "" },
+    username: { value: "", error: "" },
     password: { value: "", error: "" },
   });
 
-  const handleChange = (field: "email" | "password", value: string) => {
+  const [message, setMessage] = useState(null)
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const handleChange = (field: "username" | "password", value: string) => {
     setCredentials((prev) => ({
       ...prev,
       [field]: { value, error: "" },
@@ -32,35 +37,86 @@ export default function SignInScreen({ navigation }: Props) {
   };
 
   const onLoginPressed = async () => {
-    const emailError = emailValidator(credentials.email.value);
+    setLoading(true)
+    const usernameError = usernameValidator(credentials.username.value);
     const passwordError = passwordValidator(credentials.password.value);
 
-    if (emailError || passwordError) {
+    if (usernameError || passwordError) {
       setCredentials((prev) => ({
-        email: { ...prev.email, error: emailError },
+        username: { ...prev.username, error: usernameError },
         password: { ...prev.password, error: passwordError },
       }));
       return;
     }
+    //send this data to the server
+    const userLoginData: any = {
+      username: credentials.username.value,
+      password: credentials.password.value
+    }
+    console.log(userLoginData);
+    let RockOakApi = new UtilityAPI()
 
-    const storedUser = await getAsyncStorageValue(
-      LOCALSTORAGE.LOGGED_IN_USER,
-      true
-    );
-    console.log({ storedUser });
-    const { email: userEmail, password: userPassword } = storedUser || {};
+    try {
+      const response = await RockOakApi.userLogin(userLoginData)
+      console.log(`Login API response ${response}`)
 
-    if (
-      credentials.email.value === userEmail &&
-      credentials.password.value === userPassword
-    ) {
+      const msg = response?.data?.message || 'user is registered!';
+      console.log(msg)
+      setAsyncStorageValue(
+        LOCALSTORAGE.MFA_ACCESS_TOKEN,
+        response?.data.accessToken
+      );
+      setAsyncStorageValue(
+        LOCALSTORAGE.MFA_REFRESH_TOKEN,
+        response?.data.refreshToken
+      );
+      setAsyncStorageValue(
+        LOCALSTORAGE.LOGGED_IN_USER,
+        response?.data.user,
+        true
+      );
+      Toast.show({
+        type: 'success',
+        text2: msg
+      });
+      setMessage(msg);
       navigation.reset({
         index: 0,
         routes: [{ name: SCREENS.main }],
       });
-    } else {
-      alert("Please provide correct credentials");
+
+    } catch (error: any) {
+      console.log(`Error in Login API call ${error}`)
+      const msg = error?.response?.data?.message
+      console.log(msg)
+      Toast.show({
+        type: "error",
+        text2: msg
+      })
+    } finally {
+      setLoading(false)
     }
+
+    // const storedUser = await getAsyncStorageValue(
+    //   LOCALSTORAGE.LOGGED_IN_USER,
+    //   true
+    // );
+    // console.log({ storedUser });
+    // const { email: userEmail, password: userPassword } = storedUser || {};
+
+    // if (
+    //   credentials.email.value === userEmail &&
+    //   credentials.password.value === userPassword
+    // ) {
+    //   navigation.reset({
+    //     index: 0,
+    //     routes: [{ name: SCREENS.main }],
+    //   });
+    // } else {
+    //   alert("Please provide correct credentials");
+    // }
+
+    console.log(message)
   };
 
   return (
@@ -76,7 +132,7 @@ export default function SignInScreen({ navigation }: Props) {
           position: "relative",
         }}
       >
-        <BackButton />
+        {/* <BackButton /> */}
         <View
           // style={{
           //   width: "100%",
@@ -94,13 +150,14 @@ export default function SignInScreen({ navigation }: Props) {
         >
           <Logo />
           <Header>Good to See You Again!</Header>
+          {message && <Text style={styles.errorMessage}>{message}</Text>}
           <TextInput
-            label="Email"
+            label="Username"
             returnKeyType="next"
-            value={credentials.email.value}
-            onChangeText={(text: string) => handleChange("email", text)}
-            error={!!credentials.email.error}
-            errorText={credentials.email.error}
+            value={credentials.username.value}
+            onChangeText={(text: string) => handleChange("username", text)}
+            error={!!credentials.username.error}
+            errorText={credentials.username.error}
             autoCapitalize="none"
             autoCompleteType="email"
             textContentType="emailAddress"
@@ -145,7 +202,7 @@ export default function SignInScreen({ navigation }: Props) {
 
           <ButtonComp
             borderRadius={20}
-            title={"Sign In"}
+            title={loading ? 'Logging in ....' : 'Sign in'}
             onPress={() => onLoginPressed()}
           />
           <View style={styles.row}>
@@ -194,4 +251,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: theme.colors.primary,
   },
+  errorMessage: {
+    marginLeft: 8, // equivalent to ml-2 (assuming 4 points per unit)
+    color: '#ef4444', // equivalent to text-red-500
+  }
 });

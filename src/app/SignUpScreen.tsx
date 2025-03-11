@@ -4,25 +4,18 @@ import { Text } from "react-native-paper";
 import Background from "../components/Background";
 import Logo from "../components/Logo";
 import Header from "../components/Header";
-import BackButton from "../components/BackButton";
+// import SafeAreaBackButton from "@components/button/SafeAreaBackButton";
 import { theme } from "@components/theme";
 import Toast from "react-native-toast-message";
-import {
-  emailValidator,
-  passwordValidator,
-  usernameValidator,
-} from "helpers/validator";
-import {
-  getAsyncStorageValue,
-  setAsyncStorageValue,
-} from "@utils/localStorage";
+import { emailValidator, passwordValidator, usernameValidator } from "helpers/validator";
+import { getAsyncStorageValue, setAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import InputComp from "@components/common/InputComp";
 import ButtonComp from "@components/common/ButtonComp";
 import SCREENS from "@constants/screen.constant";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Feather from "@expo/vector-icons/Feather";
-
+import UtilityAPI from "service/utility";
 interface FormValues {
   username: string;
   email: string;
@@ -35,6 +28,11 @@ interface FormErrors {
   password?: string;
 }
 
+export const formData: FormValues = {
+  email: "",
+  username: "",
+  password: "",
+};
 const SignUpScreen = ({ navigation }: any) => {
   const [values, setValues] = useState<FormValues>({
     username: "",
@@ -46,13 +44,17 @@ const SignUpScreen = ({ navigation }: any) => {
 
   const [show, setShow] = useState<boolean>();
 
+  //loader
+  const [loading, setLoading] = useState<boolean>(false);
   const onChangeHandler = (text: string, field: keyof FormValues) => {
+    // console.log(text);
     setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
 
     setValues((prevValues) => ({ ...prevValues, [field]: text }));
   };
 
   const onSignUpPressed = async () => {
+    setLoading(true);
     const nameError = usernameValidator(values.username);
     const emailError = emailValidator(values.email);
     const passwordError = passwordValidator(values.password);
@@ -63,51 +65,43 @@ const SignUpScreen = ({ navigation }: any) => {
         email: emailError,
         password: passwordError,
       }));
+      setLoading(false);
       return;
     }
 
-    const existingUser = await getAsyncStorageValue(
-      LOCALSTORAGE.LOGGED_IN_USER,
-      true
-    );
+    const formData = new FormData();
+    formData.append("username", values.username);
+    formData.append("email", values.email);
+    formData.append("password", values.password);
 
-    if (existingUser) {
-      const { email: storedEmail, username: storedUsername } = existingUser;
-      if (storedEmail === values.email || storedUsername === values.username) {
-        Toast.show({
-          type: "error",
-          text1: "Something went wrong!",
-          text2: "Username or email already in use",
-        });
-        return;
-      }
-    }
+    let RockOakApi = new UtilityAPI();
 
     try {
-      await setAsyncStorageValue(
-        LOCALSTORAGE.LOGGED_IN_USER,
-        {
-          ...values,
-        },
-        true
-      );
+      const response = await RockOakApi.userRegister(formData);
+      console.log(response)
+      const msg = response?.data?.message || "user is already registered";
 
-      await setAsyncStorageValue(
-        LOCALSTORAGE.MFA_ACCESS_TOKEN,
-        "mfatokenfromapiresponse"
-      );
+      //storing the tokens
+      setAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN, response?.data?.accessToken);
+
+      setAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, response?.data?.user, true);
 
       Toast.show({
         type: "success",
-        text2: "Your account has been created successfully!",
+        text2: "You account has been successfully createrd",
       });
 
-      navigation.replace(SCREENS.signIn);
-    } catch (error) {
+      setLoading(false);
+      navigation.replace(`${SCREENS.signIn}`);
+    } catch (error: any) {
+      console.log(`Sign up API call error ${error}`);
+      const msg = error?.response?.data?.message || "user is already registered";
+      console.log(msg)
       Toast.show({
         type: "error",
-        text2: "Failed to save your account. Please try again.",
+        text2: msg,
       });
+      setLoading(false);
     }
   };
 
@@ -124,23 +118,23 @@ const SignUpScreen = ({ navigation }: any) => {
           position: "relative",
         }}
       >
-        <BackButton />
+
         <View style={[styles.container]}>
           <Logo />
           <Header>Join the Journey to Greatness!</Header>
 
           <InputComp
             label="Username"
-            onChangeHandler={(text: string) =>
-              onChangeHandler(text, "username")
-            }
+            onChangeHandler={(text: string) => onChangeHandler(text, "username")}
             errorMessage={errors.username}
+            autoCapitalize="none"
           />
           <InputComp
             label="Email"
             leftIcon={<Fontisto name="email" size={24} color="black" />}
             onChangeHandler={(text: string) => onChangeHandler(text, "email")}
             errorMessage={errors.email}
+            autoCapitalize="none"
           />
           <InputComp
             label="Password"
@@ -156,29 +150,24 @@ const SignUpScreen = ({ navigation }: any) => {
               </Pressable>
             }
             secure={!show}
-            onChangeHandler={(text: string) =>
-              onChangeHandler(text, "password")
-            }
+            onChangeHandler={(text: string) => onChangeHandler(text, "password")}
           />
           <View style={styles.forgotPassword}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate("ResetPasswordScreen")}
-            >
+            <TouchableOpacity onPress={() => navigation.navigate("ResetPasswordScreen")}>
               <Text style={styles.forgot}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
 
           <ButtonComp
             borderRadius={20}
-            title={"Sign Up"}
+            title={loading ? "Loading..." : "Sign Up"}
             onPress={() => onSignUpPressed()}
+            disabled={loading}
           />
 
           <View style={styles.row}>
             <Text>Already have an account? </Text>
-            <TouchableOpacity
-              onPress={() => navigation.replace(SCREENS.signIn)}
-            >
+            <TouchableOpacity onPress={() => navigation.replace(SCREENS.signIn)}>
               <Text style={styles.link}>Sign In</Text>
             </TouchableOpacity>
           </View>

@@ -30,7 +30,7 @@ const emailValidator = (email: string) => {
   if (!email) {
     return 'Email Required...!';
   } else if (email.includes(' ')) {
-    return 'Wrong Email...!';
+    return 'Invalid Email Type...!';
   } else if (!specialChars.test(email)) {
     return 'Invalid email address...!';
   }
