@@ -3,18 +3,20 @@ import { View, Text } from "react-native";
 import InputComp from "@components/common/InputComp";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { CustomButton } from "@components/common/Component";
-import { getAsyncStorageValue } from "@utils/localStorage";
+import { getAsyncStorageValue, setAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Entypo from "@expo/vector-icons/Entypo";
 import FormField from "@components/profile/FormField";
+import UtilityAPI from "service/utility";
+import Toast from "react-native-toast-message";
 
 interface FormValues {
   firstName?: string;
   lastName?: string;
   email?: string;
   password?: string;
-
+  phone?: string;
   address?: string;
 }
 
@@ -22,6 +24,7 @@ interface FormErrors {
   firstName?: string;
   lastName?: string;
   email?: string;
+  phone?: string;
   password?: string;
   address?: string;
 }
@@ -34,7 +37,8 @@ const EditProfile: React.FC = () => {
   const [values, setValues] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormErrors>({});
   const [data, setData] = useState<any | null>(null);
-  const [show, setShow] = useState<ShowPasswordState>({});
+  // const [show, setShow] = useState<ShowPasswordState>({});
+  // const [formData, setFormData] = useState<FormValues>({});
 
   const onChangeHandler = (text: string, field: keyof FormValues) => {
     setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
@@ -55,30 +59,55 @@ const EditProfile: React.FC = () => {
     featchData();
   }, []);
 
-  const [formData, setFormData] = useState<any>({});
 
-  const handleChange = (key: keyof any, value: string) => {
-    setFormData({
-      ...formData,
-      [key]: value,
-    });
-  };
 
-  const handleSubmit = () => {
-    // onSave(formData);
-  };
+  // const handleChange = (key: keyof any, value: string) => {
+  //   setFormData({
+  //     ...formData,
+  //     [key]: value,
+  //   });
+  // };
+
+  console.log(values)
+  //Update the profile data
+  const updateProfileData = async () => {
+    let rockOakApi = new UtilityAPI();
+    try {
+      const profileReponse = await rockOakApi.updateProfile(values);
+      console.log('profile data', profileReponse.data)
+      if (profileReponse?.data?.data) {
+        setAsyncStorageValue(
+          LOCALSTORAGE.LOGGED_IN_USER,
+          profileReponse.data.data,
+          true
+        )
+        Toast.show({
+          type: "success",
+          text2: "Profile updated successfully",
+        })
+      }
+    } catch (error) {
+      console.log('error updating profile', error)
+      Toast.show({
+        type: "error",
+        text2: "Failed to update your profile",
+      })
+    }
+  }
+  // console.log(values)
+
 
   return (
     <View style={{ backgroundColor: "#F8F8F8", height: "100%" }}>
       <TopNavHeader title="Edit Profile" />
-      <FormField
+      {/* <FormField
         label="Phone"
         icon="phone"
         value={formData?.phone || "6393241779"}
         onChangeText={(text) => handleChange("phone", text)}
         placeholder="Enter your phone number"
         keyboardType="phone-pad"
-      />
+      /> */}
       <View
         style={{
           height: "100%",
@@ -112,6 +141,15 @@ const EditProfile: React.FC = () => {
           validate={() => validate("email", "Please enter your email")}
           errorMessage={errors.email}
           placeholder={data?.email || ""}
+          autoCapitalize="none"
+        />
+        <InputComp
+          label="phone"
+          onChangeHandler={(text: string) => onChangeHandler(text, "phone")}
+          validate={() => validate("phone", "Enter phone number")}
+          errorMessage={errors.phone}
+          // leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
+          placeholder={data?.phone || "9393271779"}
         />
         <InputComp
           numLines={2}
@@ -150,7 +188,7 @@ const EditProfile: React.FC = () => {
           Only edit fields you want to update
         </Text>
         <View style={{ padding: 30 }}>
-          <CustomButton onPress={() => alert("hey")}>
+          <CustomButton onPress={() => updateProfileData()}>
             <Text style={{ color: "white" }}>Update</Text>
           </CustomButton>
         </View>

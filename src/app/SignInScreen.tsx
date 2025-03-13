@@ -58,10 +58,11 @@ export default function SignInScreen({ navigation }: Props) {
 
     try {
       const response = await RockOakApi.userLogin(userLoginData)
-      console.log(`Login API response ${response}`)
+      // console.log(`Login API response ${response}`)
 
       const msg = response?.data?.message || 'user is registered!';
-      console.log(msg)
+      // console.log(msg)
+      console.log("User data when signing up", response?.data?.user)
       setAsyncStorageValue(
         LOCALSTORAGE.MFA_ACCESS_TOKEN,
         response?.data.accessToken
@@ -72,7 +73,7 @@ export default function SignInScreen({ navigation }: Props) {
       );
       setAsyncStorageValue(
         LOCALSTORAGE.LOGGED_IN_USER,
-        response?.data.user,
+        response?.data?.user,
         true
       );
       Toast.show({
@@ -130,6 +131,7 @@ export default function SignInScreen({ navigation }: Props) {
           alignItems: "center",
           paddingVertical: 30,
           position: "relative",
+
         }}
       >
         {/* <BackButton /> */}

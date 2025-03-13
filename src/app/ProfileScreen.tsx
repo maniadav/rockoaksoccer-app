@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ProfileCard from "@components/profile/ProfileCard";
 import MyTabView from "@components/common/TabComponent";
 import MembershipBadge from "@components/profile/MembershipBadge";
 import ProfileHeader from "@components/profile/ProfileHeader";
-import { MODALS } from "@constants/screen.constant";
+import SCREENS, { MODALS } from "@constants/screen.constant";
 import ProfileDetailCard from "@components/profile/ProfileDetailsCard";
 import TopNavigation from "@components/navigation/TopNavigation";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import BackButton from "@components/BackButton";
-
+import { LOCALSTORAGE } from "@constants/storage.constant";
+import UtilityAPI from "service/utility";
+import { getAsyncStorageValue } from "@utils/localStorage";
 export type ProfileData = {
   name: string;
   email: string;
@@ -28,6 +30,8 @@ export type MembershipInfo = {
 };
 
 const ProfileScreen = ({ navigation }: any) => {
+  //make an api request
+
   const [profileImage, setProfileImage] = useState(
     "https://api.a0.dev/assets/image?text=professional%20person%20portrait%20soft%20lighting&aspect=1:1"
   );
@@ -59,9 +63,51 @@ const ProfileScreen = ({ navigation }: any) => {
     setProfileImage(imageUrl);
   };
 
+  const [userData, setUserData] = useState<any>(null);
+  const [membershipData, setMembershipData] = useState<Object>({})
+
+  const getUserData = async () => {
+    try {
+      const user = await getAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, true);
+      setUserData(user);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  // const getMembershipData = async () => {
+  //   let rockOakApi = new UtilityAPI();
+
+  //   try {
+  //     const response = await rockOakApi.fetchMembershipDetails();
+
+  //     if (response.status !== 200) {
+  //       setMembershipData({
+  //         type: "No membership",
+  //         expiryDate: "None",
+  //         isActive: false,
+  //       })
+  //     } else {
+
+  //     }
+
+  //   } catch (error) {
+  //     console.log(`Error fetching membership detail ${error}`)
+  //   }
+  // }
+
+  useEffect(() => {
+    getUserData();
+    // getMembershipData();
+  }, []);
+
+
+  console.log('user data', userData)
+
+
   return (
     <SafeAreaProvider style={styles.container}>
-      <View style={{ flex: 1 }}>
+      {userData && <View style={{ flex: 1 }}>
         <ScrollView>
           <View style={styles.content}>
             <View style={styles.backButtonContainer}>
@@ -69,10 +115,10 @@ const ProfileScreen = ({ navigation }: any) => {
             </View>
             <ProfileCard
               profileImage={profileImage}
-              name={profileData.name}
-              email={profileData.email}
+              name={userData.firstName || 'There'}
+              email={userData.email}
               navigation={navigation}
-              // onEditImage={() => setImageModalVisible(true)}
+            // onEditImage={() => setImageModalVisible(true)}
             />
 
             <MembershipBadge
@@ -87,50 +133,57 @@ const ProfileScreen = ({ navigation }: any) => {
 
               <ProfileDetailCard
                 icon="person"
-                title="Name"
-                value={profileData.name}
+                title="firstName"
+                value={userData.firstName || ''}
               />
+
+              <ProfileDetailCard
+                icon="person"
+                title="lastName"
+                value={userData.lastName}
+              />
+
 
               <ProfileDetailCard
                 icon="email"
                 title="Email"
-                value={profileData.email}
+                value={userData?.email}
               />
 
-              <ProfileDetailCard
+              {/* <ProfileDetailCard
                 icon="description"
                 title="Bio"
-                value={profileData.bio}
+                value={userData.bio}
                 multiline
-              />
+              /> */}
 
               <ProfileDetailCard
                 icon="phone"
                 title="Phone"
-                value={profileData.phone}
+                value={userData?.mobile}
               />
 
               <ProfileDetailCard
                 icon="location-on"
-                title="Location"
-                value={profileData.location}
+                title="Address"
+                value={userData?.address}
               />
 
-              <ProfileDetailCard
+              {/* <ProfileDetailCard
                 icon="language"
                 title="Website"
-                value={profileData.website}
-              />
+                value={userData.website}
+              /> */}
 
-              <ProfileDetailCard
+              {/* <ProfileDetailCard
                 icon="event"
                 title="Member Since"
-                value={profileData.joinDate}
-              />
+                value={userData.joinDate}
+              /> */}
             </View>
           </View>
         </ScrollView>
-      </View>
+      </View>}
     </SafeAreaProvider>
   );
 };
