@@ -5,16 +5,15 @@ import Background from "@components/Background";
 import Logo from "@components/Logo";
 import Header from "@components/Header";
 import TextInput from "@components/TextInput";
-import BackButton from "@components/BackButton";
 import { theme } from "@components/theme";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { usernameValidator, passwordValidator } from "helpers/validator";
-import { getAsyncStorageValue, setAsyncStorageValue } from "@utils/localStorage";
-import { LOCALSTORAGE } from "constants/storage.constant";
 import SCREENS from "@constants/screen.constant";
 import ButtonComp from "@components/common/ButtonComp";
 import Toast from "react-native-toast-message";
 import UtilityAPI from "service/utility";
+import { setAsyncStorageValue } from "@utils/localStorage";
+import { LOCALSTORAGE } from "@constants/storage.constant";
 
 type Props = {
   navigation: NativeStackNavigationProp<any, any>;
@@ -26,8 +25,8 @@ export default function SignInScreen({ navigation }: Props) {
     password: { value: "", error: "" },
   });
 
-  const [message, setMessage] = useState(null)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [message, setMessage] = useState(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleChange = (field: "username" | "password", value: string) => {
     setCredentials((prev) => ({
@@ -37,7 +36,7 @@ export default function SignInScreen({ navigation }: Props) {
   };
 
   const onLoginPressed = async () => {
-    setLoading(true)
+    setLoading(true);
     const usernameError = usernameValidator(credentials.username.value);
     const passwordError = passwordValidator(credentials.password.value);
 
@@ -48,21 +47,21 @@ export default function SignInScreen({ navigation }: Props) {
       }));
       return;
     }
-    //send this data to the server
+
     const userLoginData: any = {
       username: credentials.username.value,
-      password: credentials.password.value
-    }
+      password: credentials.password.value,
+    };
     console.log(userLoginData);
-    let RockOakApi = new UtilityAPI()
+    let RockOakApi = new UtilityAPI();
 
     try {
-      const response = await RockOakApi.userLogin(userLoginData)
-      // console.log(`Login API response ${response}`)
+      const response = await RockOakApi.userLogin(userLoginData);
+      // console.log(`Login API response ${response}`, userLoginData);
 
-      const msg = response?.data?.message || 'user is registered!';
-      // console.log(msg)
-      console.log("User data when signing up", response?.data?.user)
+      const msg = response?.data?.message || "user is registered!";
+
+      // console.log("User data when signing up", response?.data?.user);
       setAsyncStorageValue(
         LOCALSTORAGE.MFA_ACCESS_TOKEN,
         response?.data.accessToken
@@ -77,48 +76,28 @@ export default function SignInScreen({ navigation }: Props) {
         true
       );
       Toast.show({
-        type: 'success',
-        text2: msg
+        type: "success",
+        text2: msg,
       });
       setMessage(msg);
       navigation.reset({
         index: 0,
         routes: [{ name: SCREENS.main }],
       });
-
     } catch (error: any) {
-      console.log(`Error in Login API call ${error}`)
-      const msg = error?.response?.data?.message
-      console.log(msg)
+      console.log(`Error in Login API call`, error);
+      const msg = error?.response?.data?.message;
+      setMessage(msg || "something went wrong");
       Toast.show({
         type: "error",
-        text2: msg
-      })
+        text2: msg || "something went wrong",
+      });
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-
-    // const storedUser = await getAsyncStorageValue(
-    //   LOCALSTORAGE.LOGGED_IN_USER,
-    //   true
-    // );
-    // console.log({ storedUser });
-    // const { email: userEmail, password: userPassword } = storedUser || {};
-
-    // if (
-    //   credentials.email.value === userEmail &&
-    //   credentials.password.value === userPassword
-    // ) {
-    //   navigation.reset({
-    //     index: 0,
-    //     routes: [{ name: SCREENS.main }],
-    //   });
-    // } else {
-    //   alert("Please provide correct credentials");
-    // }
-
-    console.log(message)
   };
+
+  console.log({ message });
 
   return (
     <Background>
@@ -131,28 +110,12 @@ export default function SignInScreen({ navigation }: Props) {
           alignItems: "center",
           paddingVertical: 30,
           position: "relative",
-
         }}
       >
-        {/* <BackButton /> */}
-        <View
-          // style={{
-          //   width: "100%",
-          //   // height: "100%",
-          //   display: "flex",
-          //   justifyContent: "center",
-          //   alignItems: "center",
-          //   paddingVertical: 30,
-          //   backgroundColor: "white",
-          //   paddingHorizontal: 20,
-          //   borderRadius: 30,
-          // }}
-          style={[styles.container]}
-        // style={glassStyle.glassContainer}
-        >
+        <View style={[styles.container]}>
           <Logo />
           <Header>Good to See You Again!</Header>
-          {message && <Text style={styles.errorMessage}>{message}</Text>}
+
           <TextInput
             label="Username"
             returnKeyType="next"
@@ -176,24 +139,7 @@ export default function SignInScreen({ navigation }: Props) {
             secureTextEntry
             description="Please enter your password"
           />
-          {/* <InputComp
-            // outlined
-            bgColor="#FFFAFA"
-            label="Email"
-            onChangeHandler={(text: string) => handleChange("email", text)}
-            // validate={() => validate("lastName", "Enter lastName name")}
-            errorMessage={credentials.email.error}
-            placeholder={credentials.email.value || ""}
-          />
-          <InputComp
-            // outlined
-            bgColor="#FFFAFA"
-            label="Password"
-            onChangeHandler={(text: string) => handleChange("email", text)}
-            // validate={() => validate("lastName", "Enter lastName name")}
-            errorMessage={credentials.password.error}
-            placeholder={credentials.password.value || ""}
-          /> */}
+
           <View style={styles.forgotPassword}>
             <TouchableOpacity
               onPress={() => navigation.navigate("ResetPasswordScreen")}
@@ -202,9 +148,13 @@ export default function SignInScreen({ navigation }: Props) {
             </TouchableOpacity>
           </View>
 
+          <View style={styles.errorMessageContainer}>
+            {message && <Text style={styles.errorMessage}>{message}</Text>}
+          </View>
+
           <ButtonComp
             borderRadius={20}
-            title={loading ? 'Logging in ....' : 'Sign in'}
+            title={loading ? "Logging in ...." : "Sign in"}
             onPress={() => onLoginPressed()}
           />
           <View style={styles.row}>
@@ -224,7 +174,6 @@ export default function SignInScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    // height: "100%",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -253,8 +202,10 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: theme.colors.primary,
   },
+  errorMessageContainer: {
+    paddingBottom: 5,
+  },
   errorMessage: {
-    marginLeft: 8, // equivalent to ml-2 (assuming 4 points per unit)
-    color: '#ef4444', // equivalent to text-red-500
-  }
+    color: "#ef4444",
+  },
 });
