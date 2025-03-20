@@ -34,7 +34,7 @@ const ProfileScreen = ({ navigation }: any) => {
 
   useEffect(() => {
     getUserData();
-    // getMembershipData();
+    getMembershipData();
   }, []);
 
   const getUserData = async () => {
@@ -43,7 +43,7 @@ const ProfileScreen = ({ navigation }: any) => {
         LOCALSTORAGE.LOGGED_IN_USER,
         true
       );
-      console.log({user})
+      console.log({ user });
       setData(user);
     } catch (error) {
       console.error("Error fetching user data:", error);

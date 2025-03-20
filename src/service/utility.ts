@@ -1,4 +1,3 @@
-import Config from "react-native-config";
 import RockOakApi from "./RockOakAPI";
 import { API_ENDPOINT } from "@constants/api.constant";
 import { getAsyncStorageValue } from "@utils/localStorage";
@@ -251,8 +250,8 @@ class UtilityAPI extends RockOakApi {
   };
 
   // user
-  public fetchBookedEvents = () => {
-    const token = getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
+  public fetchBookedEvents = async () => {
+    const token = await getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
     let headers = {
       apikey: process.env.NUCLEUS_APIKEY,
       authorization: `Bearer ${token}`,

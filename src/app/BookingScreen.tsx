@@ -1,20 +1,26 @@
-import React, { useState, useRef } from "react";
-import { StyleSheet, ScrollView, Animated, Dimensions } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { StyleSheet, Animated, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
-import BookingCard from "@components/booking/BookingCard";
 import EmptyState from "@components/booking/EmptyState";
 import FilterTags from "@components/booking/FilterTag";
 import TabBar from "@components/booking/TabBar";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { pastBookings, upcomingBookings } from "@constants/dummy.data.constant";
+import UtilityAPI from "service/utility";
+import { MemoShimmerList } from "./MemoEventCard";
+import SCREENS from "@constants/screen.constant";
+import { BookingCardList } from "@components/BookingCardList";
 
 const { width } = Dimensions.get("window");
 
 export default function BookingScreen() {
-  const [activeTab, setActiveTab] = useState("xupcoming");
+  const [activeTab, setActiveTab] = useState("upcoming");
   const [showFilters, setShowFilters] = useState(false);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filteredData, setFilteredData] = useState<any>([]);
   const tabIndicatorPosition = useRef(new Animated.Value(0)).current;
   const navigation = useNavigation<any>();
 
@@ -32,6 +38,42 @@ export default function BookingScreen() {
     console.log("Selected filters:", selectedFilters);
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  // useEffect(() => {
+  //   filterGameData();
+  // }, [data]);
+
+  // const filterGameData = () => {
+  //   if (sportSeleted === "all-events") {
+  //     setFilteredData(data);
+  //   } else {
+  //     const filtered = data.filter((item: any) => item.type === sportSeleted);
+  //     setFilteredData(filtered);
+  //   }
+  // };
+
+  const fetchData = async () => {
+    const rockOakApi = new UtilityAPI();
+    try {
+      const res = await rockOakApi.fetchBookedEvents();
+      console.log(res.data);
+      if (res && res.data) {
+        setData(res.data);
+      } else {
+        console.warn("No data received!");
+        setData([]);
+      }
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setData([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={["top"]}>
       <StatusBar style="dark" />
@@ -46,13 +88,32 @@ export default function BookingScreen() {
         tabIndicatorPosition={tabIndicatorPosition}
       />
 
-      <ScrollView
+      {loading ? (
+        <MemoShimmerList gridLayout={false} count={5} />
+      ) : data?.length > 0 ? (
+        <BookingCardList
+          data={activeTab === "upcoming" ? upcomingBookings : pastBookings}
+          gridLayout={false}
+          navigation={navigation}
+        />
+      ) : (
+        <EmptyState
+          type={activeTab === "upcoming" ? "upcoming" : "past"}
+          onPressHandle={() => navigation.navigate(SCREENS.eventListing)}
+        />
+      )}
+      {/* <BookingCardList
+        data={activeTab === "upcoming" ? upcomingBookings : pastBookings}
+        gridLayout={false}
+        navigation={navigation}
+      /> */}
+      {/* <ScrollView
         style={styles.bookingsList}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.bookingsListContent}
       >
         {activeTab === "upcoming" ? (
-          upcomingBookings.length > 0 ? (
+          false ? (
             upcomingBookings.map((booking) => (
               <BookingCard key={booking.id} booking={booking} />
             ))
@@ -66,7 +127,7 @@ export default function BookingScreen() {
         ) : (
           <EmptyState type="past" />
         )}
-      </ScrollView>
+      </ScrollView> */}
     </SafeAreaView>
   );
 }
