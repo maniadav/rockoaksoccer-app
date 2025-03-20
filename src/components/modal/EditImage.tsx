@@ -1,15 +1,20 @@
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { LOCALSTORAGE } from "@constants/storage.constant";
-import { getAsyncStorageValue } from "@utils/localStorage";
+import {
+  getAsyncStorageValue,
+  setAsyncStorageValue,
+} from "@utils/localStorage";
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, Alert, TouchableOpacity } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import userImg from "@images/front-cat.jpg";
 import COLOUR from "@constants/colour.constant";
+import UtilityAPI from "service/utility";
+import data from "@constants/slider.data.constant";
 
 const EditImage = () => {
-  const [filePreview, setFilePreview] = useState<any>(null);
-  const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [filePreview, setFilePreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -20,43 +25,71 @@ const EditImage = () => {
   }, []);
 
   const pickImage = async () => {
+    // Add permissions check
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert("Error", "Permission required to access photos");
+      return;
+    }
+
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
       quality: 1,
     });
 
-    if (!result.canceled) {
+    if (!result.canceled && result.assets[0]?.uri) {
       setSelectedFile(result.assets[0].uri);
       setFilePreview(result.assets[0].uri);
     } else {
-      alert("You did not select any image.");
+      Alert.alert("Info", "You did not select any image.");
     }
   };
 
   const uploadImage = async () => {
-    if (!selectedFile) {
+    if (!selectedFile || !user?.username) {
       Alert.alert("Error", "Please select an image to upload.");
       return;
     }
-    Alert.alert("Uploading", "Uploading image...");
-
     let formData = new FormData();
-    const response = await fetch(selectedFile);
-    const blob = await response.blob();
-    formData.append("image", blob, "profile.jpg");
-    formData.append("caption", "Profile Picture");
 
-    // let rockOakApi = new UtilityAPI();
-    // try {
-    //   const response = await rockOakApi.uploadImage(formData);
-    //   if (response?.data?.publicUrl) {
-    //     await rockOakApi.updateProfile({ profile: response.data.publicUrl });
-    //     Alert.alert("Success", "Profile image uploaded");
-    //   }
-    // } catch (error) {
-    //   Alert.alert("Error", "Something went wrong during upload");
-    // }
+    try {
+      const type = "image/jpeg"; // Adjust based on actual file type
+      // const response = await fetch(selectedFile);
+      // const blob = await response.blob();
+      // formData.append("image", blob, "profile.jpg");
+      // formData.append("caption", "Profile Picture");
+      
+
+      formData.append("image", {
+        uri: selectedFile,
+        name: user.username,
+        type,
+      } as any);
+
+      formData.append("caption", "Profile Picture");
+
+      // Rest of your upload logic...
+    } catch (error) {
+      Alert.alert("Error", "Failed to prepare image for upload");
+    }
+
+    let rockOakApi = new UtilityAPI();
+    try {
+      const response = await rockOakApi.uploadImage(formData);
+      if (response?.data?.publicUrl) {
+        const updatedUser = { ...user, profile: response.data.publicUrl };
+        await rockOakApi.updateProfile({ profile: response.data.publicUrl });
+        await setAsyncStorageValue(
+          LOCALSTORAGE.LOGGED_IN_USER,
+          updatedUser,
+          true
+        );
+        Alert.alert("Success", "Profile image uploaded");
+      }
+    } catch (error) {
+      Alert.alert("Error", "Something went wrong during upload");
+    }
   };
 
   return (
@@ -74,10 +107,8 @@ const EditImage = () => {
         <Image
           style={{ width: 200, height: 200, borderRadius: 50 }}
           source={
-            user?.profileImage || filePreview
-              ? {
-                  uri: filePreview || user.profileImage,
-                }
+            user?.profile || filePreview
+              ? { uri: filePreview || user.profile }
               : userImg
           }
         />
