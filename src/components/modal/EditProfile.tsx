@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
 import InputComp from "@components/common/InputComp";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { CustomButton } from "@components/common/Component";
-import { getAsyncStorageValue, setAsyncStorageValue } from "@utils/localStorage";
+import {
+  getAsyncStorageValue,
+  setAsyncStorageValue,
+} from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import Fontisto from "@expo/vector-icons/Fontisto";
 import Entypo from "@expo/vector-icons/Entypo";
@@ -16,7 +19,7 @@ interface FormValues {
   lastName?: string;
   email?: string;
   password?: string;
-  phone?: string;
+  mobile?: string;
   address?: string;
 }
 
@@ -24,7 +27,7 @@ interface FormErrors {
   firstName?: string;
   lastName?: string;
   email?: string;
-  phone?: string;
+  mobile?: string;
   password?: string;
   address?: string;
 }
@@ -37,6 +40,7 @@ const EditProfile: React.FC = () => {
   const [values, setValues] = useState<FormValues>({});
   const [errors, setErrors] = useState<FormErrors>({});
   const [data, setData] = useState<any | null>(null);
+  const [msg, setMsg] = useState("Only edit fields you want to update");
   // const [show, setShow] = useState<ShowPasswordState>({});
   // const [formData, setFormData] = useState<FormValues>({});
 
@@ -59,54 +63,42 @@ const EditProfile: React.FC = () => {
     featchData();
   }, []);
 
-
-
-  // const handleChange = (key: keyof any, value: string) => {
-  //   setFormData({
-  //     ...formData,
-  //     [key]: value,
-  //   });
-  // };
-
-  console.log(values)
-  //Update the profile data
   const updateProfileData = async () => {
     let rockOakApi = new UtilityAPI();
     try {
       const profileReponse = await rockOakApi.updateProfile(values);
-      console.log('profile data', profileReponse.data)
       if (profileReponse?.data?.data) {
-        setAsyncStorageValue(
+        await setAsyncStorageValue(
           LOCALSTORAGE.LOGGED_IN_USER,
           profileReponse.data.data,
           true
-        )
+        );
+        setMsg("Profile updated successfully");
         Toast.show({
           type: "success",
           text2: "Profile updated successfully",
-        })
+        });
       }
     } catch (error) {
-      console.log('error updating profile', error)
+      console.log("error updating profile", error);
+      setMsg("Failed to update your profile");
       Toast.show({
         type: "error",
         text2: "Failed to update your profile",
-      })
+      });
     }
-  }
-  // console.log(values)
-
+  };
 
   return (
     <View style={{ backgroundColor: "#F8F8F8", height: "100%" }}>
       <TopNavHeader title="Edit Profile" />
       {/* <FormField
         label="Phone"
-        icon="phone"
-        value={formData?.phone || "6393241779"}
-        onChangeText={(text) => handleChange("phone", text)}
-        placeholder="Enter your phone number"
-        keyboardType="phone-pad"
+        icon="mobile"
+        value={formData?.mobile || "6393241779"}
+        onChangeText={(text) => handleChange("mobile", text)}
+        placeholder="Enter your mobile number"
+        keyboardType="mobile-pad"
       /> */}
       <View
         style={{
@@ -138,18 +130,18 @@ const EditProfile: React.FC = () => {
           label="Email"
           leftIcon={<Fontisto name="email" size={24} color="black" />}
           onChangeHandler={(text: string) => onChangeHandler(text, "email")}
-          validate={() => validate("email", "Please enter your email")}
+          // validate={() => validate("email", "Please enter your email")}
           errorMessage={errors.email}
           placeholder={data?.email || ""}
           autoCapitalize="none"
         />
         <InputComp
-          label="phone"
-          onChangeHandler={(text: string) => onChangeHandler(text, "phone")}
-          validate={() => validate("phone", "Enter phone number")}
-          errorMessage={errors.phone}
+          label="mobile"
+          onChangeHandler={(text: string) => onChangeHandler(text, "mobile")}
+          validate={() => validate("mobile", "Enter mobile number")}
+          errorMessage={errors.mobile}
           // leftIcon={<Ionicons name="home-outline" size={10} color={"black"} />}
-          placeholder={data?.phone || "9393271779"}
+          placeholder={data?.mobile || "-"}
         />
         <InputComp
           numLines={2}
@@ -184,9 +176,7 @@ const EditProfile: React.FC = () => {
         onChangeHandler={(text: string) => onChangeHandler(text, "password")}
         bgColor="#fff1d2"
       /> */}
-        <Text style={{ color: "green", textAlign: "center" }}>
-          Only edit fields you want to update
-        </Text>
+        <Text style={{ color: "green", textAlign: "center" }}>{msg}</Text>
         <View style={{ padding: 30 }}>
           <CustomButton onPress={() => updateProfileData()}>
             <Text style={{ color: "white" }}>Update</Text>

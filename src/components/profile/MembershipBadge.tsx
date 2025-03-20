@@ -66,7 +66,9 @@ const MembershipBadge = ({
         <View style={styles.badgeContent}>
           <Text style={styles.membershipType}>{membershipType} Membership</Text>
           <Text style={styles.expiryInfo}>
-            {isActive ? `Expires on ${expiryDate}` : `Expired on ${expiryDate}`}
+            {isActive
+              ? `Expires on ${expiryDate || "-"}`
+              : `Expired on ${expiryDate || "-"}`}
           </Text>
         </View>
         <View

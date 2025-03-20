@@ -5,8 +5,10 @@ import SCREENS from "@constants/screen.constant";
 import Loader from "@components/common/Loader";
 import { getAsyncStorageValue } from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
-import { NavigationContainer, NavigationIndependentTree } from "@react-navigation/native";
-// import { SCREENS } from "@constants/screen.constant";
+import {
+  NavigationContainer,
+  NavigationIndependentTree,
+} from "@react-navigation/native";
 
 export default function App() {
   const [initialRoute, setInitialRoute] = useState<string | null>(null);
@@ -36,13 +38,8 @@ export default function App() {
 
   return (
     <NavigationIndependentTree>
-
       <NavigationContainer>
-        {initialRoute ? (
-          <RootNavigation initialRoute={initialRoute} />
-        ) : (
-          <Loader />
-        )}
+        <RootNavigation initialRoute={initialRoute} />
       </NavigationContainer>
     </NavigationIndependentTree>
   );

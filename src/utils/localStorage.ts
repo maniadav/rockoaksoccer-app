@@ -1,4 +1,4 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 /**
  * @function getAsyncStorageValue
@@ -14,7 +14,7 @@ const getAsyncStorageValue = async (key: string, parse = false) => {
 
     return parse ? JSON.parse(storedValue) : storedValue;
   } catch (e) {
-    console.error('Error accessing AsyncStorage:', e);
+    console.error("Error accessing AsyncStorage:", e);
     return null;
   }
 };
@@ -30,13 +30,13 @@ const getAsyncStorageValue = async (key: string, parse = false) => {
 const setAsyncStorageValue = async <T>(
   key: string,
   value: T,
-  serialize = true
+  serialize: boolean = typeof value !== "string"
 ) => {
   try {
     const valueToStore = serialize ? JSON.stringify(value) : (value as string);
     await AsyncStorage.setItem(key, valueToStore);
   } catch (e) {
-    console.error('Error saving to AsyncStorage:', e);
+    console.error("Error saving to AsyncStorage:", e);
   }
 };
 
@@ -49,7 +49,7 @@ const removeAsyncStorageValue = async (key: string) => {
   try {
     await AsyncStorage.removeItem(key);
   } catch (e) {
-    console.error('Error removing from AsyncStorage:', e);
+    console.error("Error removing from AsyncStorage:", e);
   }
 };
 

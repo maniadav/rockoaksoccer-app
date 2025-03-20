@@ -152,11 +152,13 @@ class UtilityAPI extends RockOakApi {
       headers,
     });
   };
-  public updateProfile = (data: any) => {
-    const token = getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
+
+  public updateProfile = async (data: any) => {
+    const token = await getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
+    console.log(`${token}`);
     let headers = {
       apikey: process.env.NUCLEUS_APIKEY,
-      Authorization: `Bearer ${token}`,
+      authorization: `Bearer ${token}`, // remove this as already sending in x-access-token in RockOakApi, update backend
     };
     return this.instance.put(
       `${API_ENDPOINT.user.profile.update}`,
@@ -164,6 +166,7 @@ class UtilityAPI extends RockOakApi {
       { headers }
     );
   };
+
   public updateUserData = (data: any) => {
     const token = getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
     let headers = {
@@ -275,11 +278,12 @@ class UtilityAPI extends RockOakApi {
     );
   };
   // membership
-  public fetchMembershipDetails = () => {
-    const token = getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
+  public fetchMembershipDetails = async () => {
+    const token = await getAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN);
+    console.log(`${token}`);
     let headers = {
       apikey: process.env.NUCLEUS_APIKEY,
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${token}`, // remove this as already sending in x-access-token in RockOakApi, update backend
     };
     return this.instance.get(`${API_ENDPOINT.membership.details}`, {
       headers,

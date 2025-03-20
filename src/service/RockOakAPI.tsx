@@ -13,6 +13,10 @@ import {
 } from "@constants/config.constant";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import SCREENS from "@constants/screen.constant";
+import {
+  getAsyncStorageValue,
+  setAsyncStorageValue,
+} from "@utils/localStorage";
 
 // React Native doesn't need 'use client' directive
 // Removed Next.js specific imports
@@ -54,9 +58,10 @@ class RockOakApi {
     instance.interceptors.request.use(
       async (config: AxiosRequestConfig) => {
         const API_KEY = this.API_KEY || "";
-        const access_token = await AsyncStorage.getItem("MFA_ACCESS_TOKEN");
-        const userString = await AsyncStorage.getItem("LOGGED_IN_USER");
-        const user = userString ? JSON.parse(userString) : null;
+        const access_token = await getAsyncStorageValue(
+          LOCALSTORAGE.MFA_ACCESS_TOKEN
+        );
+        const user = await getAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER);
 
         const headers = {
           ...config.headers,
@@ -112,9 +117,14 @@ class RockOakApi {
 
   private static async handleTokenRefresh(config: AxiosRequestConfig) {
     try {
-      const userString = await AsyncStorage.getItem("LOGGED_IN_USER");
-      const user: any = userString ? JSON.parse(userString) : null;
-      const rottencookie = await AsyncStorage.getItem("REFRESH_ACCESS_TOKEN");
+      const user = await getAsyncStorageValue(
+        LOCALSTORAGE.LOGGED_IN_USER,
+        true
+      );
+
+      const rottencookie = await getAsyncStorageValue(
+        LOCALSTORAGE.MFA_REFRESH_TOKEN
+      );
 
       const response = await axios.post(
         `${this.BASE_URL}${API_ENDPOINT.auth.getAccessToken}`,
@@ -125,8 +135,9 @@ class RockOakApi {
       );
 
       if (response.data.accessToken) {
-        await AsyncStorage.setItem(
-          "MFA_ACCESS_TOKEN",
+        console.log("aces get", response.data.accessToken);
+        await setAsyncStorageValue(
+          LOCALSTORAGE.MFA_ACCESS_TOKEN,
           response.data.accessToken
         );
         config.headers = {
