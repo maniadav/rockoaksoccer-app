@@ -1,7 +1,5 @@
 // stack.type.ts
-import SCREENS from "@constants/screen.constant";
 import { RouteProp } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { StackNavigationProp } from "@react-navigation/stack";
 
 export type RootStackParamList = {
@@ -29,5 +27,5 @@ export type RootStackParamList = {
 
 export type RootStackNavigationProp = {
   navigation: StackNavigationProp<any>;
-  route: RouteProp<any>;
+  route?: RouteProp<any>;
 };

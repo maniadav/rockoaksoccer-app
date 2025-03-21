@@ -1,160 +1,91 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableOpacity,
-} from "react-native";
-import SafeAreaComponent from "@components/common/SafeAreaComponent";
-import SCREENS, { MODALS } from "@constants/screen.constant";
+import { StyleSheet, ScrollView, Alert } from "react-native";
+import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import TopNavHeader from "@components/navigation/TopNavHeader";
-import { settingNavigationMap } from "@constants/index";
+import { SettingSection, SettingItem } from "@components/setting/SettingComp";
+import SCREENS, { MODALS } from "@constants/screen.constant";
+import { RootStackNavigationProp } from "types/stack.type";
 
-type SettingItem = {
-  icon?: string;
-  name: string;
-  navigationName: string;
-};
-
-const Setting = () => {
-  const [result, setResult] = useState<SettingItem[]>([]);
-  const [isSearching, setIsSearching] = useState<boolean>(false);
-  const navigation = useNavigation<any>();
-
-  // useEffect(() => {
-  //   // Fetch settings data here if needed
-  // }, []);
-
-  const _onSearch = (q: string) => {
-    if (q.length === 0) {
-      setResult([]);
-      setIsSearching(false);
+export default function SettingsScreen({
+  navigation,
+}: RootStackNavigationProp) {
+  const handleNavigation = (route: any) => {
+    if (!route) {
+      Alert.alert("Comping Soon..");
       return;
     }
-    console.log({ settingNavigationMap });
-    const temp = settingNavigationMap.filter((item) =>
-      item.name.toLowerCase().includes(q.toLowerCase())
-    );
-
-    setResult(temp);
-    setIsSearching(true);
+    navigation.navigate(route);
   };
-
-  const settingsOptions = [
-    { title: "Auth", route: null },
-    { title: "Log Out", route: MODALS.logOut },
-    { title: "Delete Account", route: "DeleteAccount" },
-    { title: "Manage Notifications", route: null },
-    { title: "Booking History", route: SCREENS.booking },
-    { title: "User Preferences", route: "Preferences" },
-    { title: "Profile", route: null },
-    { title: "View Profile", route: SCREENS.profile },
-    { title: "Edit Profile", route: MODALS.editProfile },
-  ];
 
   return (
     <SafeAreaComponent>
       <TopNavHeader title="Setting" />
-      <View style={styles.container}>
-        <ScrollView
-          bounces={false}
-          contentContainerStyle={styles.scrollContainer}
-        >
-          {settingsOptions.map((option, index) => (
-            <View key={index} style={styles.settingItem}>
-              {option.route ? (
-                <TouchableOpacity
-                  onPress={() => navigation.navigate(option.route)}
-                  activeOpacity={0.9}
-                >
-                  <Text style={styles.linkText}>{option.title}</Text>
-                </TouchableOpacity>
-              ) : (
-                <Text style={styles.sectionHeader}>{option.title}</Text>
-              )}
-            </View>
-          ))}
-        </ScrollView>
-      </View>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <SettingSection title="Account">
+          <SettingItem
+            title="2-F Authentication"
+            icon={<MaterialIcons name="security" size={24} color="#4A90E2" />}
+            onPress={() => handleNavigation(null)}
+          />
+          <SettingItem
+            title="Log Out"
+            icon={<MaterialIcons name="logout" size={24} color="#FF9500" />}
+            onPress={() => handleNavigation(MODALS.logOut)}
+          />
+          <SettingItem
+            title="Delete Account"
+            icon={
+              <MaterialIcons name="delete-forever" size={24} color="#FF3B30" />
+            }
+            onPress={() => handleNavigation(null)}
+          />
+        </SettingSection>
+
+        <SettingSection title="Preferences">
+          <SettingItem
+            title="Manage Notifications"
+            icon={<Ionicons name="notifications" size={24} color="#4A90E2" />}
+            onPress={() => handleNavigation(null)}
+          />
+          <SettingItem
+            title="Booking History"
+            icon={<FontAwesome5 name="history" size={22} color="#34C759" />}
+            onPress={() => handleNavigation(SCREENS.booking)}
+          />
+          <SettingItem
+            title="User Preferences"
+            icon={<MaterialIcons name="settings" size={24} color="#5856D6" />}
+            onPress={() => handleNavigation(null)}
+          />
+        </SettingSection>
+
+        <SettingSection title="Profile">
+          <SettingItem
+            title="View Profile"
+            icon={<MaterialIcons name="person" size={24} color="#4A90E2" />}
+            onPress={() => handleNavigation(SCREENS.profile)}
+          />
+          <SettingItem
+            title="Edit Profile"
+            icon={<MaterialIcons name="edit" size={24} color="#FF9500" />}
+            onPress={() => handleNavigation(MODALS.editProfile)}
+          />
+        </SettingSection>
+      </ScrollView>
     </SafeAreaComponent>
   );
-};
-
-export default Setting;
+}
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#fff",
-  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    borderBottomColor: "#ddd",
-    borderBottomWidth: 1,
+    backgroundColor: "#f8f9fa",
   },
-  scrollContainer: {
-    paddingBottom: 50,
-  },
-  searchWrapper: {
-    zIndex: 999,
-    position: "relative",
-    alignItems: "center",
-    paddingVertical: 10,
-    backgroundColor: "#fff",
-    width: "100%",
-  },
-  inputWrapper: {
-    width: "90%",
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomColor: "#ddd",
-    borderBottomWidth: 1,
-  },
-  iconWrapper: {
-    width: 40,
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-    fontSize: 16,
-  },
-  resultWrapper: {
-    backgroundColor: "#fff",
-    zIndex: 999,
-    position: "absolute",
-    top: "100%",
-    left: 0,
-    width: "100%",
-    maxHeight: 300, // Optional: limits the height of results area
-  },
-  settingItem: {
-    height: 50,
-    width: "100%",
-    backgroundColor: "#fff",
-    paddingHorizontal: 15,
-    flexDirection: "row",
-    alignItems: "center",
-    borderBottomWidth: 0.5,
-    borderBottomColor: "#ddd",
-  },
-  settingItemText: {
-    fontSize: 16,
-    fontWeight: "400",
-    marginLeft: 10,
-  },
-  sectionHeader: {
-    fontSize: 16,
-    fontWeight: "500",
-  },
-  linkText: {
-    fontSize: 16,
-    color: "#318bfb",
-    fontWeight: "400",
+  contentContainer: {
+    padding: 16,
   },
 });
