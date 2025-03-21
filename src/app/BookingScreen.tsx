@@ -102,11 +102,11 @@ export default function BookingScreen() {
           onPressHandle={() => navigation.navigate(SCREENS.eventListing)}
         />
       )}
-      {/* <BookingCardList
+      <BookingCardList
         data={activeTab === "upcoming" ? upcomingBookings : pastBookings}
         gridLayout={false}
         navigation={navigation}
-      /> */}
+      />
       {/* <ScrollView
         style={styles.bookingsList}
         showsVerticalScrollIndicator={false}

@@ -1,8 +1,16 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated, Dimensions } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Dimensions,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import COLOUR from "@constants/colour.constant";
 
-const { width } = Dimensions.get('window');
+const { width } = Dimensions.get("window");
 
 interface TabBarProps {
   activeTab: string;
@@ -10,45 +18,59 @@ interface TabBarProps {
   tabIndicatorPosition: Animated.Value;
 }
 
-const TabBar = ({ activeTab, onTabChange, tabIndicatorPosition }: TabBarProps) => {
+const TabBar = ({
+  activeTab,
+  onTabChange,
+  tabIndicatorPosition,
+}: TabBarProps) => {
   return (
     <View style={styles.tabBarContainer}>
       <View style={styles.tabsWrapper}>
-        <TouchableOpacity 
-          style={[styles.tab, activeTab === 'upcoming' && styles.activeTab]}
-          onPress={() => onTabChange('upcoming')}
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "upcoming" && styles.activeTab]}
+          onPress={() => onTabChange("upcoming")}
         >
-          <Ionicons 
-            name="calendar-outline" 
-            size={18} 
-            color={activeTab === 'upcoming' ? '#0066cc' : '#777'} 
+          <Ionicons
+            name="calendar-outline"
+            size={18}
+            color={activeTab === "upcoming" ? COLOUR.primary : "#777"}
             style={styles.tabIcon}
           />
-          <Text style={[styles.tabText, activeTab === 'upcoming' && styles.activeTabText]}>
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === "upcoming" && styles.activeTabText,
+            ]}
+          >
             Upcoming
           </Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-          style={[styles.tab, activeTab === 'past' && styles.activeTab]}
-          onPress={() => onTabChange('past')}
+        <TouchableOpacity
+          style={[styles.tab, activeTab === "past" && styles.activeTab]}
+          onPress={() => onTabChange("past")}
         >
-          <Ionicons 
-            name="time-outline" 
-            size={18} 
-            color={activeTab === 'past' ? '#0066cc' : '#777'} 
+          <Ionicons
+            name="time-outline"
+            size={18}
+            color={activeTab === "past" ? COLOUR.primary : "#777"}
             style={styles.tabIcon}
           />
-          <Text style={[styles.tabText, activeTab === 'past' && styles.activeTabText]}>
+          <Text
+            style={[
+              styles.tabText,
+              activeTab === "past" && styles.activeTabText,
+            ]}
+          >
             Past
           </Text>
         </TouchableOpacity>
-        <Animated.View 
+        <Animated.View
           style={[
             styles.tabIndicator,
             {
-              transform: [{translateX: tabIndicatorPosition}],
-              width: width / 2
-            }
+              transform: [{ translateX: tabIndicatorPosition }],
+              width: width / 2,
+            },
           ]}
         />
       </View>
@@ -58,21 +80,21 @@ const TabBar = ({ activeTab, onTabChange, tabIndicatorPosition }: TabBarProps) =
 
 const styles = StyleSheet.create({
   tabBarContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderBottomWidth: 1,
-    borderBottomColor: '#eaeaea',
+    borderBottomColor: "#eaeaea",
     paddingTop: 8,
   },
   tabsWrapper: {
-    flexDirection: 'row',
-    position: 'relative',
+    flexDirection: "row",
+    position: "relative",
   },
   tab: {
     flex: 1,
     paddingVertical: 12,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
   activeTab: {
     // Add specific active tab styles if needed
@@ -82,18 +104,18 @@ const styles = StyleSheet.create({
   },
   tabText: {
     fontSize: 15,
-    fontWeight: '500',
-    color: '#777',
+    fontWeight: "500",
+    color: "#777",
   },
   activeTabText: {
-    color: '#0066cc',
-    fontWeight: '600',
+    color: COLOUR.primary,
+    fontWeight: "600",
   },
   tabIndicator: {
-    position: 'absolute',
+    position: "absolute",
     height: 3,
     bottom: 0,
-    backgroundColor: '#0066cc',
+    backgroundColor: COLOUR.primary,
     borderTopLeftRadius: 3,
     borderTopRightRadius: 3,
   },

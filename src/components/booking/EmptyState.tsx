@@ -1,3 +1,4 @@
+import COLOUR from "@constants/colour.constant";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import React from "react";
 import {
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   bookNowButton: {
-    backgroundColor: "#0066cc",
+    backgroundColor: COLOUR.primary,
     display: "flex",
     gap: 8,
     flexDirection: "row",
