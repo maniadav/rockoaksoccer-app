@@ -1,15 +1,19 @@
 import { StyleSheet, ScrollView, Alert } from "react-native";
 import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import SafeAreaComponent from "@components/common/SafeAreaComponent";
 import TopNavHeader from "@components/navigation/TopNavHeader";
 import { SettingSection, SettingItem } from "@components/setting/SettingComp";
 import SCREENS, { MODALS } from "@constants/screen.constant";
 import { RootStackNavigationProp } from "types/stack.type";
+import { useState } from "react";
+import { renderModalContent } from "@components/modal/ModalRenderComp";
+import PopUpModal from "@components/modal/PopUpModal";
 
 export default function SettingsScreen({
   navigation,
 }: RootStackNavigationProp) {
+  const [activeModal, setActiveModal] = useState<string | null>(null);
+
   const handleNavigation = (route: any) => {
     if (!route) {
       Alert.alert("Comping Soon..");
@@ -34,7 +38,7 @@ export default function SettingsScreen({
           <SettingItem
             title="Log Out"
             icon={<MaterialIcons name="logout" size={24} color="#FF9500" />}
-            onPress={() => handleNavigation(MODALS.logOut)}
+            onPress={() => setActiveModal(MODALS.logOut)}
           />
           <SettingItem
             title="Delete Account"
@@ -75,6 +79,12 @@ export default function SettingsScreen({
             onPress={() => handleNavigation(MODALS.editProfile)}
           />
         </SettingSection>
+        <PopUpModal
+          activeModal={activeModal}
+          onClose={() => setActiveModal(null)}
+        >
+          {renderModalContent(activeModal || "", () => setActiveModal(null))}
+        </PopUpModal>
       </ScrollView>
     </SafeAreaComponent>
   );
