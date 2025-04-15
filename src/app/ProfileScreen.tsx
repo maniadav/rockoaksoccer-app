@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, ActivityIndicator, Text } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ProfileCard from "@components/profile/ProfileCard";
 import MembershipBadge from "@components/profile/MembershipBadge";
@@ -31,6 +31,7 @@ export type MembershipInfo = {
 const ProfileScreen = ({ navigation }: any) => {
   const [membership, setMembershipInfo] = useState<MembershipInfo | null>(null);
   const [data, setData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getUserData();
@@ -47,6 +48,8 @@ const ProfileScreen = ({ navigation }: any) => {
       setData(user);
     } catch (error) {
       console.error("Error fetching user data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -67,72 +70,96 @@ const ProfileScreen = ({ navigation }: any) => {
     }
   };
 
+  if (loading) {
+    return (
+      <SafeAreaProvider style={styles.container}>
+        <View style={styles.backButtonContainer}>
+          <BackButton />
+        </View>
+        <View style={[styles.container, styles.loadingContainer]}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      </SafeAreaProvider>
+    );
+  }
+
+  if (!data) {
+    return (
+      <SafeAreaProvider style={styles.container}>
+        <View style={styles.backButtonContainer}>
+          <BackButton />
+        </View>
+        <View style={[styles.container, styles.loadingContainer]}>
+          <Text>Unable to load profile data</Text>
+        </View>
+      </SafeAreaProvider>
+    );
+  }
+
   return (
     <SafeAreaProvider style={styles.container}>
-      {data && (
-        <View style={{ flex: 1 }}>
-          <ScrollView>
-            <View style={styles.content}>
-              <View style={styles.backButtonContainer}>
-                <BackButton />
-              </View>
-              <ProfileCard
-                profileImage={
-                  data.profile ||
-                  "https://api.a0.dev/assets/image?text=professional%20person%20portrait%20soft%20lighting&aspect=1:1"
-                }
-                name={data.firstName || "Rockers"}
-                email={data.email}
-                navigation={navigation}
-              />
-
-              <MembershipBadge
-                membershipType={membership?.type || ""}
-                expiryDate={membership?.expiryDate || ""}
-                isActive={membership?.isActive || false}
-              />
-
-              <View style={styles.detailsSection}>
-                <ProfileDetailCard
-                  icon="person"
-                  title="firstName"
-                  value={data.firstName || "-"}
-                />
-
-                <ProfileDetailCard
-                  icon="person"
-                  title="lastName"
-                  value={data.lastName || "-"}
-                />
-
-                <ProfileDetailCard
-                  icon="email"
-                  title="Email"
-                  value={data?.email || "-"}
-                />
-
-                <ProfileDetailCard
-                  icon="phone"
-                  title="Phone"
-                  value={data?.mobile || "-"}
-                />
-
-                <ProfileDetailCard
-                  icon="location-on"
-                  title="Address"
-                  value={data?.address || "-"}
-                />
-
-                <ProfileDetailCard
-                  icon="event"
-                  title="Member Since"
-                  value={data.joinDate || "-"}
-                />
-              </View>
+      <View style={{ flex: 1 }}>
+        <ScrollView>
+          <View style={styles.content}>
+            <View style={styles.backButtonContainer}>
+              <BackButton />
             </View>
-          </ScrollView>
-        </View>
-      )}
+            <ProfileCard
+              profileImage={
+                data.profile ||
+                "https://api.a0.dev/assets/image?text=professional%20person%20portrait%20soft%20lighting&aspect=1:1"
+              }
+              name={data.firstName || "Rockers"}
+              email={data.email}
+              navigation={navigation}
+            />
+
+            <MembershipBadge
+              membershipType={membership?.type || ""}
+              expiryDate={membership?.expiryDate || ""}
+              isActive={membership?.isActive || false}
+            />
+
+            <View style={styles.detailsSection}>
+              <ProfileDetailCard
+                icon="person"
+                title="firstName"
+                value={data.firstName || "-"}
+              />
+
+              <ProfileDetailCard
+                icon="person"
+                title="lastName"
+                value={data.lastName || "-"}
+              />
+
+              <ProfileDetailCard
+                icon="email"
+                title="Email"
+                value={data?.email || "-"}
+              />
+
+              <ProfileDetailCard
+                icon="phone"
+                title="Phone"
+                value={data?.mobile || "-"}
+              />
+
+              <ProfileDetailCard
+                icon="location-on"
+                title="Address"
+                value={data?.address || "-"}
+              />
+
+              <ProfileDetailCard
+                icon="event"
+                title="Member Since"
+                value={data.joinDate || "-"}
+              />
+            </View>
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaProvider>
   );
 };
@@ -165,4 +192,8 @@ const styles = StyleSheet.create({
     zIndex: -1,
   },
   profileImage: { position: "absolute", top: 30, left: 10, zIndex: 1 },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });

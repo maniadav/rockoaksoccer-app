@@ -7,8 +7,15 @@ import Header from "../components/Header";
 // import SafeAreaBackButton from "@components/button/SafeAreaBackButton";
 import { theme } from "@components/theme";
 import Toast from "react-native-toast-message";
-import { emailValidator, passwordValidator, usernameValidator } from "helpers/validator";
-import { getAsyncStorageValue, setAsyncStorageValue } from "@utils/localStorage";
+import {
+  emailValidator,
+  passwordValidator,
+  usernameValidator,
+} from "helpers/validator";
+import {
+  getAsyncStorageValue,
+  setAsyncStorageValue,
+} from "@utils/localStorage";
 import { LOCALSTORAGE } from "@constants/storage.constant";
 import InputComp from "@components/common/InputComp";
 import ButtonComp from "@components/common/ButtonComp";
@@ -78,13 +85,20 @@ const SignUpScreen = ({ navigation }: any) => {
 
     try {
       const response = await RockOakApi.userRegister(formData);
-      console.log(response)
+      console.log(response);
       const msg = response?.data?.message || "user is already registered";
 
       //storing the tokens
-      setAsyncStorageValue(LOCALSTORAGE.MFA_ACCESS_TOKEN, response?.data?.accessToken);
+      setAsyncStorageValue(
+        LOCALSTORAGE.MFA_ACCESS_TOKEN,
+        response?.data?.accessToken
+      );
 
-      setAsyncStorageValue(LOCALSTORAGE.LOGGED_IN_USER, response?.data?.user, true);
+      setAsyncStorageValue(
+        LOCALSTORAGE.LOGGED_IN_USER,
+        response?.data?.user,
+        true
+      );
 
       Toast.show({
         type: "success",
@@ -95,8 +109,9 @@ const SignUpScreen = ({ navigation }: any) => {
       navigation.replace(`${SCREENS.signIn}`);
     } catch (error: any) {
       console.log(`Sign up API call error ${error}`);
-      const msg = error?.response?.data?.message || "user is already registered";
-      console.log(msg)
+      const msg =
+        error?.response?.data?.message || "user is already registered";
+      console.log(msg);
       Toast.show({
         type: "error",
         text2: msg,
@@ -118,18 +133,21 @@ const SignUpScreen = ({ navigation }: any) => {
           position: "relative",
         }}
       >
-
         <View style={[styles.container]}>
           <Logo />
           <Header>Join the Journey to Greatness!</Header>
 
           <InputComp
+            bgColor="#FFF"
             label="Username"
-            onChangeHandler={(text: string) => onChangeHandler(text, "username")}
+            onChangeHandler={(text: string) =>
+              onChangeHandler(text, "username")
+            }
             errorMessage={errors.username}
             autoCapitalize="none"
           />
           <InputComp
+            bgColor="#FFF"
             label="Email"
             leftIcon={<Fontisto name="email" size={24} color="black" />}
             onChangeHandler={(text: string) => onChangeHandler(text, "email")}
@@ -137,8 +155,8 @@ const SignUpScreen = ({ navigation }: any) => {
             autoCapitalize="none"
           />
           <InputComp
+            bgColor="#FFF"
             label="Password"
-            outlined
             errorMessage={errors.password}
             rightIcon={
               <Pressable onPress={() => setShow((prev) => !show)}>
@@ -150,10 +168,14 @@ const SignUpScreen = ({ navigation }: any) => {
               </Pressable>
             }
             secure={!show}
-            onChangeHandler={(text: string) => onChangeHandler(text, "password")}
+            onChangeHandler={(text: string) =>
+              onChangeHandler(text, "password")
+            }
           />
           <View style={styles.forgotPassword}>
-            <TouchableOpacity onPress={() => navigation.navigate("ResetPasswordScreen")}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ResetPasswordScreen")}
+            >
               <Text style={styles.forgot}>Forgot your password?</Text>
             </TouchableOpacity>
           </View>
@@ -167,7 +189,9 @@ const SignUpScreen = ({ navigation }: any) => {
 
           <View style={styles.row}>
             <Text>Already have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.replace(SCREENS.signIn)}>
+            <TouchableOpacity
+              onPress={() => navigation.replace(SCREENS.signIn)}
+            >
               <Text style={styles.link}>Sign In</Text>
             </TouchableOpacity>
           </View>
